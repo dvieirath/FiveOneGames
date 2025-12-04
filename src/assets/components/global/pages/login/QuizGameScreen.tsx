@@ -7,25 +7,27 @@ import {
   StatusBar, 
   ScrollView, 
   Alert,
-  Dimensions
+  Dimensions,
+  TextInput // Importado TextInput
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const { width } = Dimensions.get('window');
 
 // CORES - TEMA LARANJA NEON
 const colors = {
-  primary: '#fc4b08',     
-  background: '#000000',  
-  text: '#F5F5F5',        
+  primary: '#fc4b08',
+  background: '#000000',
+  text: '#F5F5F5',
   cardBackground: '#111111',
-  success: '#00ff00',     
-  danger: '#ff0000',      
+  success: '#00ff00',
+  danger: '#ff0000',
   optionBg: '#1a1a1a',
+  inputBg: '#222', // Cor de fundo para o input de busca
 };
 
 // Dados dos Temas e Perguntas (Simulado)
-// Agora com ícones para cada tema
 const QUIZ_DATA: any = {
   'Tecnologia': {
     icon: 'hardware-chip-outline',
@@ -63,9 +65,7 @@ const QUIZ_DATA: any = {
 
 interface QuizGameScreenProps {
   onBack: () => void;
-  // Prop para notificar o App.tsx que um tema foi escolhido, para acionar o loading
   onThemeSelect: (theme: string) => void;
-  // Prop que recebe o tema selecionado APÓS o loading
   activeTheme: string | null;
 }
 
@@ -73,10 +73,20 @@ const QuizGameScreen: React.FC<QuizGameScreenProps> = ({ onBack, onThemeSelect, 
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [score, setScore] = useState(0);
   const [showResult, setShowResult] = useState(false);
-  const [timeLeft, setTimeLeft] = useState(15); // 15s por pergunta
+  const [timeLeft, setTimeLeft] = useState(15);
   const [gameActive, setGameActive] = useState(false);
+  const [userName, setUserName] = useState('Jogador');
+  const [searchQuery, setSearchQuery] = useState(''); // Estado para a busca
 
-  // Se um tema foi passado (via App.tsx após loading), inicia o jogo
+  // Carrega o nome do usuário
+  useEffect(() => {
+    const loadUser = async () => {
+        const storedName = await AsyncStorage.getItem('userName');
+        if (storedName) setUserName(storedName);
+    };
+    loadUser();
+  }, []);
+
   useEffect(() => {
     if (activeTheme) {
       setGameActive(true);
@@ -87,7 +97,6 @@ const QuizGameScreen: React.FC<QuizGameScreenProps> = ({ onBack, onThemeSelect, 
     }
   }, [activeTheme]);
 
-  // Cronômetro da pergunta
   useEffect(() => {
     let interval: NodeJS.Timeout;
     if (gameActive && !showResult && timeLeft > 0) {
@@ -95,7 +104,7 @@ const QuizGameScreen: React.FC<QuizGameScreenProps> = ({ onBack, onThemeSelect, 
         setTimeLeft((prev) => prev - 1);
       }, 1000);
     } else if (timeLeft === 0 && gameActive && !showResult) {
-      handleNextQuestion(false); // Tempo esgotou, considera erro
+      handleNextQuestion(false);
     }
     return () => clearInterval(interval);
   }, [timeLeft, gameActive, showResult]);
@@ -104,7 +113,7 @@ const QuizGameScreen: React.FC<QuizGameScreenProps> = ({ onBack, onThemeSelect, 
     if (!activeTheme) return;
     const currentQuestions = QUIZ_DATA[activeTheme].questions;
     const isCorrect = currentQuestions[currentQuestionIndex].correct === optionIndex;
-    
+
     if (isCorrect) setScore(prev => prev + 10);
     handleNextQuestion(isCorrect);
   };
@@ -115,7 +124,7 @@ const QuizGameScreen: React.FC<QuizGameScreenProps> = ({ onBack, onThemeSelect, 
 
     if (currentQuestionIndex < currentQuestions.length - 1) {
       setCurrentQuestionIndex(prev => prev + 1);
-      setTimeLeft(15); // Reseta tempo
+      setTimeLeft(15);
     } else {
       setGameActive(false);
       setShowResult(true);
@@ -123,41 +132,65 @@ const QuizGameScreen: React.FC<QuizGameScreenProps> = ({ onBack, onThemeSelect, 
   };
 
   const restartQuiz = () => {
-    // Volta para seleção de tema, mas mantendo na tela de Quiz
-    // Para reiniciar com loading, teríamos que chamar onThemeSelect novamente
     if (activeTheme) {
-        onThemeSelect(activeTheme); // Re-seleciona o mesmo tema para triggerar loading
+        onThemeSelect(activeTheme);
     }
   };
 
   // --- RENDERIZAÇÃO: SELEÇÃO DE TEMA ---
   if (!activeTheme) {
+    // Filtra os temas com base na busca
+    const filteredThemes = Object.entries(QUIZ_DATA).filter(([theme]) =>
+      theme.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
     return (
       <View style={styles.container}>
         <StatusBar barStyle="light-content" backgroundColor={colors.background} />
-        
+
         <View style={styles.header}>
+          <View style={styles.headerLeft}>
+            <Text style={styles.welcomeText}>Bem Vindo de Volta,</Text>
+            <Text style={[styles.welcomeName, styles.neonText]}>{userName}</Text>
+          </View>
           <TouchableOpacity onPress={onBack} style={styles.backButton}>
             <Ionicons name="arrow-back" size={24} color={colors.primary} />
           </TouchableOpacity>
-          <Text style={[styles.title, styles.neonText]}>QUIZ MASTER</Text>
-          <View style={{ width: 24 }} /> 
+        </View>
+
+        <Text style={[styles.title, styles.neonText]}>QUIZ MASTER</Text>
+
+        {/* BARRA DE PESQUISA */}
+        <View style={styles.searchContainer}>
+          <Ionicons name="search" size={20} color="#888" style={styles.searchIcon} />
+          <TextInput
+            style={styles.searchInput}
+            placeholder="Buscar tema..."
+            placeholderTextColor="#888"
+            value={searchQuery}
+            onChangeText={setSearchQuery}
+          />
         </View>
 
         <View style={styles.themeSelectionContainer}>
           <Text style={styles.subTitle}>Escolha um Tema:</Text>
-          <View style={styles.themeGrid}>
-            {Object.entries(QUIZ_DATA).map(([theme, data]: [string, any]) => (
-              <TouchableOpacity 
-                key={theme} 
-                style={styles.themeCard}
-                onPress={() => onThemeSelect(theme)}
-              >
-                <Ionicons name={data.icon} size={40} color={colors.primary} style={styles.themeIcon} />
-                <Text style={styles.themeText}>{theme}</Text>
-              </TouchableOpacity>
-            ))}
-          </View>
+          <ScrollView contentContainerStyle={styles.themeGridScroll}>
+             <View style={styles.themeGrid}>
+              {filteredThemes.map(([theme, data]: [string, any]) => (
+                <TouchableOpacity
+                  key={theme}
+                  style={styles.themeCard}
+                  onPress={() => onThemeSelect(theme)}
+                >
+                  <Ionicons name={data.icon} size={40} color={colors.primary} style={styles.themeIcon} />
+                  <Text style={styles.themeText}>{theme}</Text>
+                </TouchableOpacity>
+              ))}
+              {filteredThemes.length === 0 && (
+                <Text style={styles.noResultsText}>Nenhum tema encontrado.</Text>
+              )}
+            </View>
+          </ScrollView>
         </View>
       </View>
     );
@@ -170,11 +203,11 @@ const QuizGameScreen: React.FC<QuizGameScreenProps> = ({ onBack, onThemeSelect, 
         <View style={styles.resultContainer}>
           <Text style={[styles.resultTitle, styles.neonText]}>FIM DE JOGO!</Text>
           <Text style={styles.resultScore}>Pontuação Final: <Text style={{color: colors.primary}}>{score}</Text></Text>
-          
+
           <TouchableOpacity style={styles.actionButton} onPress={restartQuiz}>
             <Text style={styles.actionButtonText}>Jogar Novamente</Text>
           </TouchableOpacity>
-          
+
           <TouchableOpacity style={[styles.actionButton, styles.secondaryBtn]} onPress={onBack}>
             <Text style={[styles.actionButtonText, {color: '#888'}]}>Voltar ao Menu</Text>
           </TouchableOpacity>
@@ -191,8 +224,7 @@ const QuizGameScreen: React.FC<QuizGameScreenProps> = ({ onBack, onThemeSelect, 
   return (
     <View style={styles.container}>
       <StatusBar barStyle="light-content" backgroundColor={colors.background} />
-      
-      {/* HEADER SIMPLIFICADO */}
+
       <View style={styles.gameHeader}>
         <View style={styles.themeInfo}>
           <Ionicons name={themeIcon} size={24} color={colors.primary} style={styles.headerIcon} />
@@ -203,7 +235,6 @@ const QuizGameScreen: React.FC<QuizGameScreenProps> = ({ onBack, onThemeSelect, 
         </Text>
       </View>
 
-      {/* PERGUNTA */}
       <View style={styles.questionContainer}>
         <Text style={styles.questionCounter}>
             Questão {currentQuestionIndex + 1}/{currentQuestions.length}
@@ -211,11 +242,10 @@ const QuizGameScreen: React.FC<QuizGameScreenProps> = ({ onBack, onThemeSelect, 
         <Text style={styles.questionText}>{question.question}</Text>
       </View>
 
-      {/* OPÇÕES */}
       <View style={styles.optionsContainer}>
         {question.options.map((option: string, index: number) => (
-          <TouchableOpacity 
-            key={index} 
+          <TouchableOpacity
+            key={index}
             style={styles.optionButton}
             onPress={() => handleOptionPress(index)}
           >
@@ -224,7 +254,6 @@ const QuizGameScreen: React.FC<QuizGameScreenProps> = ({ onBack, onThemeSelect, 
         ))}
       </View>
 
-      {/* PONTUAÇÃO ATUAL */}
       <Text style={styles.currentScore}>Pontos: {score}</Text>
     </View>
   );
@@ -239,32 +268,70 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingTop: 30,
-    marginBottom: 40,
+    alignItems: 'flex-start',
+    marginTop: 30,
+    marginBottom: 20,
   },
-  backButton: { padding: 5 },
+  headerLeft: {
+    flexDirection: 'column',
+  },
+  welcomeText: {
+    color: '#888',
+    fontSize: 12,
+  },
+  welcomeName: {
+    color: colors.primary,
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  backButton: {
+    padding: 5,
+    marginTop: 5,
+  },
   title: {
-    fontSize: 24,
+    fontSize: 32,
     fontWeight: '900',
     color: colors.text,
     letterSpacing: 2,
+    textAlign: 'center',
+    marginBottom: 20, // Reduzido para dar espaço ao search
   },
   neonText: {
     textShadowColor: colors.primary,
     textShadowOffset: { width: 0, height: 0 },
     textShadowRadius: 10,
   },
-  // Seleção de Tema
+  // Estilos da Barra de Pesquisa
+  searchContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: colors.inputBg,
+    borderRadius: 25,
+    paddingHorizontal: 15,
+    height: 50,
+    marginBottom: 20,
+    borderWidth: 1,
+    borderColor: '#333',
+  },
+  searchIcon: {
+    marginRight: 10,
+  },
+  searchInput: {
+    flex: 1,
+    color: colors.text,
+    fontSize: 16,
+  },
   themeSelectionContainer: {
       flex: 1,
-      justifyContent: 'center',
   },
   subTitle: {
       color: '#888',
       fontSize: 18,
-      marginBottom: 20,
+      marginBottom: 15,
       textAlign: 'center',
+  },
+  themeGridScroll: {
+    paddingBottom: 20,
   },
   themeGrid: {
       flexDirection: 'row',
@@ -274,14 +341,14 @@ const styles = StyleSheet.create({
   },
   themeCard: {
       width: '47%',
-      height: 120, // Aumentado para acomodar o ícone
+      height: 120,
       backgroundColor: colors.cardBackground,
       borderWidth: 1,
       borderColor: colors.primary,
       borderRadius: 10,
       justifyContent: 'center',
       alignItems: 'center',
-      marginBottom: 15,
+      marginBottom: 5,
       shadowColor: colors.primary,
       shadowOffset: { width: 0, height: 0 },
       shadowOpacity: 0.4,
@@ -295,7 +362,12 @@ const styles = StyleSheet.create({
       fontWeight: 'bold',
       fontSize: 16,
   },
-  // Jogo
+  noResultsText: {
+    color: '#666',
+    textAlign: 'center',
+    marginTop: 20,
+    width: '100%',
+  },
   gameHeader: {
       flexDirection: 'row',
       justifyContent: 'space-between',
@@ -354,7 +426,6 @@ const styles = StyleSheet.create({
       color: '#888',
       fontSize: 14,
   },
-  // Resultados
   resultContainer: {
       flex: 1,
       justifyContent: 'center',

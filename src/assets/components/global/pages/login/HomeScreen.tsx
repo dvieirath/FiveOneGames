@@ -1,21 +1,27 @@
-import React, { useState, useRef } from 'react';
-import { 
-  View, 
-  Text, 
-  StyleSheet, 
-  SafeAreaView, 
-  ScrollView, 
-  TouchableOpacity, 
-  StatusBar, 
-  Image, 
-  Dimensions, 
+import React, { useState } from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+  SafeAreaView,
+  ScrollView,
+  TouchableOpacity,
+  StatusBar,
+  Image,
+  Dimensions,
   Alert,
   NativeSyntheticEvent,
   NativeScrollEvent
 } from 'react-native';
-import { FontAwesome5, MaterialIcons, Ionicons } from '@expo/vector-icons'; 
+import { FontAwesome5, MaterialIcons, Ionicons } from '@expo/vector-icons';
 
-const LOCAL_LOGO_PATH = require('../../../../FiveOneLogo.png'); 
+// CAMINHO DA LOGO AJUSTADO
+// Se o arquivo estiver em src/assets/FiveOneLogo.png e este arquivo em src/assets/components/global/pages/login/HomeScreen.tsx
+// O caminho correto é subir 5 níveis: ../../../../../FiveOneLogo.png
+// MAS, para garantir, vamos usar o require direto do assets se possível ou ajustar conforme a estrutura real.
+// Assumindo que a logo está na raiz de assets dentro de src:
+const LOCAL_LOGO_PATH = require('../../../../FiveOneLogo.png');
+
 const { width, height } = Dimensions.get('window');
 
 // CORES - TEMA LARANJA NEON
@@ -23,11 +29,11 @@ const colors = {
   primary: '#fc4b08',     // Laranja Neon
   background: '#000000',  // Preto Absoluto
   text: '#F5F5F5',        // Texto Claro
-  cardBackground: '#111111', 
-  secondary: '#FF4081',   
-  border: '#fc4b08',      
+  cardBackground: '#111111',
+  secondary: '#FF4081',
+  border: '#fc4b08',
   darkOverlay: 'rgba(0,0,0,0.5)', // Overlay um pouco mais suave
-  tabBarBackground: '#0a0a0a', 
+  tabBarBackground: '#0a0a0a',
   indicatorInactive: '#333',
 };
 
@@ -43,7 +49,7 @@ const gameData = [
 
 interface HomeScreenProps {
   onLogout: () => void;
-  onGameSelect: (gameTitle: string) => void; 
+  onGameSelect: (gameTitle: string) => void;
 }
 
 const HomeScreen: React.FC<HomeScreenProps> = ({ onLogout, onGameSelect }) => {
@@ -53,7 +59,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ onLogout, onGameSelect }) => {
     if (game.status.toUpperCase() === 'EM BREVE') {
         Alert.alert("Em Produção", "Este jogo estará disponível em breve!");
     } else {
-        if (game.title === 'Jogo da Memória') {
+        if (game.title === 'Jogo da Memória' || game.title === 'Quiz') {
             onGameSelect(game.title);
         } else {
             Alert.alert("Jogo", `Iniciando o jogo: ${game.title}`);
@@ -75,13 +81,13 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ onLogout, onGameSelect }) => {
   return (
     <SafeAreaView style={styles.safeArea}>
       <StatusBar barStyle="light-content" backgroundColor={colors.background} />
-      
+
       {/* HEADER PRINCIPAL */}
       <View style={styles.header}>
-        <View style={styles.headerSpacer} /> 
+        <View style={styles.headerSpacer} />
         <View style={styles.logoContainer}>
-            <Image 
-                source={LOCAL_LOGO_PATH} 
+            <Image
+                source={LOCAL_LOGO_PATH}
                 style={[styles.logo, styles.neonShadow]}
                 resizeMode="contain"
             />
@@ -100,7 +106,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ onLogout, onGameSelect }) => {
 
         {/* CARROSSEL DE JOGOS (Horizontal) */}
         <View style={styles.carouselContainer}>
-            <ScrollView 
+            <ScrollView
                 horizontal
                 pagingEnabled // Ativa o efeito de "travar" em cada item (snap)
                 showsHorizontalScrollIndicator={false}
@@ -113,31 +119,31 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ onLogout, onGameSelect }) => {
 
                 return (
                 <View key={game.id} style={styles.slideWrapper}>
-                    <TouchableOpacity 
+                    <TouchableOpacity
                         style={styles.gameCard}
                         onPress={() => handleGamePress(game)}
                         activeOpacity={0.9}
                     >
                         {/* Imagem de Fundo */}
-                        <Image 
-                            source={{ uri: game.imageUrl }} 
+                        <Image
+                            source={{ uri: game.imageUrl }}
                             style={styles.cardImage}
                             resizeMode="cover"
                         />
-                        
+
                         {/* Overlay Gradiente/Escuro */}
                         <View style={styles.cardOverlay} />
-                        
+
                         {/* Conteúdo do Card */}
                         <View style={styles.cardContent}>
                             <View style={[styles.statusBadge, { backgroundColor: itemColor }]}>
                                 <Text style={styles.statusText}>{game.status}</Text>
                             </View>
-                            
+
                             <Text style={[styles.gameTitle, styles.textShadow]}>
                                 {game.title}
                             </Text>
-                            
+
                             <View style={styles.playButton}>
                                 <Text style={styles.playButtonText}>JOGAR AGORA</Text>
                                 <Ionicons name="play-circle" size={24} color="white" style={{marginLeft: 5}} />
@@ -154,14 +160,14 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ onLogout, onGameSelect }) => {
             {/* Indicadores de Paginação (Bolinhas) */}
             <View style={styles.paginationContainer}>
                 {gameData.map((_, index) => (
-                    <View 
-                        key={index} 
+                    <View
+                        key={index}
                         style={[
-                            styles.paginationDot, 
-                            index === activeIndex ? 
-                                { backgroundColor: colors.primary, width: 20 } : 
+                            styles.paginationDot,
+                            index === activeIndex ?
+                                { backgroundColor: colors.primary, width: 20 } :
                                 { backgroundColor: colors.indicatorInactive }
-                        ]} 
+                        ]}
                     />
                 ))}
             </View>
@@ -206,7 +212,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingHorizontal: 20,
-    paddingTop: 15, 
+    paddingTop: 15,
     paddingBottom: 15,
     backgroundColor: colors.background,
     zIndex: 10,
@@ -215,7 +221,7 @@ const styles = StyleSheet.create({
   },
   headerSpacer: { width: 60 },
   logoContainer: { alignItems: 'center', flexGrow: 1 },
-  logo: { width: 60, height: 60, marginBottom: 5 }, // Logo ajustada para caber melhor
+  logo: { width: 90, height: 90, marginBottom: 5 },
   neonShadow: {
     shadowColor: colors.primary,
     shadowOffset: { width: 0, height: 0 },
@@ -237,18 +243,18 @@ const styles = StyleSheet.create({
   logoutButton: {
     paddingVertical: 6,
     borderRadius: 4,
-    backgroundColor: '#1a1a1a', 
-    width: 50, 
+    backgroundColor: '#1a1a1a',
+    width: 50,
     alignItems: 'center',
     borderWidth: 1,
     borderColor: colors.primary + '50',
   },
   logoutText: {
-    color: colors.primary, 
+    color: colors.primary,
     fontWeight: 'bold',
     fontSize: 10,
   },
-  
+
   // --- ESTRUTURA DO CARROSSEL ---
   mainContainer: {
       flex: 1,
@@ -271,24 +277,23 @@ const styles = StyleSheet.create({
     textShadowRadius: 8,
   },
   carouselContainer: {
-      height: height * 0.65, // Ocupa 65% da altura da tela
+      height: height * 0.55, // Reduzido para ficar mais compacto
       alignItems: 'center',
   },
   scrollContent: {
       alignItems: 'center',
   },
   slideWrapper: {
-      width: width, // Cada slide tem a largura total da tela
+      width: width, // O container do slide tem a largura total
       height: '100%',
       justifyContent: 'center',
       alignItems: 'center',
-      paddingHorizontal: 20, // Margem lateral para o card não colar na borda
   },
-  
+
   // --- ESTILO DO CARD GIGANTE ---
   gameCard: {
-      width: '100%',
-      height: '90%', // Ocupa quase toda a altura do container do carrossel
+      width: width * 0.8, // 80% da largura da tela para um bom destaque sem ocupar tudo
+      height: '90%',
       backgroundColor: colors.cardBackground,
       borderRadius: 20,
       overflow: 'hidden',
@@ -298,6 +303,10 @@ const styles = StyleSheet.create({
       shadowOpacity: 0.5,
       shadowRadius: 10,
       position: 'relative',
+      // Transformação para simular o paralelogramo de forma sutil se desejar,
+      // mas em carrossel paginado, cards retos costumam funcionar melhor.
+      // Se quiser inclinado, descomente a linha abaixo:
+      // transform: [{ skewY: '-2deg' }],
   },
   cardImage: {
       width: '100%',
@@ -306,10 +315,9 @@ const styles = StyleSheet.create({
   },
   cardOverlay: {
       ...StyleSheet.absoluteFillObject,
-      backgroundColor: 'rgba(0,0,0,0.4)', // Escurece a imagem para o texto aparecer
-      // Gradiente simulado com opacidade
-      borderBottomWidth: 150,
-      borderBottomColor: 'rgba(0,0,0,0.8)',
+      backgroundColor: 'rgba(0,0,0,0.3)',
+      borderBottomWidth: 150, // Gradiente simulado na parte inferior
+      borderBottomColor: 'rgba(0,0,0,0.9)',
   },
   cardContent: {
       flex: 1,
@@ -318,19 +326,19 @@ const styles = StyleSheet.create({
       zIndex: 2,
   },
   gameTitle: {
-      fontSize: 32,
+      fontSize: 28,
       fontWeight: '900',
       color: 'white',
       textTransform: 'uppercase',
       marginBottom: 10,
-      lineHeight: 36,
+      lineHeight: 32,
   },
   statusBadge: {
       paddingVertical: 6,
       paddingHorizontal: 12,
       borderRadius: 6,
       alignSelf: 'flex-start',
-      marginBottom: 15,
+      marginBottom: 10,
   },
   statusText: {
       color: 'white',
@@ -342,10 +350,15 @@ const styles = StyleSheet.create({
       flexDirection: 'row',
       alignItems: 'center',
       marginTop: 10,
+      backgroundColor: colors.primary,
+      paddingVertical: 10,
+      paddingHorizontal: 20,
+      borderRadius: 30,
+      alignSelf: 'flex-start',
   },
   playButtonText: {
-      color: 'white',
-      fontSize: 16,
+      color: 'black', // Texto preto no botão laranja para contraste
+      fontSize: 14,
       fontWeight: 'bold',
       letterSpacing: 1,
   },

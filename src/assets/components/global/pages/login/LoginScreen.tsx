@@ -93,34 +93,38 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ onLoginSuccess }) => {
     setIsLoading(true);
 
     // 2. VERIFICAÇÃO DE TESTE (BYPASS)
-    // Se as credenciais forem as de teste, pula o backend
     if (!isRegistering && identifier === TEST_EMAIL && password === TEST_PASSWORD) {
         setTimeout(async () => {
             await AsyncStorage.setItem('userToken', 'dummy-test-token');
+            await AsyncStorage.setItem('userName', 'Administrador'); // Nome Fixo para teste
             setIsLoading(false);
             onLoginSuccess();
-        }, 1000); // Delay falso para realismo
+        }, 1000);
         return;
     }
 
     // 3. FLUXO REAL (BACKEND)
     let endpoint = isRegistering ? '/register' : '/login';
     let payload: any = { email: identifier, password };
-    
+
     if (isRegistering) {
         payload = { email: identifier, password, username };
     }
 
     try {
         const response = await axios.post(`${API_URL}${endpoint}`, payload);
-        const token = response.data.token;
+        const { token, username: dbUsername } = response.data; // Recebe o token E o nome
 
         if (token) {
             await AsyncStorage.setItem('userToken', token);
-            
+
+            // Salva o nome do usuário (se veio do banco ou se está no form de registro)
+            const nameToSave = dbUsername || username || 'Jogador';
+            await AsyncStorage.setItem('userName', nameToSave);
+
             if (isRegistering) {
-                setSuccess('Conta criada com sucesso!'); 
-                setIsRegistering(false); 
+                setSuccess('Conta criada com sucesso!');
+                setIsRegistering(false);
                 setPassword('');
                 setConfirmPassword('');
                 setUsername('');
@@ -128,12 +132,12 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ onLoginSuccess }) => {
             } else {
                 onLoginSuccess();
             }
-            return; 
+            return;
         }
 
     } catch (err: any) {
         let errorMessage = 'Erro de comunicação. Verifique o backend.';
-        
+
         if (err.response && err.response.data) {
             errorMessage = err.response.data.message || errorMessage;
             if (err.response.status === 401) errorMessage = 'Credenciais Inválidas.';
@@ -155,21 +159,20 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ onLoginSuccess }) => {
   return (
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>
-        
-        <Animated.Image 
-          source={LOCAL_LOGO_PATH} 
-          style={[styles.logo, styles.logoShadow, { transform: [{ rotateY: spinY }] }]} 
+
+        <Animated.Image
+          source={LOCAL_LOGO_PATH}
+          style={[styles.logo, styles.logoShadow, { transform: [{ rotateY: spinY }] }]}
           resizeMode="contain"
         />
-        
+
         <Text style={[styles.subtitle, styles.textShadow]}>
           {isRegistering ? 'CRIAR CONTA' : 'FIVEONEGAMES'}
         </Text>
-        
+
         {error ? <Text style={styles.errorText}>{error}</Text> : null}
-        {success ? <Text style={[styles.successText]}>{success}</Text> : null} 
-        
-        {/* Formulário */}
+        {success ? <Text style={[styles.successText]}>{success}</Text> : null}
+
         {isRegistering && (
           <TextInput
             style={styles.input}
@@ -197,10 +200,10 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ onLoginSuccess }) => {
           placeholderTextColor={colors.placeholder}
           value={password}
           onChangeText={setPassword}
-          secureTextEntry={true} 
+          secureTextEntry={true}
           autoCapitalize="none"
         />
-        
+
         {isRegistering && (
           <TextInput
             style={styles.input}
@@ -219,8 +222,8 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ onLoginSuccess }) => {
           </TouchableOpacity>
         )}
 
-        <TouchableOpacity 
-          style={[styles.button, styles.buttonShadow, isLoading && styles.buttonDisabled]} 
+        <TouchableOpacity
+          style={[styles.button, styles.buttonShadow, isLoading && styles.buttonDisabled]}
           onPress={handleSubmit}
           disabled={isLoading}
         >
@@ -233,21 +236,21 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ onLoginSuccess }) => {
           )}
         </TouchableOpacity>
 
-        <TouchableOpacity 
+        <TouchableOpacity
           onPress={() => {
             setIsRegistering(!isRegistering);
             setError('');
             setSuccess('');
             setConfirmPassword('');
             setPassword('');
-            setUsername(''); 
+            setUsername('');
             setIdentifier('');
-          }} 
+          }}
           style={styles.toggleButton}
         >
           <Text style={styles.toggleText}>
-            {isRegistering 
-              ? 'Já tem uma conta? Fazer Login' 
+            {isRegistering
+              ? 'Já tem uma conta? Fazer Login'
               : 'Não tem conta? Cadastre-se agora!'}
           </Text>
         </TouchableOpacity>
@@ -264,19 +267,18 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    justifyContent: 'center', 
+    justifyContent: 'center',
     paddingHorizontal: 30,
-    alignItems: 'center', 
-    backgroundColor: colors.background, 
+    alignItems: 'center',
+    backgroundColor: colors.background,
   },
-  logo: { 
-    width: 160, 
-    height: 160, 
-    marginBottom: 30, 
+  logo: {
+    width: 160,
+    height: 160,
+    marginBottom: 30,
     resizeMode: 'contain',
     transform: [{ perspective: 1000 }],
   },
-  // 🌟 NOVO: Sombra neon para o logo
   logoShadow: {
     shadowColor: colors.primary,
     shadowOffset: { width: 0, height: 0 },
@@ -292,7 +294,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     letterSpacing: 1,
   },
-  // 🌟 NOVO: Sombra neon para o texto
   textShadow: {
     textShadowColor: colors.primary,
     textShadowOffset: { width: 0, height: 0 },
@@ -302,14 +303,13 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 55,
     backgroundColor: colors.inputBackground,
-    color: colors.text, 
+    color: colors.text,
     borderRadius: 8,
     paddingHorizontal: 20,
     fontSize: 16,
     marginBottom: 15,
     borderWidth: 1,
-    borderColor: colors.primary + '50', // Borda sutil com cor neon
-    // 🌟 NOVO: Pequena sombra interna para input
+    borderColor: colors.primary + '50',
     shadowColor: colors.primary,
     shadowOffset: { width: 0, height: 0 },
     shadowOpacity: 0.2,
@@ -321,7 +321,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontWeight: '600',
   },
-  // 🌟 NOVO: Estilo para a mensagem de sucesso (usa a cor primária neon)
   successText: {
     color: colors.primary,
     marginBottom: 15,
@@ -350,11 +349,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     elevation: 4,
   },
-  // 🌟 NOVO: Sombra neon para o botão
   buttonShadow: {
     shadowColor: colors.primary,
     shadowOffset: { width: 0, height: 0 },
-    shadowOpacity: 0.8, // Opacidade alta para efeito neon
+    shadowOpacity: 0.8,
     shadowRadius: 10,
   },
   buttonDisabled: {
