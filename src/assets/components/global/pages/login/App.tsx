@@ -1,57 +1,97 @@
 import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, StatusBar, Text } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage'; 
+
 import LoginScreen from './LoginScreen'; 
 import SplashScreen from './SplashScreen'; 
-import HomeScreen from './HomeScreen'; // Importação da tela Home
+import HomeScreen from './HomeScreen'; 
+import GameLoadingScreen from './GameLoadingScreen'; 
+import MemoryGameScreen from './MemoryGameScreen';   
+import QuizGameScreen from './QuizGameScreen'; // 🔑 Importação da nova tela
 
-// Duração da tela de carregamento simulada (3 segundos)
 const SPLASH_DURATION = 3000; 
-const BACKGROUND_COLOR = '#121212'; 
-const TEXT_COLOR = '#F5F5F5'; 
+const BACKGROUND_COLOR = '#000000'; 
 
-/**
- * Componente principal da aplicação.
- * Controla a transição Splash -> Login/Home com base no estado de autenticação.
- */
+// Tipos de telas possíveis
+type AppScreen = 'HOME' | 'LOADING_GAME' | 'MEMORY_GAME' | 'QUIZ_GAME';
+
 const App: React.FC = () => {
   const [isSplashVisible, setIsSplashVisible] = useState(true);
-  const [isAuthenticated, setIsAuthenticated] = useState(false); // Estado de Autenticação
+  const [isAuthenticated, setIsAuthenticated] = useState(false); 
   const [hasError, setHasError] = useState(false); 
+  
+  // Estado de Navegação
+  const [currentScreen, setCurrentScreen] = useState<AppScreen>('HOME');
+  const [selectedGame, setSelectedGame] = useState<string>('');
+  const [selectedQuizTheme, setSelectedQuizTheme] = useState<string | null>(null); // Estado para o tema do Quiz
 
   useEffect(() => {
-    // Lógica para transição do SPLASH
-    const timer = setTimeout(() => {
-      setIsSplashVisible(false);
-    }, SPLASH_DURATION);
-    
-    return () => clearTimeout(timer);
+    const checkAuthAndHideSplash = async () => {
+      try {
+        const token = await AsyncStorage.getItem('userToken'); 
+        if (token) setIsAuthenticated(true);
+        await new Promise(resolve => setTimeout(resolve, SPLASH_DURATION)); 
+        setIsSplashVisible(false);
+      } catch (e) {
+        setIsSplashVisible(false);
+      }
+    };
+    checkAuthAndHideSplash();
   }, []);
 
-  // Função chamada pelo LoginScreen ao fazer login com sucesso
-  // ESSA FUNÇÃO FORÇA A MUDANÇA DE TELA
   const handleLoginSuccess = () => {
-    console.log("Login Success detected. Switching to HomeScreen.");
     setIsAuthenticated(true);
+    setCurrentScreen('HOME');
   };
 
-  // Função chamada pelo HomeScreen ao fazer logout
-  const handleLogout = () => {
-    console.log("Logout detected. Switching to LoginScreen.");
+  const handleLogout = async () => { 
+    await AsyncStorage.removeItem('userToken'); 
     setIsAuthenticated(false);
+    setCurrentScreen('HOME');
+  };
+
+  // 1. Usuário seleciona o jogo na Home
+  const handleGameSelect = (gameTitle: string) => {
+      if (gameTitle === 'Jogo da Memória') {
+          setSelectedGame(gameTitle);
+          setCurrentScreen('LOADING_GAME');
+      } else if (gameTitle === 'Quiz') {
+          // Para o Quiz, vamos direto para a tela de seleção de tema (sem loading ainda)
+          setSelectedGame(gameTitle);
+          setSelectedQuizTheme(null); // Reseta tema
+          setCurrentScreen('QUIZ_GAME');
+      } else {
+          console.log("Jogo não implementado:", gameTitle);
+      }
+  };
+
+  // 2. (Apenas Quiz) Usuário seleciona um tema dentro da tela do Quiz
+  const handleQuizThemeSelect = (theme: string) => {
+      setSelectedQuizTheme(theme);
+      // Agora sim, mostramos o loading específico do tema
+      setCurrentScreen('LOADING_GAME');
+  };
+
+  // 3. O Loading termina
+  const handleGameLoaded = () => {
+      if (selectedGame === 'Jogo da Memória') {
+          setCurrentScreen('MEMORY_GAME');
+      } else if (selectedGame === 'Quiz') {
+          setCurrentScreen('QUIZ_GAME'); // Volta para o Quiz, mas agora com tema selecionado
+      }
+  };
+
+  // Voltar para Home
+  const handleBackToHome = () => {
+      setCurrentScreen('HOME');
+      setSelectedGame('');
+      setSelectedQuizTheme(null);
   };
 
   const barStyle = "light-content";
 
-  if (hasError) {
-      return (
-          <View style={styles.errorContainer}>
-              <StatusBar barStyle={barStyle} backgroundColor={BACKGROUND_COLOR} />
-              <Text style={styles.errorText}>Erro Crítico: Não foi possível carregar o aplicativo.</Text>
-          </View>
-      );
-  }
+  if (hasError) return <View style={styles.errorContainer}><Text>Erro</Text></View>;
 
-  // Renderização Condicional
   if (isSplashVisible) {
     return (
       <View style={styles.splashContainer}>
@@ -61,20 +101,42 @@ const App: React.FC = () => {
     );
   }
 
-  // Se autenticado, renderiza a HOME
   if (isAuthenticated) {
     return (
         <View style={styles.container}>
-            <HomeScreen onLogout={handleLogout} /> {/* Passa a função de logout */}
+            {currentScreen === 'HOME' && (
+                <HomeScreen 
+                    onLogout={handleLogout} 
+                    onGameSelect={handleGameSelect} 
+                /> 
+            )}
+            
+            {currentScreen === 'LOADING_GAME' && (
+                <GameLoadingScreen 
+                    // Mostra o nome do jogo ou "Quiz: Tema"
+                    gameName={selectedGame === 'Quiz' && selectedQuizTheme ? `Quiz: ${selectedQuizTheme}` : selectedGame} 
+                    onLoadingComplete={handleGameLoaded} 
+                />
+            )}
+
+            {currentScreen === 'MEMORY_GAME' && (
+                <MemoryGameScreen onBack={handleBackToHome} />
+            )}
+
+            {currentScreen === 'QUIZ_GAME' && (
+                <QuizGameScreen 
+                    onBack={handleBackToHome}
+                    onThemeSelect={handleQuizThemeSelect} // Função para escolher tema e iniciar loading
+                    activeTheme={selectedQuizTheme}       // Passa o tema se já foi escolhido e carregado
+                />
+            )}
         </View>
     );
   }
 
-  // Se não autenticado (Splash terminou), renderiza o LOGIN
   return (
     <View style={styles.container}>
       <StatusBar barStyle={barStyle} backgroundColor={BACKGROUND_COLOR} />
-      {/* Passa a função de sucesso para o LoginScreen */}
       <LoginScreen onLoginSuccess={handleLoginSuccess} />
     </View>
   );
@@ -94,12 +156,6 @@ const styles = StyleSheet.create({
       backgroundColor: BACKGROUND_COLOR,
       justifyContent: 'center',
       alignItems: 'center',
-  },
-  errorText: {
-      color: 'red',
-      fontSize: 18,
-      fontWeight: 'bold',
-      marginBottom: 10,
   },
 });
 

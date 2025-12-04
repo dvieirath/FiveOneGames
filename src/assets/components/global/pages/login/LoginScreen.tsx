@@ -12,22 +12,29 @@ import {
   Alert
 } from 'react-native';
 
-// --- ARQUIVO LOCAL: CORREÇÃO DO CAMINHO SOLICITADA ---
-// Usando o caminho exato fornecido: '../../../../FiveOneLogo.png'
+// 🔑 IMPORTS PARA COMUNICAÇÃO COM O BACKEND
+import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage'; 
+
+// --- ARQUIVO LOCAL: LOGO PATH ---
 const LOCAL_LOGO_PATH = require('../../../../FiveOneLogo.png'); 
 
-// Cores do tema GAMING / DARK MODE
+// 💻 CONFIGURAÇÃO DA API
+const API_URL = 'http://192.168.56.1:3000/api/auth'; 
+
+// Cores do tema GAMING / DARK MODE (ATUALIZADO PARA LARANJA NEON)
 const colors = {
-  primary: '#00BCD4',     // Ciano Elétrico (Para botões e destaque)
-  background: '#121212',  // Fundo Preto/Dark Blue
+  primary: '#fc4b08',     // Laranja Neon (Para botões e destaque)
+  background: '#000000',  // Preto Absoluto
   text: '#F5F5F5',        // Texto Claro
-  inputBackground: '#212121', // Fundo para campos de texto
-  secondary: '#FF4081',   // Magenta (Para erros e links secundários)
+  inputBackground: '#111111', // Fundo para campos de texto (ligeiramente mais claro)
+  secondary: '#FF4081',   // Magenta (Para erros)
+  placeholder: '#555555', // Cor mais escura para placeholders
+  error: '#FF4081',
 };
 
-// Dados de teste para simulação de login
-const TEST_IDENTIFIER = 'usuario@teste.com';
-const TEST_PASSWORD = '123456';
+// CRITÉRIO DE ACEITE: Senha mínima de 5 caracteres
+const MIN_PASSWORD_LENGTH = 5;
 
 interface LoginScreenProps {
   onLoginSuccess: () => void; // Função para sinalizar login bem-sucedido
@@ -61,66 +68,105 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ onLoginSuccess }) => {
     outputRange: ['0deg', '360deg'],
   });
 
-  // --- LÓGICA SIMULADA DE SUBMISSÃO ---
+  // --- LÓGICA DE SUBMISSÃO COM API E VALIDAÇÕES ---
   const handleSubmit = async () => {
     setError('');
     setSuccess('');
     
-    // Validações básicas (requerimento de preenchimento)
+    // 1. Validação de Preenchimento Básico
     if (!identifier || !password || (isRegistering && (!confirmPassword || !username))) {
-        setError(isRegistering ? "Preencha o Nome de Usuário, E-mail e Senhas." : "Preencha o E-mail/Usuário e Senha.");
+        setError(isRegistering ? "Preencha o Nome de Usuário, E-mail e Senhas." : "Preencha o E-mail e Senha.");
         return;
+    }
+
+    // 2. Validação de Senha Mínima
+    if (password.length < MIN_PASSWORD_LENGTH) {
+        setError(`A senha deve ter pelo menos ${MIN_PASSWORD_LENGTH} caracteres.`);
+        return;
+    }
+    
+    if (isRegistering) {
+        // 3. Validação de Confirmação de Senha (Registro)
+        if (password !== confirmPassword) {
+            Alert.alert('Erro no Cadastro', 'As senhas digitadas não coincidem.');
+            setError('As senhas digitadas não coincidem.');
+            return;
+        }
     }
     
     setIsLoading(true);
 
-    // Simula atraso de rede (1.5 segundos)
-    await new Promise(resolve => setTimeout(resolve, 1500)); 
-
+    let endpoint = isRegistering ? '/register' : '/login';
+    let payload: any = { email: identifier, password };
+    
     if (isRegistering) {
-        // REGISTRO SIMULADO
-        if (password !== confirmPassword) {
-            setError('As senhas não coincidem.');
-            setIsLoading(false);
-            return;
-        }
-        
-        // SUCESSO NO REGISTRO: Mostra mensagem de sucesso e alterna para Login
-        setSuccess(`Sucesso! Conta para "${username}" criada. Faça Login.`); 
-        setIsRegistering(false); 
-
-    } else {
-        // LOGIN SIMULADO
-        if (
-            (identifier.toLowerCase() === TEST_IDENTIFIER || identifier === '12345678') &&
-            password === TEST_PASSWORD
-        ) {
-            // *** CORREÇÃO FINAL: REMOVEMOS O setIsLoading(false) NO SUCESSO ***
-            // 1. Chama a navegação para mudar o estado em App.tsx
-            onLoginSuccess();
-            
-            // 2. RETORNA IMEDIATAMENTE. Isso garante que o componente seja substituído
-            // sem causar re-renderizações conflitantes.
-            return; 
-
-        } else {
-            // Login Falhou
-            setError('Credenciais Inválidas. (Dica: A senha de teste é 123456)');
-        }
+        payload = { email: identifier, password, username };
     }
-    
-    // Este bloco só é alcançado em caso de falha de login/registro simulada
-    
-    // Limpa campos sensíveis
-    setConfirmPassword('');
-    setUsername('');
-    
-    // Garante que o loading seja desligado APENAS EM CASO DE FALHA
-    setIsLoading(false);
+
+    try {
+        // 4. Chamada real para a API do backend
+        const response = await axios.post(`${API_URL}${endpoint}`, payload);
+        
+        const token = response.data.token;
+
+        if (token) {
+            // 5. SUCESSO: Armazena o token usando AsyncStorage
+            await AsyncStorage.setItem('userToken', token);
+            
+            if (isRegistering) {
+                // Mensagem de sucesso concisa para registro
+                setSuccess('Conta criada com sucesso!'); 
+                
+                setIsRegistering(false); 
+                
+                // Limpa os campos após o registro para forçar o login
+                setPassword('');
+                setConfirmPassword('');
+                setUsername('');
+                setIdentifier('');
+            } else {
+                // 6. Login bem-sucedido: Transiciona para a HomeScreen
+                onLoginSuccess();
+            }
+            
+            // Retorna imediatamente em caso de sucesso
+            return; 
+        }
+
+    } catch (err: any) {
+        // 7. Lida com erros: Diagnóstico Aprimorado
+        let errorMessage = 'Erro de comunicação ou no servidor. Verifique o backend.';
+        
+        if (err.response && err.response.data) {
+            const apiMessage = err.response.data.message;
+            const statusCode = err.response.status;
+
+            if (apiMessage) {
+                errorMessage = apiMessage;
+            }
+
+            if (statusCode === 401) {
+                errorMessage = 'Credenciais Inválidas.'; // Para Login falho
+            } else if (statusCode === 409) {
+                errorMessage = 'Usuário ou e-mail já cadastrado.'; // Para Registro duplicado
+            }
+        } else if (err.message && err.message.includes('Network Error')) {
+            errorMessage = `Erro de Rede: Não foi possível conectar a ${API_URL}. O servidor está online?`;
+        } else if (err.code === 'ECONNABORTED' || err.code === 'ETIMEDOUT') {
+            errorMessage = `Tempo limite esgotado: O servidor demorou muito para responder.`;
+        }
+
+        console.error("AXIOS ERROR:", err);
+        setError(errorMessage);
+    } finally {
+        // 8. Desliga o loading
+        setIsLoading(false);
+    }
   };
+  // FIM DA LÓGICA DE SUBMISSÃO
 
   const handleForgotPassword = () => {
-    Alert.alert('Recuperação', 'Redirecionando para recuperação de senha...');
+    Alert.alert('Recuperação', 'Recurso de recuperação de senha não implementado (FUTURO).');
   };
 
   return (
@@ -130,7 +176,7 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ onLoginSuccess }) => {
         {/* LOGO ANIMADA */}
         <Animated.Image 
           source={LOCAL_LOGO_PATH} 
-          style={[styles.logo, { transform: [{ rotateY: spinY }] }]} 
+          style={[styles.logo, styles.logoShadow, { transform: [{ rotateY: spinY }] }]} // Adiciona estilo de sombra
           resizeMode="contain"
         />
         
@@ -140,7 +186,8 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ onLoginSuccess }) => {
         
         {/* Mensagens de feedback */}
         {error ? <Text style={styles.errorText}>{error}</Text> : null}
-        {success ? <Text style={[styles.errorText, { color: colors.primary }]}>{success}</Text> : null} 
+        {/* A mensagem de sucesso aparece aqui */}
+        {success ? <Text style={[styles.successText]}>{success}</Text> : null} 
         
         {/* Formulário */}
         {isRegistering && (
@@ -156,16 +203,17 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ onLoginSuccess }) => {
 
         <TextInput
           style={styles.input}
-          placeholder="E-mail ou Usuário"
+          placeholder="E-mail"
           placeholderTextColor={colors.placeholder}
           value={identifier}
           onChangeText={setIdentifier}
           autoCapitalize="none"
+          keyboardType="email-address"
         />
 
         <TextInput
           style={styles.input}
-          placeholder="Senha"
+          placeholder={`Senha (mínimo ${MIN_PASSWORD_LENGTH} caracteres)`}
           placeholderTextColor={colors.placeholder}
           value={password}
           onChangeText={setPassword}
@@ -192,7 +240,7 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ onLoginSuccess }) => {
         )}
 
         <TouchableOpacity 
-          style={[styles.button, isLoading && styles.buttonDisabled]} 
+          style={[styles.button, styles.buttonShadow, isLoading && styles.buttonDisabled]} 
           onPress={handleSubmit}
           disabled={isLoading}
         >
@@ -235,17 +283,12 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.background,
   },
-  // 2. CORREÇÃO: Ocupar todo o espaço e centralizar o conteúdo (padrão flex)
   container: {
     flex: 1,
-    justifyContent: 'center', // Centraliza verticalmente
+    justifyContent: 'center', 
     paddingHorizontal: 30,
-    alignItems: 'center', // Centraliza horizontalmente
-  },
-  content: {
-    // Mantém o conteúdo centralizado e com largura total
     alignItems: 'center', 
-    width: '100%',
+    backgroundColor: colors.background, // Fundo Preto Absoluto
   },
   logo: { 
     width: 160, 
@@ -253,6 +296,14 @@ const styles = StyleSheet.create({
     marginBottom: 30, 
     resizeMode: 'contain',
     transform: [{ perspective: 1000 }],
+  },
+  // 🌟 NOVO: Sombra neon para o logo
+  logoShadow: {
+    shadowColor: colors.primary,
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 1,
+    shadowRadius: 15,
+    elevation: 20,
   },
   subtitle: {
     fontSize: 20,
@@ -272,13 +323,30 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginBottom: 15,
     borderWidth: 1,
-    borderColor: '#333', 
+    borderColor: colors.primary + '50', // Borda sutil com cor neon
+    // 🌟 NOVO: Pequena sombra interna para input
+    shadowColor: colors.primary,
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0.2,
+    shadowRadius: 5,
   },
   errorText: {
     color: colors.error,
     marginBottom: 15,
     textAlign: 'center',
     fontWeight: '600',
+  },
+  // 🌟 NOVO: Estilo para a mensagem de sucesso (usa a cor primária neon)
+  successText: {
+    color: colors.primary,
+    marginBottom: 15,
+    textAlign: 'center',
+    fontWeight: '600',
+    fontSize: 16,
+    // Efeito neon sutil no texto
+    textShadowColor: colors.primary,
+    textShadowOffset: { width: 0, height: 0 },
+    textShadowRadius: 8,
   },
   forgotPasswordButton: {
     alignSelf: 'flex-end',
@@ -297,16 +365,20 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     elevation: 4,
+  },
+  // 🌟 NOVO: Sombra neon para o botão
+  buttonShadow: {
     shadowColor: colors.primary,
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.4,
-    shadowRadius: 4,
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0.8, // Opacidade alta para efeito neon
+    shadowRadius: 10,
   },
   buttonDisabled: {
     opacity: 0.4,
+    shadowOpacity: 0.1,
   },
   buttonText: {
-    color: colors.background,
+    color: colors.background, // Texto preto no botão laranja
     fontSize: 18,
     fontWeight: 'bold',
     letterSpacing: 0.5,

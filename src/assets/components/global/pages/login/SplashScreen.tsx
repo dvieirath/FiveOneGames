@@ -1,38 +1,33 @@
 import React from 'react';
 import { View, Image, Text, StyleSheet, ActivityIndicator, StatusBar } from 'react-native';
 
-// Definição das cores para manter a consistência do tema GAMING
+// NOVAS CORES - LARANJA NEON E PRETO ABSOLUTO
 const colors = {
-  primary: '#00BCD4',     // Ciano Elétrico
-  background: '#121212',  // Fundo Preto/Dark Blue
+  primary: '#fc4b08',     // Laranja Neon
+  background: '#000000',  // Preto Absoluto
   text: '#F5F5F5',        // Texto Claro
 };
 
 interface SplashScreenProps {
-  // Propriedade para indicar que o carregamento está ativo
   isLoading: boolean;
 }
 
 const SplashScreen: React.FC<SplashScreenProps> = ({ isLoading }) => {
   return (
     <View style={styles.container}>
-      {/* Garante que a barra de status combine com o tema escuro */}
       <StatusBar barStyle="light-content" backgroundColor={colors.background} />
 
-      {/* LOGO (Usando o mesmo caminho local que o LoginScreen.tsx) */}
       <Image 
-        // Lembre-se, este caminho é relativo ao local do componente LoginScreen
         source={require('../../../../FiveOneLogo.png')} 
-        style={styles.logo}
+        style={[styles.logo, styles.logoShadow]}
       />
       
-      <Text style={styles.title}>FIVE ONE GAMES</Text>
+      <Text style={[styles.title, styles.textShadow]}>FIVE ONE GAMES</Text>
       
-      {/* Indicador de Carregamento animado */}
       {isLoading && (
         <View style={styles.loadingContainer}>
           <ActivityIndicator size="large" color={colors.primary} />
-          <Text style={styles.loadingText}>Carregando...</Text>
+          <Text style={[styles.loadingText, styles.textShadow]}>Carregando...</Text>
         </View>
       )}
     </View>
@@ -47,10 +42,18 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   logo: {
-    width: 200, // Logo maior para a tela de splash
+    width: 200,
     height: 200,
     marginBottom: 20,
     resizeMode: 'contain',
+  },
+  // Sombra neon para o logo
+  logoShadow: {
+    shadowColor: colors.primary,
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0.8,
+    shadowRadius: 20,
+    elevation: 10, // Para Android
   },
   title: {
     fontSize: 32,
@@ -58,6 +61,12 @@ const styles = StyleSheet.create({
     color: colors.text,
     letterSpacing: 2,
     marginBottom: 50,
+  },
+  // Sombra neon para o texto
+  textShadow: {
+    textShadowColor: colors.primary,
+    textShadowOffset: { width: 0, height: 0 },
+    textShadowRadius: 10,
   },
   loadingContainer: {
     position: 'absolute',
@@ -68,6 +77,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     fontSize: 16,
     color: colors.primary,
+    fontWeight: 'bold',
   }
 });
 
