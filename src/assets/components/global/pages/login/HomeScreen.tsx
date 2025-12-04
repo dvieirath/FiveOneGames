@@ -1,11 +1,22 @@
-import React from 'react';
-import { View, Text, StyleSheet, SafeAreaView, ScrollView, TouchableOpacity, StatusBar, Image, Dimensions, Alert } from 'react-native';
-// Importação de ícones do pacote padrão do Expo (se você estiver usando Expo)
-// Se não estiver usando Expo, precisará instalar 'react-native-vector-icons'
+import React, { useState, useRef } from 'react';
+import { 
+  View, 
+  Text, 
+  StyleSheet, 
+  SafeAreaView, 
+  ScrollView, 
+  TouchableOpacity, 
+  StatusBar, 
+  Image, 
+  Dimensions, 
+  Alert,
+  NativeSyntheticEvent,
+  NativeScrollEvent
+} from 'react-native';
 import { FontAwesome5, MaterialIcons, Ionicons } from '@expo/vector-icons'; 
 
 const LOCAL_LOGO_PATH = require('../../../../FiveOneLogo.png'); 
-const { width } = Dimensions.get('window');
+const { width, height } = Dimensions.get('window');
 
 // CORES - TEMA LARANJA NEON
 const colors = {
@@ -15,59 +26,57 @@ const colors = {
   cardBackground: '#111111', 
   secondary: '#FF4081',   
   border: '#fc4b08',      
-  darkOverlay: 'rgba(0,0,0,0.6)', // Para escurecer imagens de fundo
-  tabBarBackground: '#0a0a0a', // Fundo um pouco mais claro para a barra inferior
+  darkOverlay: 'rgba(0,0,0,0.5)', // Overlay um pouco mais suave
+  tabBarBackground: '#0a0a0a', 
+  indicatorInactive: '#333',
 };
 
-// Dados simulados ATUALIZADOS com imagens de placeholder
-// OBS: Em um app real, você usaria suas próprias imagens.
+// Dados simulados
 const gameData = [
-  { id: '1', title: 'Jogo da Memória', status: 'Novo', color: '#16A085', imageUrl: 'https://picsum.photos/id/237/500/300' },
-  { id: '2', title: 'Quiz', status: 'Popular', color: '#E74C3C', imageUrl: 'https://picsum.photos/id/1040/500/300' },
-  { id: '3', title: 'Puzzle de Código', status: 'EM BREVE', color: '#F39C12', imageUrl: 'https://picsum.photos/id/1073/500/300' },
-  { id: '4', title: 'Corrida Turbo 3D', status: 'EM BREVE', color: '#2980B9', imageUrl: 'https://picsum.photos/id/1076/500/300' },
-  { id: '5', title: 'Fúria dos Dragões', status: 'EM BREVE', color: '#8E44AD', imageUrl: 'https://picsum.photos/id/1084/500/300' },
-  { id: '6', title: 'Estratégia Galáctica', status: 'EM BREVE', color: colors.primary, imageUrl: 'https://picsum.photos/id/1096/500/300' },
+  { id: '1', title: 'Jogo da Memória', status: 'Novo', color: '#16A085', imageUrl: 'https://picsum.photos/id/237/800/600' },
+  { id: '2', title: 'Quiz', status: 'Popular', color: '#E74C3C', imageUrl: 'https://picsum.photos/id/1040/800/600' },
+  { id: '3', title: 'Puzzle de Código', status: 'EM BREVE', color: '#F39C12', imageUrl: 'https://picsum.photos/id/1073/800/600' },
+  { id: '4', title: 'Corrida Turbo 3D', status: 'EM BREVE', color: '#2980B9', imageUrl: 'https://picsum.photos/id/1076/800/600' },
+  { id: '5', title: 'Fúria dos Dragões', status: 'EM BREVE', color: '#8E44AD', imageUrl: 'https://picsum.photos/id/1084/800/600' },
+  { id: '6', title: 'Estratégia Galáctica', status: 'EM BREVE', color: colors.primary, imageUrl: 'https://picsum.photos/id/1096/800/600' },
 ];
-
-const customAlert = (title: string, message: string) => {
-    // Usando Alert nativo para melhor feedback visual
-    Alert.alert(title, message);
-};
 
 interface HomeScreenProps {
   onLogout: () => void;
-  // Nova prop para lidar com a seleção do jogo e navegação no App.tsx
   onGameSelect: (gameTitle: string) => void; 
 }
 
 const HomeScreen: React.FC<HomeScreenProps> = ({ onLogout, onGameSelect }) => {
+  const [activeIndex, setActiveIndex] = useState(0);
 
   const handleGamePress = (game: typeof gameData[0]) => {
-    // Normaliza para maiúsculas para garantir a comparação
     if (game.status.toUpperCase() === 'EM BREVE') {
-        // Alerta específico para jogos em produção
         Alert.alert("Em Produção", "Este jogo estará disponível em breve!");
     } else {
-        // Se for o Jogo da Memória, iniciamos o fluxo de navegação
         if (game.title === 'Jogo da Memória') {
             onGameSelect(game.title);
         } else {
-            // Para outros jogos disponíveis mas sem tela ainda (ex: Quiz)
-            customAlert("Jogo", `Iniciando o jogo: ${game.title}`);
+            Alert.alert("Jogo", `Iniciando o jogo: ${game.title}`);
         }
     }
   };
 
   const handleTabPress = (tabName: string) => {
-      customAlert("Navegação", `Abrindo ${tabName}... (Funcionalidade em breve)`);
+      Alert.alert("Navegação", `Abrindo ${tabName}... (Funcionalidade em breve)`);
+  };
+
+  // Atualiza o índice ativo ao rolar o carrossel
+  const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
+    const contentOffsetX = event.nativeEvent.contentOffset.x;
+    const index = Math.round(contentOffsetX / width);
+    setActiveIndex(index);
   };
 
   return (
     <SafeAreaView style={styles.safeArea}>
       <StatusBar barStyle="light-content" backgroundColor={colors.background} />
       
-      {/* HEADER PRINCIPAL (Mantido) */}
+      {/* HEADER PRINCIPAL */}
       <View style={styles.header}>
         <View style={styles.headerSpacer} /> 
         <View style={styles.logoContainer}>
@@ -83,92 +92,102 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ onLogout, onGameSelect }) => {
         </TouchableOpacity>
       </View>
 
-      {/* Conteúdo principal */}
-      <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
-        {/* Frase centralizada e estilizada */}
+      <View style={styles.mainContainer}>
+        {/* Título da Seção */}
         <View style={styles.sectionTitleContainer}>
-            <Text style={styles.sectionTitle}>Selecione seu Jogo</Text>
+            <Text style={styles.sectionTitle}>Destaques</Text>
         </View>
-        
-        <View style={styles.gameListContainer}>
-          {gameData.map((game, index) => {
-             // Mantemos a inclinação alternada para estilo, mas sem sobreposição
-             const skewValue = '-10deg'; // Inclinação padrão para todos
-             const reverseSkewValue = '10deg'; // Reversão para conteúdo reto
-             const itemColor = game.color === colors.primary ? colors.border : game.color;
 
-             return (
-            <TouchableOpacity 
-              key={game.id} 
-              style={styles.bannerWrapper}
-              onPress={() => handleGamePress(game)}
-              activeOpacity={0.8}
+        {/* CARROSSEL DE JOGOS (Horizontal) */}
+        <View style={styles.carouselContainer}>
+            <ScrollView 
+                horizontal
+                pagingEnabled // Ativa o efeito de "travar" em cada item (snap)
+                showsHorizontalScrollIndicator={false}
+                onScroll={handleScroll}
+                scrollEventThrottle={16} // Otimiza a fluidez do evento de scroll
+                contentContainerStyle={styles.scrollContent}
             >
-              {/* O Container Inclinado que corta a imagem */}
-              <View style={[
-                  styles.angledContainer, 
-                  { 
-                    transform: [{ skewX: skewValue }], // Usando skewX para inclinação horizontal (estilo paralelogramo)
-                    borderColor: itemColor,
-                  }
-              ]}>
-                  {/* Imagem de Fundo (com inclinação reversa para parecer reta) */}
-                  <Image 
-                    source={{ uri: game.imageUrl }} 
-                    style={[styles.bannerImage, { transform: [{ skewX: reverseSkewValue }, { scale: 1.2 }] }]} 
-                    resizeMode="cover"
-                  />
-                  {/* Overlay escuro */}
-                  <View style={[styles.darkImageOverlay, { transform: [{ skewX: reverseSkewValue }, { scale: 1.3 }] }]} />
-              </View>
-              
-              {/* Conteúdo de Texto (Título e Status) sobreposto e reto */}
-              <View style={styles.bannerTextContent}>
-                  <Text style={[styles.bannerTitle, styles.textShadow]} numberOfLines={1}>{game.title}</Text>
-                  
-                  <View style={[
-                      styles.statusBadge, 
-                      { backgroundColor: itemColor + '60', borderColor: itemColor }
-                    ]}>
-                    <Text style={[
-                        styles.cardStatus, 
-                        { color: colors.text }
-                      ]}>{game.status}</Text>
-                  </View>
-              </View>
-              
-              {/* Borda Neon Brilhante Externa */}
-              <View style={[styles.neonBorderOverlay, { borderColor: itemColor, transform: [{ skewX: skewValue }] }]} />
+            {gameData.map((game, index) => {
+                const itemColor = game.color === colors.primary ? colors.border : game.color;
 
-            </TouchableOpacity>
-          )})}
+                return (
+                <View key={game.id} style={styles.slideWrapper}>
+                    <TouchableOpacity 
+                        style={styles.gameCard}
+                        onPress={() => handleGamePress(game)}
+                        activeOpacity={0.9}
+                    >
+                        {/* Imagem de Fundo */}
+                        <Image 
+                            source={{ uri: game.imageUrl }} 
+                            style={styles.cardImage}
+                            resizeMode="cover"
+                        />
+                        
+                        {/* Overlay Gradiente/Escuro */}
+                        <View style={styles.cardOverlay} />
+                        
+                        {/* Conteúdo do Card */}
+                        <View style={styles.cardContent}>
+                            <View style={[styles.statusBadge, { backgroundColor: itemColor }]}>
+                                <Text style={styles.statusText}>{game.status}</Text>
+                            </View>
+                            
+                            <Text style={[styles.gameTitle, styles.textShadow]}>
+                                {game.title}
+                            </Text>
+                            
+                            <View style={styles.playButton}>
+                                <Text style={styles.playButtonText}>JOGAR AGORA</Text>
+                                <Ionicons name="play-circle" size={24} color="white" style={{marginLeft: 5}} />
+                            </View>
+                        </View>
+
+                        {/* Borda Neon */}
+                        <View style={[styles.neonBorder, { borderColor: itemColor }]} />
+                    </TouchableOpacity>
+                </View>
+            )})}
+            </ScrollView>
+
+            {/* Indicadores de Paginação (Bolinhas) */}
+            <View style={styles.paginationContainer}>
+                {gameData.map((_, index) => (
+                    <View 
+                        key={index} 
+                        style={[
+                            styles.paginationDot, 
+                            index === activeIndex ? 
+                                { backgroundColor: colors.primary, width: 20 } : 
+                                { backgroundColor: colors.indicatorInactive }
+                        ]} 
+                    />
+                ))}
+            </View>
         </View>
-      </ScrollView>
+      </View>
 
-      {/* --- BARRA DE NAVEGAÇÃO INFERIOR --- */}
+      {/* BARRA DE NAVEGAÇÃO INFERIOR */}
       <View style={styles.bottomTabBar}>
-          {/* Aba Amigos */}
           <TouchableOpacity style={styles.tabItem} onPress={() => handleTabPress('Amigos')}>
-              <FontAwesome5 name="user-friends" size={24} color={colors.primary} style={styles.tabIconShadow} />
+              <FontAwesome5 name="user-friends" size={20} color={colors.primary} style={styles.tabIconShadow} />
               <Text style={styles.tabLabel}>Amigos</Text>
           </TouchableOpacity>
 
-          {/* Aba Home (Ativa - Apenas visual neste exemplo já que estamos na home) */}
           <TouchableOpacity style={styles.tabItem}>
               <View style={styles.activeTabIndicator}>
                 <MaterialIcons name="home" size={28} color="white" />
               </View>
           </TouchableOpacity>
 
-          {/* Aba Conquistas */}
           <TouchableOpacity style={styles.tabItem} onPress={() => handleTabPress('Conquistas')}>
-              <FontAwesome5 name="trophy" size={24} color={colors.primary} style={styles.tabIconShadow} />
+              <FontAwesome5 name="trophy" size={20} color={colors.primary} style={styles.tabIconShadow} />
               <Text style={styles.tabLabel}>Conquistas</Text>
           </TouchableOpacity>
 
-          {/* Aba Notificações */}
           <TouchableOpacity style={styles.tabItem} onPress={() => handleTabPress('Notificações')}>
-              <Ionicons name="notifications" size={26} color={colors.primary} style={styles.tabIconShadow} />
+              <Ionicons name="notifications" size={22} color={colors.primary} style={styles.tabIconShadow} />
               <Text style={styles.tabLabel}>Avisos</Text>
           </TouchableOpacity>
       </View>
@@ -191,19 +210,12 @@ const styles = StyleSheet.create({
     paddingBottom: 15,
     backgroundColor: colors.background,
     zIndex: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#111',
   },
-  headerSpacer: {
-    width: 60, 
-  },
-  logoContainer: {
-    alignItems: 'center',
-    flexGrow: 1, 
-  },
-  logo: {
-    width: 90, 
-    height: 90, 
-    marginBottom: 5,
-  },
+  headerSpacer: { width: 60 },
+  logoContainer: { alignItems: 'center', flexGrow: 1 },
+  logo: { width: 60, height: 60, marginBottom: 5 }, // Logo ajustada para caber melhor
   neonShadow: {
     shadowColor: colors.primary,
     shadowOffset: { width: 0, height: 0 },
@@ -216,17 +228,17 @@ const styles = StyleSheet.create({
     textShadowRadius: 5,
   },
   logoText: {
-    fontSize: 14,
+    fontSize: 12,
     color: colors.text,
     fontWeight: 'bold',
     letterSpacing: 1,
     textTransform: 'uppercase',
   },
   logoutButton: {
-    paddingVertical: 8,
+    paddingVertical: 6,
     borderRadius: 4,
     backgroundColor: '#1a1a1a', 
-    width: 60, 
+    width: 50, 
     alignItems: 'center',
     borderWidth: 1,
     borderColor: colors.primary + '50',
@@ -234,20 +246,22 @@ const styles = StyleSheet.create({
   logoutText: {
     color: colors.primary, 
     fontWeight: 'bold',
-    fontSize: 11,
+    fontSize: 10,
   },
-  scrollContent: {
-    paddingVertical: 20,
-    paddingBottom: 100, // Espaço extra para a barra inferior não cobrir o último item
+  
+  // --- ESTRUTURA DO CARROSSEL ---
+  mainContainer: {
+      flex: 1,
+      justifyContent: 'flex-start', // Começa do topo
+      paddingTop: 20,
   },
-  // Container centralizado para o título
   sectionTitleContainer: {
     width: '100%',
-    alignItems: 'center', // Centraliza horizontalmente
-    marginBottom: 25,
+    paddingHorizontal: 20,
+    marginBottom: 15,
   },
   sectionTitle: {
-    fontSize: 22,
+    fontSize: 28,
     fontWeight: '900',
     color: colors.text,
     textTransform: 'uppercase',
@@ -255,108 +269,124 @@ const styles = StyleSheet.create({
     textShadowColor: colors.primary,
     textShadowOffset: { width: 0, height: 0 },
     textShadowRadius: 8,
-    textAlign: 'center', // Garante alinhamento do texto
   },
-  gameListContainer: {
-    alignItems: 'center',
-    paddingBottom: 40,
+  carouselContainer: {
+      height: height * 0.65, // Ocupa 65% da altura da tela
+      alignItems: 'center',
   },
-  // --- ESTILOS DOS BANNERS RETOS/PARALELOGRAMOS ---
-  bannerWrapper: {
-    width: width * 0.55, // Reduzido para ~55% da largura (BEM MENOR E MAIS FINO)
-    height: 90, // Altura reduzida para ficar proporcional
-    marginBottom: 25, // Mais espaço vertical entre os itens
-    position: 'relative',
-    justifyContent: 'center',
-    alignItems: 'center',
-    alignSelf: 'center', 
+  scrollContent: {
+      alignItems: 'center',
   },
-  angledContainer: {
-    width: '100%',
-    height: '100%',
-    backgroundColor: colors.cardBackground,
-    overflow: 'hidden', 
-    borderWidth: 2,
-    borderRadius: 6,
-    
-    // Sombra Neon no container
-    shadowColor: colors.primary,
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.3,
-    shadowRadius: 5,
-    elevation: 5,
+  slideWrapper: {
+      width: width, // Cada slide tem a largura total da tela
+      height: '100%',
+      justifyContent: 'center',
+      alignItems: 'center',
+      paddingHorizontal: 20, // Margem lateral para o card não colar na borda
   },
-  bannerImage: {
-    width: '100%',
-    height: '100%',
-    position: 'absolute',
+  
+  // --- ESTILO DO CARD GIGANTE ---
+  gameCard: {
+      width: '100%',
+      height: '90%', // Ocupa quase toda a altura do container do carrossel
+      backgroundColor: colors.cardBackground,
+      borderRadius: 20,
+      overflow: 'hidden',
+      elevation: 10,
+      shadowColor: colors.primary,
+      shadowOffset: { width: 0, height: 5 },
+      shadowOpacity: 0.5,
+      shadowRadius: 10,
+      position: 'relative',
   },
-  darkImageOverlay: {
-    ...StyleSheet.absoluteFillObject,
-    backgroundColor: colors.darkOverlay,
+  cardImage: {
+      width: '100%',
+      height: '100%',
+      position: 'absolute',
   },
-  bannerTextContent: {
-    position: 'absolute',
-    left: 15, // Ajustado para a menor largura
-    bottom: 15, // Ajustado para a menor altura
-    right: 15,
-    zIndex: 5, 
-    alignItems: 'flex-start', // Alinha texto à esquerda dentro do card
+  cardOverlay: {
+      ...StyleSheet.absoluteFillObject,
+      backgroundColor: 'rgba(0,0,0,0.4)', // Escurece a imagem para o texto aparecer
+      // Gradiente simulado com opacidade
+      borderBottomWidth: 150,
+      borderBottomColor: 'rgba(0,0,0,0.8)',
   },
-  bannerTitle: {
-    fontSize: 14, // Fonte reduzida para caber no card menor
-    fontWeight: '900',
-    color: 'white',
-    textTransform: 'uppercase',
-    fontStyle: 'italic',
-    marginBottom: 4,
-    letterSpacing: 0.5,
+  cardContent: {
+      flex: 1,
+      justifyContent: 'flex-end',
+      padding: 25,
+      zIndex: 2,
+  },
+  gameTitle: {
+      fontSize: 32,
+      fontWeight: '900',
+      color: 'white',
+      textTransform: 'uppercase',
+      marginBottom: 10,
+      lineHeight: 36,
   },
   statusBadge: {
-    paddingVertical: 2,
-    paddingHorizontal: 6,
-    borderRadius: 3,
-    alignSelf: 'flex-start',
-    borderWidth: 1,
+      paddingVertical: 6,
+      paddingHorizontal: 12,
+      borderRadius: 6,
+      alignSelf: 'flex-start',
+      marginBottom: 15,
   },
-  cardStatus: {
-    fontSize: 8, // Fonte reduzida
-    fontWeight: 'bold',
-    textTransform: 'uppercase',
-    letterSpacing: 1,
+  statusText: {
+      color: 'white',
+      fontWeight: 'bold',
+      fontSize: 12,
+      textTransform: 'uppercase',
   },
-  // Camada extra para um brilho neon externo
-  neonBorderOverlay: {
-    ...StyleSheet.absoluteFillObject,
-    borderWidth: 1,
-    borderRadius: 6,
-    borderColor: colors.primary,
-    opacity: 0.4,
-    zIndex: -1,
-    shadowColor: colors.primary,
-    shadowOffset: { width: 0, height: 0 },
-    shadowOpacity: 0.6,
-    shadowRadius: 10,
+  playButton: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      marginTop: 10,
   },
-  // --- ESTILOS DA BARRA INFERIOR ---
+  playButtonText: {
+      color: 'white',
+      fontSize: 16,
+      fontWeight: 'bold',
+      letterSpacing: 1,
+  },
+  neonBorder: {
+      ...StyleSheet.absoluteFillObject,
+      borderWidth: 2,
+      borderColor: colors.primary,
+      borderRadius: 20,
+      zIndex: 3,
+      opacity: 0.6,
+  },
+
+  // --- PAGINAÇÃO ---
+  paginationContainer: {
+      flexDirection: 'row',
+      justifyContent: 'center',
+      alignItems: 'center',
+      marginTop: 15,
+      height: 20,
+  },
+  paginationDot: {
+      height: 8,
+      width: 8,
+      borderRadius: 4,
+      marginHorizontal: 4,
+  },
+
+  // --- BARRA INFERIOR ---
   bottomTabBar: {
       flexDirection: 'row',
       backgroundColor: colors.tabBarBackground,
       height: 70,
       borderTopWidth: 1,
-      borderTopColor: '#333',
+      borderTopColor: '#222',
       justifyContent: 'space-around',
       alignItems: 'center',
       position: 'absolute',
       bottom: 0,
       left: 0,
       right: 0,
-      paddingBottom: 10, // Para lidar com áreas seguras em alguns dispositivos
-      elevation: 10,
-      shadowColor: '#000',
-      shadowOffset: { width: 0, height: -3 },
-      shadowOpacity: 0.3,
-      shadowRadius: 5,
+      paddingBottom: 10, 
   },
   tabItem: {
       alignItems: 'center',
@@ -364,7 +394,7 @@ const styles = StyleSheet.create({
       flex: 1,
   },
   tabLabel: {
-      color: '#888',
+      color: '#666',
       fontSize: 10,
       marginTop: 4,
       fontWeight: '600',
@@ -372,21 +402,21 @@ const styles = StyleSheet.create({
   tabIconShadow: {
       textShadowColor: colors.primary,
       textShadowOffset: { width: 0, height: 0 },
-      textShadowRadius: 8,
+      textShadowRadius: 5,
   },
   activeTabIndicator: {
       backgroundColor: colors.primary,
-      width: 50,
-      height: 50,
+      width: 45,
+      height: 45,
       borderRadius: 25,
       justifyContent: 'center',
       alignItems: 'center',
-      marginTop: -20, // Efeito de botão flutuante
+      marginTop: -15, 
       shadowColor: colors.primary,
       shadowOffset: { width: 0, height: 4 },
-      shadowOpacity: 0.6,
+      shadowOpacity: 0.5,
       shadowRadius: 8,
-      elevation: 8,
+      elevation: 5,
       borderWidth: 2,
       borderColor: '#000',
   }

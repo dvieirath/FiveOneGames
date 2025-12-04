@@ -2,12 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, StatusBar, Text } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage'; 
 
+// Importações das telas
 import LoginScreen from './LoginScreen'; 
 import SplashScreen from './SplashScreen'; 
 import HomeScreen from './HomeScreen'; 
 import GameLoadingScreen from './GameLoadingScreen'; 
 import MemoryGameScreen from './MemoryGameScreen';   
-import QuizGameScreen from './QuizGameScreen'; // 🔑 Importação da nova tela
+import QuizGameScreen from './QuizGameScreen'; 
 
 const SPLASH_DURATION = 3000; 
 const BACKGROUND_COLOR = '#000000'; 
@@ -77,7 +78,7 @@ const App: React.FC = () => {
       if (selectedGame === 'Jogo da Memória') {
           setCurrentScreen('MEMORY_GAME');
       } else if (selectedGame === 'Quiz') {
-          setCurrentScreen('QUIZ_GAME'); // Volta para o Quiz, mas agora com tema selecionado
+          setCurrentScreen('QUIZ_GAME'); // Volta para o Quiz, mas agora com tema selecionado e ativo
       }
   };
 
