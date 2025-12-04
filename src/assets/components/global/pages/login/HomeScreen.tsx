@@ -49,11 +49,11 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ onLogout, onGameSelect }) => {
         // Alerta específico para jogos em produção
         Alert.alert("Em Produção", "Este jogo estará disponível em breve!");
     } else {
-        // Verifica se é um dos jogos implementados para iniciar a navegação
-        if (game.title === 'Jogo da Memória' || game.title === 'Quiz') {
+        // Se for o Jogo da Memória, iniciamos o fluxo de navegação
+        if (game.title === 'Jogo da Memória') {
             onGameSelect(game.title);
         } else {
-            // Para outros jogos disponíveis mas sem tela ainda
+            // Para outros jogos disponíveis mas sem tela ainda (ex: Quiz)
             customAlert("Jogo", `Iniciando o jogo: ${game.title}`);
         }
     }
@@ -85,7 +85,10 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ onLogout, onGameSelect }) => {
 
       {/* Conteúdo principal */}
       <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
-        <Text style={styles.sectionTitle}>Selecione seu Jogo</Text>
+        {/* Frase centralizada e estilizada */}
+        <View style={styles.sectionTitleContainer}>
+            <Text style={styles.sectionTitle}>Selecione seu Jogo</Text>
+        </View>
         
         <View style={styles.gameListContainer}>
           {gameData.map((game, index) => {
@@ -121,7 +124,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ onLogout, onGameSelect }) => {
               
               {/* Conteúdo de Texto (Título e Status) sobreposto e reto */}
               <View style={styles.bannerTextContent}>
-                  <Text style={[styles.bannerTitle, styles.textShadow]}>{game.title}</Text>
+                  <Text style={[styles.bannerTitle, styles.textShadow]} numberOfLines={1}>{game.title}</Text>
                   
                   <View style={[
                       styles.statusBadge, 
@@ -197,8 +200,8 @@ const styles = StyleSheet.create({
     flexGrow: 1, 
   },
   logo: {
-    width: 90,  // Aumentado para 90 conforme solicitado
-    height: 90, // Aumentado para 90 conforme solicitado
+    width: 90, 
+    height: 90, 
     marginBottom: 5,
   },
   neonShadow: {
@@ -237,17 +240,22 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
     paddingBottom: 100, // Espaço extra para a barra inferior não cobrir o último item
   },
+  // Container centralizado para o título
+  sectionTitleContainer: {
+    width: '100%',
+    alignItems: 'center', // Centraliza horizontalmente
+    marginBottom: 25,
+  },
   sectionTitle: {
-    fontSize: 24,
+    fontSize: 22,
     fontWeight: '900',
     color: colors.text,
-    marginBottom: 30,
-    marginLeft: 20,
     textTransform: 'uppercase',
     letterSpacing: 1,
     textShadowColor: colors.primary,
     textShadowOffset: { width: 0, height: 0 },
     textShadowRadius: 8,
+    textAlign: 'center', // Garante alinhamento do texto
   },
   gameListContainer: {
     alignItems: 'center',
@@ -255,12 +263,13 @@ const styles = StyleSheet.create({
   },
   // --- ESTILOS DOS BANNERS RETOS/PARALELOGRAMOS ---
   bannerWrapper: {
-    width: width - 40, // Largura total menos margens laterais
-    height: 100, // Altura reduzida para 100 (mais compacto)
-    marginBottom: 20, // Espaço vertical entre os itens (sem sobreposição)
+    width: width * 0.55, // Reduzido para ~55% da largura (BEM MENOR E MAIS FINO)
+    height: 90, // Altura reduzida para ficar proporcional
+    marginBottom: 25, // Mais espaço vertical entre os itens
     position: 'relative',
     justifyContent: 'center',
     alignItems: 'center',
+    alignSelf: 'center', 
   },
   angledContainer: {
     width: '100%',
@@ -288,12 +297,14 @@ const styles = StyleSheet.create({
   },
   bannerTextContent: {
     position: 'absolute',
-    left: 40, // Ajustado para compensar a inclinação visual
-    bottom: 20,
+    left: 15, // Ajustado para a menor largura
+    bottom: 15, // Ajustado para a menor altura
+    right: 15,
     zIndex: 5, 
+    alignItems: 'flex-start', // Alinha texto à esquerda dentro do card
   },
   bannerTitle: {
-    fontSize: 18,
+    fontSize: 14, // Fonte reduzida para caber no card menor
     fontWeight: '900',
     color: 'white',
     textTransform: 'uppercase',
@@ -302,14 +313,14 @@ const styles = StyleSheet.create({
     letterSpacing: 0.5,
   },
   statusBadge: {
-    paddingVertical: 3,
-    paddingHorizontal: 8,
-    borderRadius: 4,
+    paddingVertical: 2,
+    paddingHorizontal: 6,
+    borderRadius: 3,
     alignSelf: 'flex-start',
     borderWidth: 1,
   },
   cardStatus: {
-    fontSize: 9,
+    fontSize: 8, // Fonte reduzida
     fontWeight: 'bold',
     textTransform: 'uppercase',
     letterSpacing: 1,
