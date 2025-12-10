@@ -6,11 +6,12 @@ import {
   TouchableOpacity, 
   StatusBar, 
   ScrollView, 
-  Alert,
   Dimensions,
-  TextInput // Importado TextInput
+  TextInput,
+  Image
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { supabase } from '../../../../../../supabaseClient'; // Verifique se o caminho está correto
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const { width } = Dimensions.get('window');
@@ -24,42 +25,31 @@ const colors = {
   success: '#00ff00',
   danger: '#ff0000',
   optionBg: '#1a1a1a',
-  inputBg: '#222', // Cor de fundo para o input de busca
+  inputBg: '#222',
 };
 
-// Dados dos Temas e Perguntas (Simulado)
-const QUIZ_DATA: any = {
+// --- DADOS DOS TEMAS COM IMAGENS REAIS ---
+const QUIZ_THEMES: Record<string, { image: string }> = {
   'Tecnologia': {
-    icon: 'hardware-chip-outline',
-    questions: [
-      { question: 'Qual linguagem é conhecida como a mãe das linguagens?', options: ['C', 'Assembly', 'Fortran', 'Java'], correct: 0 },
-      { question: 'O que significa CPU?', options: ['Central Process Unit', 'Computer Personal Unit', 'Central Power Unit', 'Core Processing Unit'], correct: 0 },
-      { question: 'Quem fundou a Microsoft?', options: ['Steve Jobs', 'Bill Gates', 'Elon Musk', 'Mark Zuckerberg'], correct: 1 },
-    ]
+    image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3',
   },
   'Cinema': {
-    icon: 'film-outline',
-    questions: [
-      { question: 'Quem dirigiu "Pulp Fiction"?', options: ['Spielberg', 'Tarantino', 'Nolan', 'Scorsese'], correct: 1 },
-      { question: 'Qual o filme de maior bilheteria?', options: ['Avatar', 'Vingadores', 'Titanic', 'Star Wars'], correct: 0 },
-      { question: 'Em que ano foi lançado o primeiro "Matrix"?', options: ['1998', '1999', '2000', '2001'], correct: 1 },
-    ]
+    image: 'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3',
   },
   'Esportes': {
-    icon: 'football-outline',
-    questions: [
-      { question: 'Qual país venceu a Copa de 2014?', options: ['Brasil', 'Argentina', 'Alemanha', 'Espanha'], correct: 2 },
-      { question: 'Quantos jogadores tem um time de vôlei?', options: ['5', '6', '7', '8'], correct: 1 },
-      { question: 'Quem é conhecido como "Rei do Futebol"?', options: ['Maradona', 'Messi', 'Pelé', 'Ronaldo'], correct: 2 },
-    ]
+    image: 'https://images.unsplash.com/photo-1461896836934-ffe607ba8211?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3',
   },
   'História': {
-    icon: 'book-outline',
-    questions: [
-      { question: 'Em que ano o homem pisou na Lua?', options: ['1965', '1969', '1972', '1959'], correct: 1 },
-      { question: 'Quem descobriu o Brasil?', options: ['Cabral', 'Colombo', 'Vespucci', 'Magalhães'], correct: 0 },
-      { question: 'Qual foi a primeira capital do Brasil?', options: ['Rio de Janeiro', 'Brasília', 'Salvador', 'São Paulo'], correct: 2 },
-    ]
+    image: 'https://images.unsplash.com/photo-1461360228754-6e81c478b882?q=80&w=1474&auto=format&fit=crop&ixlib=rb-4.0.3',
+  },
+  'Música': {
+    image: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3',
+  },
+  'Geografia': {
+    image: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3',
+  },
+  'Ciências': {
+    image: 'https://images.unsplash.com/photo-1465101046530-73398c7f28ca?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3',
   }
 };
 
@@ -70,61 +60,146 @@ interface QuizGameScreenProps {
 }
 
 const QuizGameScreen: React.FC<QuizGameScreenProps> = ({ onBack, onThemeSelect, activeTheme }) => {
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [score, setScore] = useState(0);
-  const [showResult, setShowResult] = useState(false);
-  const [timeLeft, setTimeLeft] = useState(15);
-  const [gameActive, setGameActive] = useState(false);
-  const [userName, setUserName] = useState('Jogador');
-  const [searchQuery, setSearchQuery] = useState(''); // Estado para a busca
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number>(0);
+  const [score, setScore] = useState<number>(0);
+  const [showResult, setShowResult] = useState<boolean>(false);
+  const [timeLeft, setTimeLeft] = useState<number>(15);
+  const [gameActive, setGameActive] = useState<boolean>(false);
+  const [userName, setUserName] = useState<string>('Jogador');
+  const [searchQuery, setSearchQuery] = useState<string>('');
+  const [shuffledQuestions, setShuffledQuestions] = useState<any[]>([]);
+  const [selectedOption, setSelectedOption] = useState<number | null>(null);
+  const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
+  const [optionsDisabled, setOptionsDisabled] = useState<boolean>(false);
 
-  // Carrega o nome do usuário
   useEffect(() => {
     const loadUser = async () => {
-        const storedName = await AsyncStorage.getItem('userName');
-        if (storedName) setUserName(storedName);
+      const storedName = await AsyncStorage.getItem('userName');
+      if (storedName) setUserName(storedName);
     };
     loadUser();
   }, []);
 
+  // --- AQUI ESTÁ A CORREÇÃO PRINCIPAL ---
   useEffect(() => {
-    if (activeTheme) {
-      setGameActive(true);
-      setCurrentQuestionIndex(0);
-      setScore(0);
-      setShowResult(false);
-      setTimeLeft(15);
+    async function loadQuestions() {
+      if (activeTheme) {
+        setGameActive(true);
+        setCurrentQuestionIndex(0);
+        setScore(0);
+        setShowResult(false);
+        setTimeLeft(15);
+        setSelectedOption(null);
+        setIsCorrect(null);
+        setOptionsDisabled(false);
+
+        console.log("Buscando perguntas para o tema:", activeTheme);
+
+        // Busca perguntas do Supabase
+        const { data, error } = await supabase
+          .from('perguntas')
+          .select('*')
+          .eq('tema', activeTheme)
+          // .order('random()') // OBS: Se der erro de SQL, comente esta linha temporariamente
+          .limit(10);
+
+        if (error) {
+          console.error("Erro ao buscar perguntas:", error);
+          setShuffledQuestions([]);
+        } else if (data) {
+          console.log("Perguntas brutas encontradas:", data.length);
+          
+          // Processamento e Validação dos Dados
+          const perguntasValidas = data.map((q: any) => {
+            let optionsParsed = [];
+            
+            // Tenta converter as opções, seja Array ou String JSON
+            try {
+              if (Array.isArray(q.opcoes)) {
+                optionsParsed = q.opcoes;
+              } else if (typeof q.opcoes === 'string') {
+                // Remove aspas extras se necessário e converte
+                // Ex: '"[\"A\", \"B\"]"' -> ["A", "B"]
+                const cleanString = q.opcoes.startsWith('"') && q.opcoes.endsWith('"') 
+                  ? JSON.parse(q.opcoes) 
+                  : q.opcoes;
+                optionsParsed = typeof cleanString === 'string' ? JSON.parse(cleanString) : cleanString;
+              }
+            } catch (e) {
+              console.log("Erro ao fazer parse das opções da pergunta ID:", q.id, e);
+              optionsParsed = [];
+            }
+
+            return {
+              question: q.pergunta,
+              options: optionsParsed,
+              correct: q.correta
+            };
+          }).filter(q => 
+            // Filtro de Segurança
+            q.question &&
+            Array.isArray(q.options) &&
+            q.options.length >= 2 && // Pelo menos 2 opções
+            typeof q.correct === 'number' &&
+            q.correct >= 0 &&
+            q.correct < q.options.length
+          );
+
+          console.log("Perguntas válidas após processamento:", perguntasValidas.length);
+          
+          // Embaralhar as perguntas no front-end (caso o random do banco falhe)
+          const shuffled = perguntasValidas.sort(() => Math.random() - 0.5);
+          setShuffledQuestions(shuffled);
+        }
+      }
     }
+    loadQuestions();
   }, [activeTheme]);
 
   useEffect(() => {
     let interval: NodeJS.Timeout;
-    if (gameActive && !showResult && timeLeft > 0) {
+    if (gameActive && !showResult && timeLeft > 0 && selectedOption === null) {
       interval = setInterval(() => {
         setTimeLeft((prev) => prev - 1);
       }, 1000);
-    } else if (timeLeft === 0 && gameActive && !showResult) {
-      handleNextQuestion(false);
+    } else if (timeLeft === 0 && gameActive && !showResult && selectedOption === null) {
+      handleOptionPress(-1); // tempo esgotado, resposta errada
     }
     return () => clearInterval(interval);
-  }, [timeLeft, gameActive, showResult]);
+  }, [timeLeft, gameActive, showResult, selectedOption]);
 
   const handleOptionPress = (optionIndex: number) => {
-    if (!activeTheme) return;
-    const currentQuestions = QUIZ_DATA[activeTheme].questions;
-    const isCorrect = currentQuestions[currentQuestionIndex].correct === optionIndex;
+    if (!activeTheme || optionsDisabled || selectedOption !== null) return;
+    
+    const currentQuestions = shuffledQuestions;
+    // Proteção extra caso o array esteja vazio
+    if (!currentQuestions || currentQuestions.length === 0) return;
 
-    if (isCorrect) setScore(prev => prev + 10);
-    handleNextQuestion(isCorrect);
+    const correctIndex = currentQuestions[currentQuestionIndex].correct;
+    const acertou = optionIndex === correctIndex;
+    
+    setSelectedOption(optionIndex);
+    setIsCorrect(acertou);
+    setOptionsDisabled(true);
+    
+    if (acertou) setScore(prev => prev + 10);
+    
+    // Aguarda 1.2s para mostrar feedback antes de ir para próxima
+    setTimeout(() => {
+      handleNextQuestion(true);
+    }, 1200);
   };
 
   const handleNextQuestion = (lastCorrect: boolean) => {
     if (!activeTheme) return;
-    const currentQuestions = QUIZ_DATA[activeTheme].questions;
-
+    const currentQuestions = shuffledQuestions;
+    
     if (currentQuestionIndex < currentQuestions.length - 1) {
       setCurrentQuestionIndex(prev => prev + 1);
       setTimeLeft(15);
+      setSelectedOption(null);
+      setIsCorrect(null);
+      setOptionsDisabled(false);
     } else {
       setGameActive(false);
       setShowResult(true);
@@ -133,65 +208,77 @@ const QuizGameScreen: React.FC<QuizGameScreenProps> = ({ onBack, onThemeSelect, 
 
   const restartQuiz = () => {
     if (activeTheme) {
-        onThemeSelect(activeTheme);
+      onThemeSelect(activeTheme);
     }
   };
 
   // --- RENDERIZAÇÃO: SELEÇÃO DE TEMA ---
   if (!activeTheme) {
-    // Filtra os temas com base na busca
-    const filteredThemes = Object.entries(QUIZ_DATA).filter(([theme]) =>
+    const filteredThemes = Object.entries(QUIZ_THEMES).filter(([theme]) =>
       theme.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
     return (
-      <View style={styles.container}>
+      <View style={[styles.container, {padding: 0}]}> 
         <StatusBar barStyle="light-content" backgroundColor={colors.background} />
-
-        <View style={styles.header}>
-          <View style={styles.headerLeft}>
-            <Text style={styles.welcomeText}>Bem Vindo de Volta,</Text>
-            <Text style={[styles.welcomeName, styles.neonText]}>{userName}</Text>
-          </View>
-          <TouchableOpacity onPress={onBack} style={styles.backButton}>
-            <Ionicons name="arrow-back" size={24} color={colors.primary} />
-          </TouchableOpacity>
-        </View>
-
-        <Text style={[styles.title, styles.neonText]}>QUIZ MASTER</Text>
-
-        {/* BARRA DE PESQUISA */}
-        <View style={styles.searchContainer}>
-          <Ionicons name="search" size={20} color="#888" style={styles.searchIcon} />
-          <TextInput
-            style={styles.searchInput}
-            placeholder="Buscar tema..."
-            placeholderTextColor="#888"
-            value={searchQuery}
-            onChangeText={setSearchQuery}
-          />
-        </View>
-
-        <View style={styles.themeSelectionContainer}>
-          <Text style={styles.subTitle}>Escolha um Tema:</Text>
-          <ScrollView contentContainerStyle={styles.themeGridScroll}>
-             <View style={styles.themeGrid}>
-              {filteredThemes.map(([theme, data]: [string, any]) => (
-                <TouchableOpacity
-                  key={theme}
-                  style={styles.themeCard}
-                  onPress={() => onThemeSelect(theme)}
-                >
-                  <Ionicons name={data.icon} size={40} color={colors.primary} style={styles.themeIcon} />
-                  <Text style={styles.themeText}>{theme}</Text>
-                </TouchableOpacity>
-              ))}
-              {filteredThemes.length === 0 && (
-                <Text style={styles.noResultsText}>Nenhum tema encontrado.</Text>
-              )}
+        <View style={{padding: 20}}>
+          <View style={styles.header}>
+            <View style={styles.headerLeft}>
+              <Text style={styles.welcomeText}>Bem Vindo de Volta,</Text>
+              <Text style={[styles.welcomeName, styles.neonText]}>{userName}</Text>
             </View>
-          </ScrollView>
+            <TouchableOpacity onPress={onBack} style={styles.backButton}>
+              <Ionicons name="arrow-back" size={24} color={colors.primary} />
+            </TouchableOpacity>
+          </View>
+          <Text style={[styles.title, styles.neonText, {fontSize: 32, marginBottom: 10}]}>FiveQuiz</Text>
+          <View style={styles.searchContainer}>
+            <Ionicons name="search" size={20} color="#888" style={styles.searchIcon} />
+            <TextInput
+              style={styles.searchInput}
+              placeholder="Buscar tema..."
+              placeholderTextColor="#888"
+              value={searchQuery}
+              onChangeText={setSearchQuery}
+            />
+          </View>
         </View>
+        <ScrollView contentContainerStyle={{paddingHorizontal: 10, paddingBottom: 30}}>
+          <View style={{flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center'}}>
+            {filteredThemes.map(([theme, data]: [string, any]) => (
+              <TouchableOpacity
+                key={theme}
+                style={{
+                  width: width * 0.42,
+                  height: 170,
+                  margin: 10,
+                  borderRadius: 18,
+                  overflow: 'hidden',
+                  backgroundColor: colors.cardBackground,
+                  elevation: 6,
+                  shadowColor: colors.primary,
+                  shadowOpacity: 0.3,
+                  shadowRadius: 12,
+                }}
+                onPress={() => onThemeSelect(theme)}
+                activeOpacity={0.85}
+              >
+                <Image
+                  source={{ uri: data.image }}
+                  style={{width: '100%', height: 110, borderTopLeftRadius: 18, borderTopRightRadius: 18}}
+                  resizeMode="cover"
+                />
+                <View style={{padding: 10, alignItems: 'center'}}>
+                  <Text style={{color: colors.primary, fontWeight: 'bold', fontSize: 18, textShadowColor: colors.primary, textShadowRadius: 8}}>{theme}</Text>
+                  <Text style={{color: colors.text, fontSize: 12, marginTop: 2}}>Perguntas online</Text>
+                </View>
+              </TouchableOpacity>
+            ))}
+            {filteredThemes.length === 0 && (
+              <Text style={styles.noResultsText}>Nenhum tema encontrado.</Text>
+            )}
+          </View>
+        </ScrollView>
       </View>
     );
   }
@@ -217,9 +304,28 @@ const QuizGameScreen: React.FC<QuizGameScreenProps> = ({ onBack, onThemeSelect, 
   }
 
   // --- RENDERIZAÇÃO: O JOGO (PERGUNTAS) ---
-  const currentQuestions = QUIZ_DATA[activeTheme].questions;
+  const currentQuestions = shuffledQuestions;
   const question = currentQuestions[currentQuestionIndex];
-  const themeIcon = QUIZ_DATA[activeTheme].icon;
+  const themeIcon = 'game-controller-outline';
+
+  // Verifica se a pergunta atual é válida para renderizar
+  if (!question || !Array.isArray(question.options) || typeof question.correct !== 'number' || question.correct < 0 || question.correct >= question.options.length) {
+    return (
+      <View style={styles.container}>
+        <StatusBar barStyle="light-content" backgroundColor={colors.background} />
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+          <Text style={{ color: colors.danger, fontSize: 18, textAlign: 'center', paddingHorizontal: 20 }}>
+            {shuffledQuestions.length === 0 
+              ? "Carregando perguntas ou nenhuma pergunta encontrada..." 
+              : "Erro ao carregar a próxima pergunta."}
+          </Text>
+          <TouchableOpacity style={[styles.actionButton, { marginTop: 30 }]} onPress={onBack}>
+            <Text style={styles.actionButtonText}>Voltar ao Menu</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    );
+  }
 
   return (
     <View style={styles.container}>
@@ -243,16 +349,46 @@ const QuizGameScreen: React.FC<QuizGameScreenProps> = ({ onBack, onThemeSelect, 
       </View>
 
       <View style={styles.optionsContainer}>
-        {question.options.map((option: string, index: number) => (
-          <TouchableOpacity
-            key={index}
-            style={styles.optionButton}
-            onPress={() => handleOptionPress(index)}
-          >
-            <Text style={styles.optionText}>{option}</Text>
-          </TouchableOpacity>
-        ))}
+        {question.options.map((option: string, index: number) => {
+          let optionStyle = { ...styles.optionButton };
+          let optionTextStyle = { ...styles.optionText };
+          let opacity = 1;
+          
+          if (selectedOption !== null) {
+            if (index === question.correct) {
+              optionStyle.backgroundColor = colors.success;
+              optionTextStyle.color = '#000';
+            } else if (index === selectedOption && !isCorrect) {
+              optionStyle.backgroundColor = colors.danger;
+              optionTextStyle.color = '#fff';
+            } else {
+              opacity = 0.5;
+            }
+          }
+          return (
+            <TouchableOpacity
+              key={index}
+              style={[optionStyle, { opacity }]}
+              onPress={() => handleOptionPress(index)}
+              disabled={optionsDisabled}
+            >
+              <Text style={optionTextStyle}>{option}</Text>
+            </TouchableOpacity>
+          );
+        })}
       </View>
+
+      {selectedOption !== null && (
+        <Text style={{
+          textAlign: 'center',
+          marginTop: 18,
+          fontSize: 16,
+          color: isCorrect ? colors.success : colors.danger,
+          fontWeight: 'bold',
+        }}>
+          {isCorrect ? 'Resposta correta!' : 'Resposta errada!'}
+        </Text>
+      )}
 
       <Text style={styles.currentScore}>Pontos: {score}</Text>
     </View>
@@ -262,6 +398,11 @@ const QuizGameScreen: React.FC<QuizGameScreenProps> = ({ onBack, onThemeSelect, 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    borderWidth: 2,
+    borderColor: colors.primary,
+    margin: 10,
+    borderRadius: 15,
+    overflow: 'hidden',
     backgroundColor: colors.background,
     padding: 20,
   },
@@ -294,14 +435,13 @@ const styles = StyleSheet.create({
     color: colors.text,
     letterSpacing: 2,
     textAlign: 'center',
-    marginBottom: 20, // Reduzido para dar espaço ao search
+    marginBottom: 20,
   },
   neonText: {
     textShadowColor: colors.primary,
     textShadowOffset: { width: 0, height: 0 },
     textShadowRadius: 10,
   },
-  // Estilos da Barra de Pesquisa
   searchContainer: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -321,53 +461,13 @@ const styles = StyleSheet.create({
     color: colors.text,
     fontSize: 16,
   },
-  themeSelectionContainer: {
-      flex: 1,
-  },
-  subTitle: {
-      color: '#888',
-      fontSize: 18,
-      marginBottom: 15,
-      textAlign: 'center',
-  },
-  themeGridScroll: {
-    paddingBottom: 20,
-  },
-  themeGrid: {
-      flexDirection: 'row',
-      flexWrap: 'wrap',
-      justifyContent: 'space-between',
-      gap: 15,
-  },
-  themeCard: {
-      width: '47%',
-      height: 120,
-      backgroundColor: colors.cardBackground,
-      borderWidth: 1,
-      borderColor: colors.primary,
-      borderRadius: 10,
-      justifyContent: 'center',
-      alignItems: 'center',
-      marginBottom: 5,
-      shadowColor: colors.primary,
-      shadowOffset: { width: 0, height: 0 },
-      shadowOpacity: 0.4,
-      shadowRadius: 5,
-  },
-  themeIcon: {
-    marginBottom: 10,
-  },
-  themeText: {
-      color: colors.text,
-      fontWeight: 'bold',
-      fontSize: 16,
-  },
   noResultsText: {
     color: '#666',
     textAlign: 'center',
     marginTop: 20,
     width: '100%',
   },
+  // --- ESTILOS DO JOGO ---
   gameHeader: {
       flexDirection: 'row',
       justifyContent: 'space-between',
@@ -426,6 +526,7 @@ const styles = StyleSheet.create({
       color: '#888',
       fontSize: 14,
   },
+  // --- ESTILOS DO RESULTADO ---
   resultContainer: {
       flex: 1,
       justifyContent: 'center',

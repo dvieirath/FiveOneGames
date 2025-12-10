@@ -40,6 +40,10 @@ const styles = StyleSheet.create({
     backgroundColor: colors.background,
     justifyContent: 'center',
     alignItems: 'center',
+    borderWidth: 2,
+    borderColor: colors.primary,
+    margin: 10,
+    borderRadius: 15,
   },
   logo: {
     width: 200,

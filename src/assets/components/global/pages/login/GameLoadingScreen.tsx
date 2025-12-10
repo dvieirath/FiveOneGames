@@ -1,11 +1,14 @@
 import React, { useEffect } from 'react';
+import { useRef } from 'react';
+import { Animated, Easing } from 'react-native';
+import { Ionicons, FontAwesome5 } from '@expo/vector-icons';
 import { View, Text, StyleSheet, ActivityIndicator, StatusBar } from 'react-native';
 
-// CORES - TEMA LARANJA NEON
+// CORES - TEMA CLEAN
 const colors = {
-  primary: '#fc4b08',     // Laranja Neon
-  background: '#000000',  // Preto Absoluto
-  text: '#F5F5F5',        // Texto Claro
+  primary: '#000000',     // Preto
+  background: '#FFFFFF',  // Branco Sólido
+  text: '#000000',        // Texto Preto
 };
 
 interface GameLoadingScreenProps {
@@ -15,27 +18,78 @@ interface GameLoadingScreenProps {
 
 const GameLoadingScreen: React.FC<GameLoadingScreenProps> = ({ gameName, onLoadingComplete }) => {
 
+  // Animação de pulo (Bounce)
+  const bounceAnim = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    Animated.loop(
+      Animated.sequence([
+        Animated.timing(bounceAnim, {
+          toValue: -150, // Sobe
+          duration: 600,
+          easing: Easing.out(Easing.quad), // Desacelera na subida
+          useNativeDriver: true,
+        }),
+        Animated.timing(bounceAnim, {
+          toValue: 0, // Desce
+          duration: 600,
+          easing: Easing.in(Easing.quad), // Acelera na descida (gravidade)
+          useNativeDriver: true,
+        })
+      ])
+    ).start();
+  }, []);
+
   useEffect(() => {
     // Simula o carregamento de 2 segundos
     const timer = setTimeout(() => {
       onLoadingComplete();
-    }, 2000);
+    }, 2500); // Um pouco mais de tempo para apreciar a animação
 
     return () => clearTimeout(timer);
   }, [onLoadingComplete]);
 
   return (
     <View style={styles.container}>
-      <StatusBar barStyle="light-content" backgroundColor={colors.background} />
-      
-      <ActivityIndicator size="large" color={colors.primary} style={styles.spinner} />
-      
-      <Text style={styles.loadingText}>Carregando</Text>
-      <Text style={[styles.gameTitle, styles.textShadow]}>{gameName.toUpperCase()}</Text>
-      
-      <View style={styles.barContainer}>
-          <View style={styles.barProgress} />
+      <StatusBar barStyle="dark-content" backgroundColor={colors.background} />
+
+      <View style={styles.animationContainer}>
+        <Animated.View
+          style={[
+            styles.ball,
+            {
+              transform: [{ translateY: bounceAnim }],
+            }
+          ]}
+        >
+          {/* Opcional: Ícone de bola de futebol dentro da bolinha */}
+          <Ionicons name="football" size={40} color="white" />
+        </Animated.View>
+        
+        {/* Sombra da bola */}
+        <Animated.View 
+          style={[
+            styles.shadow,
+            {
+              opacity: bounceAnim.interpolate({
+                inputRange: [-150, 0],
+                outputRange: [0.2, 0.8], // Sombra fica mais forte quando a bola está perto
+              }),
+              transform: [
+                {
+                  scale: bounceAnim.interpolate({
+                    inputRange: [-150, 0],
+                    outputRange: [0.5, 1], // Sombra diminui quando a bola sobe
+                  })
+                }
+              ]
+            }
+          ]} 
+        />
       </View>
+
+      <Text style={styles.loadingText}>Carregando</Text>
+      <Text style={styles.gameTitle}>{gameName.toUpperCase()}</Text>
     </View>
   );
 };
@@ -47,47 +101,45 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  spinner: {
-      transform: [{ scale: 1.5 }],
-      marginBottom: 30,
+  animationContainer: {
+    height: 200,
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+    marginBottom: 50,
+  },
+  ball: {
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+    backgroundColor: colors.primary,
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex: 2,
+  },
+  shadow: {
+    width: 60,
+    height: 10,
+    borderRadius: 50,
+    backgroundColor: 'rgba(0,0,0,0.2)',
+    marginTop: 10,
   },
   loadingText: {
-    color: '#888',
-    fontSize: 14,
-    marginBottom: 5,
+    color: '#666',
+    fontSize: 16,
+    marginBottom: 10,
     letterSpacing: 2,
     textTransform: 'uppercase',
+    fontWeight: '600',
   },
   gameTitle: {
-    fontSize: 28,
+    fontSize: 24,
     fontWeight: 'bold',
     color: colors.primary,
-    marginBottom: 50,
     letterSpacing: 1,
-    textAlign: 'center',
   },
   textShadow: {
-    textShadowColor: colors.primary,
-    textShadowOffset: { width: 0, height: 0 },
-    textShadowRadius: 15,
+    // Removido shadow para look clean
   },
-  // Barra de progresso visual (estática ou animada se desejar complexidade)
-  barContainer: {
-      width: 200,
-      height: 4,
-      backgroundColor: '#333',
-      borderRadius: 2,
-      overflow: 'hidden',
-  },
-  barProgress: {
-      width: '50%', // Apenas visual fixo por enquanto, ou poderia animar
-      height: '100%',
-      backgroundColor: colors.primary,
-      shadowColor: colors.primary,
-      shadowOffset: { width: 0, height: 0 },
-      shadowOpacity: 1,
-      shadowRadius: 10,
-  }
+  // Removidos estilos não usados (spinner, barProgress, etc)
 });
-
 export default GameLoadingScreen;

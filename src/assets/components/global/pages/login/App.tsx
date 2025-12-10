@@ -6,7 +6,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import LoginScreen from './LoginScreen'; 
 import SplashScreen from './SplashScreen'; 
 import HomeScreen from './HomeScreen'; 
+import FriendsScreen from './FriendsScreen';
 import GameLoadingScreen from './GameLoadingScreen'; 
+import QuizLoadingScreen from './QuizLoadingScreen';
 import MemoryGameScreen from './MemoryGameScreen';   
 import QuizGameScreen from './QuizGameScreen'; 
 
@@ -14,12 +16,13 @@ const SPLASH_DURATION = 3000;
 const BACKGROUND_COLOR = '#000000'; 
 
 // Tipos de telas possíveis
-type AppScreen = 'HOME' | 'LOADING_GAME' | 'MEMORY_GAME' | 'QUIZ_GAME';
+// Tipos de telas possíveis
+type AppScreen = 'HOME' | 'LOADING_GAME' | 'MEMORY_GAME' | 'QUIZ_GAME' | 'FRIENDS';
 
 const App: React.FC = () => {
   const [isSplashVisible, setIsSplashVisible] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false); 
-  const [hasError, setHasError] = useState(false); 
+  const [hasError, setHasError] = useState<string | boolean>(false); 
   
   // Estado de Navegação
   const [currentScreen, setCurrentScreen] = useState<AppScreen>('HOME');
@@ -27,17 +30,20 @@ const App: React.FC = () => {
   const [selectedQuizTheme, setSelectedQuizTheme] = useState<string | null>(null); // Estado para o tema do Quiz
 
   useEffect(() => {
+    let isMounted = true;
     const checkAuthAndHideSplash = async () => {
       try {
         const token = await AsyncStorage.getItem('userToken'); 
-        if (token) setIsAuthenticated(true);
+        if (token && isMounted) setIsAuthenticated(true);
         await new Promise(resolve => setTimeout(resolve, SPLASH_DURATION)); 
-        setIsSplashVisible(false);
+        if (isMounted) setIsSplashVisible(false);
       } catch (e) {
-        setIsSplashVisible(false);
+        if (isMounted) setIsSplashVisible(false);
+        if (isMounted) setHasError(e instanceof Error ? e.message : 'Erro desconhecido');
       }
     };
     checkAuthAndHideSplash();
+    return () => { isMounted = false; };
   }, []);
 
   const handleLoginSuccess = () => {
@@ -68,7 +74,10 @@ const App: React.FC = () => {
 
   // 2. (Apenas Quiz) Usuário seleciona um tema dentro da tela do Quiz
   const handleQuizThemeSelect = (theme: string) => {
+      console.log("Tema selecionado:", theme);
       setSelectedQuizTheme(theme);
+      // Força o jogo selecionado para 'Quiz' caso tenha sido perdido
+      setSelectedGame('Quiz');
       // Agora sim, mostramos o loading específico do tema
       setCurrentScreen('LOADING_GAME');
   };
@@ -91,7 +100,7 @@ const App: React.FC = () => {
 
   const barStyle = "light-content";
 
-  if (hasError) return <View style={styles.errorContainer}><Text>Erro</Text></View>;
+  if (hasError) return <View style={styles.errorContainer}><Text>{typeof hasError === 'string' ? hasError : 'Erro'}</Text></View>;
 
   if (isSplashVisible) {
     return (
@@ -102,36 +111,55 @@ const App: React.FC = () => {
     );
   }
 
+  const renderContent = () => {
+    console.log(`Renderizando tela: ${currentScreen} | Jogo: ${selectedGame} | Tema: ${selectedQuizTheme}`);
+    
+    switch (currentScreen) {
+      case 'HOME':
+        return (
+          <HomeScreen
+            onLogout={handleLogout}
+            onGameSelect={handleGameSelect}
+            onOpenFriends={() => setCurrentScreen('FRIENDS')}
+          />
+        );
+      case 'FRIENDS':
+        return <FriendsScreen onBack={handleBackToHome} />;
+      case 'LOADING_GAME':
+        if (selectedGame === 'Quiz' || selectedQuizTheme) {
+          return (
+            <QuizLoadingScreen
+              themeName={selectedQuizTheme || 'Geral'}
+              onLoadingComplete={handleGameLoaded}
+            />
+          );
+        }
+        return (
+          <GameLoadingScreen
+            gameName={selectedGame}
+            onLoadingComplete={handleGameLoaded}
+          />
+        );
+      case 'MEMORY_GAME':
+        return <MemoryGameScreen onBack={handleBackToHome} />;
+      case 'QUIZ_GAME':
+        return (
+          <QuizGameScreen
+            onBack={handleBackToHome}
+            onThemeSelect={handleQuizThemeSelect}
+            activeTheme={selectedQuizTheme}
+          />
+        );
+      default:
+        return <View style={{flex:1, backgroundColor: 'red'}}><Text>Erro de Estado</Text></View>;
+    }
+  };
+
   if (isAuthenticated) {
     return (
-        <View style={styles.container}>
-            {currentScreen === 'HOME' && (
-                <HomeScreen 
-                    onLogout={handleLogout} 
-                    onGameSelect={handleGameSelect} 
-                /> 
-            )}
-            
-            {currentScreen === 'LOADING_GAME' && (
-                <GameLoadingScreen 
-                    // Mostra o nome do jogo ou "Quiz: Tema"
-                    gameName={selectedGame === 'Quiz' && selectedQuizTheme ? `Quiz: ${selectedQuizTheme}` : selectedGame} 
-                    onLoadingComplete={handleGameLoaded} 
-                />
-            )}
-
-            {currentScreen === 'MEMORY_GAME' && (
-                <MemoryGameScreen onBack={handleBackToHome} />
-            )}
-
-            {currentScreen === 'QUIZ_GAME' && (
-                <QuizGameScreen 
-                    onBack={handleBackToHome}
-                    onThemeSelect={handleQuizThemeSelect} // Função para escolher tema e iniciar loading
-                    activeTheme={selectedQuizTheme}       // Passa o tema se já foi escolhido e carregado
-                />
-            )}
-        </View>
+      <View style={styles.container}>
+        {renderContent()}
+      </View>
     );
   }
 

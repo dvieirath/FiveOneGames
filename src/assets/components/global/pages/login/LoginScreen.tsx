@@ -14,13 +14,16 @@ import {
 
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage'; 
+import { v4 as uuidv4 } from 'uuid';
 
 const LOCAL_LOGO_PATH = require('../../../../FiveOneLogo.png'); 
 
 // 💻 CONFIGURAÇÃO DA API
-const API_URL = 'http://192.168.56.1:3000/api/auth'; 
 
-// CREDENCIAIS DE TESTE (Bypass Backend)
+// Usar variável de ambiente (Expo)
+const API_URL = process.env.EXPO_PUBLIC_API_URL || 'http://localhost:3000/api/auth';
+
+// Credenciais de teste (remover em produção)
 const TEST_EMAIL = 'admin@teste.com';
 const TEST_PASSWORD = '123456';
 
@@ -73,82 +76,88 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ onLoginSuccess }) => {
   const handleSubmit = async () => {
     setError('');
     setSuccess('');
-    
-    // 1. Validações
+
+    // Validação de campos
     if (!identifier || !password || (isRegistering && (!confirmPassword || !username))) {
-        setError(isRegistering ? "Preencha todos os campos." : "Preencha E-mail e Senha.");
-        return;
+      setError(isRegistering ? 'Preencha todos os campos.' : 'Preencha E-mail e Senha.');
+      return;
+    }
+
+    // Validação de email
+    const isValidEmail = (email: string) => {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return emailRegex.test(email);
+    };
+    if (!isValidEmail(identifier)) {
+      setError('E-mail inválido.');
+      return;
     }
 
     if (password.length < MIN_PASSWORD_LENGTH) {
-        setError(`A senha deve ter pelo menos ${MIN_PASSWORD_LENGTH} caracteres.`);
-        return;
+      setError(`A senha deve ter pelo menos ${MIN_PASSWORD_LENGTH} caracteres.`);
+      return;
     }
-    
+
     if (isRegistering && password !== confirmPassword) {
-        Alert.alert('Erro', 'As senhas não coincidem.');
-        return;
+      Alert.alert('Erro', 'As senhas não coincidem.');
+      return;
     }
-    
+
     setIsLoading(true);
 
-    // 2. VERIFICAÇÃO DE TESTE (BYPASS)
+    // Login de teste (bypass backend)
     if (!isRegistering && identifier === TEST_EMAIL && password === TEST_PASSWORD) {
-        setTimeout(async () => {
-            await AsyncStorage.setItem('userToken', 'dummy-test-token');
-            await AsyncStorage.setItem('userName', 'Administrador'); // Nome Fixo para teste
-            setIsLoading(false);
-            onLoginSuccess();
-        }, 1000);
-        return;
+      setIsLoading(true);
+      setTimeout(async () => {
+        await AsyncStorage.setItem('userToken', 'dummy-test-token');
+        await AsyncStorage.setItem('userName', 'Administrador');
+        setIsLoading(false);
+        onLoginSuccess();
+      }, 1000);
+      return;
     }
 
-    // 3. FLUXO REAL (BACKEND)
+    // Fluxo real (backend)
     let endpoint = isRegistering ? '/register' : '/login';
     let payload: any = { email: identifier, password };
-
     if (isRegistering) {
-        payload = { email: identifier, password, username };
+      // Gera um ID único para o usuário
+      const userId = uuidv4();
+      payload = { email: identifier, password, username, userId };
     }
 
     try {
-        const response = await axios.post(`${API_URL}${endpoint}`, payload);
-        const { token, username: dbUsername } = response.data; // Recebe o token E o nome
-
-        if (token) {
-            await AsyncStorage.setItem('userToken', token);
-
-            // Salva o nome do usuário (se veio do banco ou se está no form de registro)
-            const nameToSave = dbUsername || username || 'Jogador';
-            await AsyncStorage.setItem('userName', nameToSave);
-
-            if (isRegistering) {
-                setSuccess('Conta criada com sucesso!');
-                setIsRegistering(false);
-                setPassword('');
-                setConfirmPassword('');
-                setUsername('');
-                setIdentifier('');
-            } else {
-                onLoginSuccess();
-            }
-            return;
+      const response = await axios.post(`${API_URL}${endpoint}`, payload);
+      const { token, username: dbUsername, userId: returnedId } = response.data;
+      if (token) {
+        await AsyncStorage.setItem('userToken', token);
+        const nameToSave = dbUsername || username || 'Jogador';
+        await AsyncStorage.setItem('userName', nameToSave);
+        // Salva o ID do usuário
+        await AsyncStorage.setItem('userId', returnedId || userId);
+        if (isRegistering) {
+          setSuccess('Conta criada com sucesso!');
+          setIsRegistering(false);
+          setPassword('');
+          setConfirmPassword('');
+          setUsername('');
+          setIdentifier('');
+        } else {
+          onLoginSuccess();
         }
-
+        return;
+      }
     } catch (err: any) {
-        let errorMessage = 'Erro de comunicação. Verifique o backend.';
-
-        if (err.response && err.response.data) {
-            errorMessage = err.response.data.message || errorMessage;
-            if (err.response.status === 401) errorMessage = 'Credenciais Inválidas.';
-        } else if (err.message && err.message.includes('Network Error')) {
-            errorMessage = `Erro de Rede: Backend inacessível em ${API_URL}`;
-        }
-
-        console.error("LOGIN ERROR:", err);
-        setError(errorMessage);
+      let errorMessage = 'Erro de comunicação. Verifique o backend.';
+      if (err.response && err.response.data) {
+        errorMessage = err.response.data.message || errorMessage;
+        if (err.response.status === 401) errorMessage = 'Credenciais inválidas.';
+      } else if (err.message && err.message.includes('Network Error')) {
+        errorMessage = `Erro de Rede: Backend inacessível em ${API_URL}`;
+      }
+      setError(errorMessage);
     } finally {
-        setIsLoading(false);
+      setIsLoading(false);
     }
   };
 
@@ -264,6 +273,11 @@ const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
     backgroundColor: colors.background,
+    borderWidth: 2,
+    borderColor: colors.primary,
+    margin: 10,
+    borderRadius: 15,
+    overflow: 'hidden',
   },
   container: {
     flex: 1,

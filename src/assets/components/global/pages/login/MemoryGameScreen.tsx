@@ -7,34 +7,46 @@ import {
   StatusBar, 
   Dimensions, 
   ScrollView, 
-  Modal // Importamos Modal para o feedback customizado
+  Modal, // Importamos Modal para o feedback customizado
+  Image,
+  ImageBackground,
+  Animated,
+  Easing
 } from 'react-native';
-import { Ionicons, FontAwesome5 } from '@expo/vector-icons';
+import { Audio } from 'expo-av';
+import { Ionicons } from '@expo/vector-icons';
 
 const { width, height } = Dimensions.get('window');
 
-// CORES - TEMA LARANJA NEON
+// CORES - TEMA DARK (PRETO)
 const colors = {
-  primary: '#fc4b08',     // Laranja Neon
-  background: '#000000',  // Preto Absoluto
-  text: '#F5F5F5',        // Texto Claro
-  cardBack: '#111111',    // Fundo da carta virada
-  cardFront: '#1a1a1a',   // Fundo da carta aberta
-  success: '#00ff00',     // Verde Neon para acertos
-  danger: '#ff0000',      // Vermelho para tempo acabando
-  overlay: 'rgba(0,0,0,0.85)', // Fundo escuro para o modal
+  primary: '#FFFFFF',     // Branco (para contraste com fundo escuro)
+  background: '#000000',  // Preto
+  text: '#FFFFFF',        // Texto Branco
+  cardBack: '#000000',    // Fundo da carta virada (Preto)
+  cardFront: '#FFFFFF',   // Fundo da carta aberta
+  success: '#4CAF50',     // Verde Suave
+  danger: '#F44336',      // Vermelho Suave
+  overlay: 'rgba(0,0,0,0.8)', // Overlay escuro
 };
 
-// Ícones disponíveis para o jogo
-const ICONS = [
-  'ghost', 'dragon', 'gamepad', 'headset', 'dice', 
-  'chess-knight', 'scroll', 'fire', 'bolt', 'skull', 
-  'heart', 'star', 'trophy', 'rocket', 'puzzle-piece'
+// Imagens do Neymar para o jogo
+const IMAGES = [
+  require('../../../../../assets/images/Neymar/1.png'),
+  require('../../../../../assets/images/Neymar/2.png'),
+  require('../../../../../assets/images/Neymar/3.png'),
+  require('../../../../../assets/images/Neymar/4.png'),
+  require('../../../../../assets/images/Neymar/5.png'),
+  require('../../../../../assets/images/Neymar/6.png'),
+  require('../../../../../assets/images/Neymar/7.png'),
+  require('../../../../../assets/images/Neymar/8.png'),
+  require('../../../../../assets/images/Neymar/9.png'),
+  require('../../../../../assets/images/Neymar/10.png'),
 ];
 
 interface Card {
   id: string;
-  icon: string;
+  image: any; // Mudado de icon (string) para image (any/require)
   isFlipped: boolean;
   isMatched: boolean;
 }
@@ -43,7 +55,93 @@ interface MemoryGameScreenProps {
   onBack: () => void;
 }
 
+interface MemoryCardProps {
+  card: Card;
+  onPress: (card: Card) => void;
+  width: number;
+  height: number;
+}
+
+const MemoryCard: React.FC<MemoryCardProps> = ({ card, onPress, width, height }) => {
+  const animatedValue = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    if (card.isFlipped || card.isMatched) {
+      Animated.spring(animatedValue, {
+        toValue: 180,
+        friction: 8,
+        tension: 10,
+        useNativeDriver: true,
+      }).start();
+    } else {
+      Animated.spring(animatedValue, {
+        toValue: 0,
+        friction: 8,
+        tension: 10,
+        useNativeDriver: true,
+      }).start();
+    }
+  }, [card.isFlipped, card.isMatched]);
+
+  const frontInterpolate = animatedValue.interpolate({
+    inputRange: [0, 180],
+    outputRange: ['0deg', '180deg'],
+  });
+
+  const backInterpolate = animatedValue.interpolate({
+    inputRange: [0, 180],
+    outputRange: ['180deg', '360deg'],
+  });
+
+  const frontAnimatedStyle = {
+    transform: [{ rotateY: frontInterpolate }],
+  };
+
+  const backAnimatedStyle = {
+    transform: [{ rotateY: backInterpolate }],
+  };
+
+  return (
+    <TouchableOpacity
+      activeOpacity={1}
+      onPress={() => onPress(card)}
+      style={{ width, height, margin: 8 }}
+    >
+      <View style={{ flex: 1 }}>
+        {/* Lado da frente (Capa / Bola) - Inicialmente visível */}
+        <Animated.View
+          style={[
+            styles.card,
+            styles.cardFace,
+            frontAnimatedStyle,
+            { position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }
+          ]}
+        >
+           <Ionicons name="football" size={32} color={colors.primary} />
+        </Animated.View>
+
+        {/* Lado de trás (Imagem do Neymar) - Inicialmente escondido */}
+        <Animated.View
+          style={[
+            styles.card,
+            styles.cardFace,
+            styles.cardFlipped,
+            backAnimatedStyle,
+            { position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }
+          ]}
+        >
+           <Image 
+              source={card.image} 
+              style={{ width: '100%', height: '100%', resizeMode: 'cover', borderRadius: 8 }} 
+            />
+        </Animated.View>
+      </View>
+    </TouchableOpacity>
+  );
+};
+
 const MemoryGameScreen: React.FC<MemoryGameScreenProps> = ({ onBack }) => {
+    const [sound, setSound] = useState<Audio.Sound | null>(null);
   const [level, setLevel] = useState(1);
   const [cards, setCards] = useState<Card[]>([]);
   const [selectedCards, setSelectedCards] = useState<Card[]>([]);
@@ -57,6 +155,42 @@ const MemoryGameScreen: React.FC<MemoryGameScreenProps> = ({ onBack }) => {
   // Estados para o cronômetro
   const [timeLeft, setTimeLeft] = useState(60);
   const [isTimerActive, setIsTimerActive] = useState(false);
+
+    // Trilha sonora
+    useEffect(() => {
+      let soundObject: Audio.Sound | null = null;
+
+      const playMusic = async () => {
+        try {
+          // Configura o áudio para tocar mesmo no modo silencioso do iOS
+          await Audio.setAudioModeAsync({
+            playsInSilentModeIOS: true,
+            staysActiveInBackground: false,
+          });
+
+          // Carrega e toca a música
+          const { sound } = await Audio.Sound.createAsync(
+            require('../../../../sounds/memory-theme.mp3'),
+            { isLooping: true, volume: 0.3 }
+          );
+          
+          soundObject = sound;
+          setSound(sound);
+          await sound.playAsync();
+        } catch (e) {
+          console.log('Erro ao carregar som:', e);
+        }
+      };
+
+      playMusic();
+
+      return () => {
+        if (soundObject) {
+          soundObject.stopAsync();
+          soundObject.unloadAsync();
+        }
+      };
+    }, []);
 
   // Configuração dos níveis
   const getLevelConfig = (lvl: number) => {
@@ -92,11 +226,12 @@ const MemoryGameScreen: React.FC<MemoryGameScreenProps> = ({ onBack }) => {
 
   const startNewGame = () => {
     const config = getLevelConfig(level);
-    const selectedIcons = ICONS.sort(() => 0.5 - Math.random()).slice(0, config.pairs);
+    // Seleciona imagens aleatórias do array IMAGES
+    const selectedImages = IMAGES.sort(() => 0.5 - Math.random()).slice(0, config.pairs);
     
-    const gameCards = [...selectedIcons, ...selectedIcons].map((icon, index) => ({
-      id: `${icon}-${index}`,
-      icon,
+    const gameCards = [...selectedImages, ...selectedImages].map((image, index) => ({
+      id: `card-${index}`, // ID único baseado no índice
+      image,
       isFlipped: false,
       isMatched: false,
     }));
@@ -132,10 +267,10 @@ const MemoryGameScreen: React.FC<MemoryGameScreenProps> = ({ onBack }) => {
   const checkForMatch = (selected: Card[], currentCards: Card[]) => {
     const [card1, card2] = selected;
 
-    if (card1.icon === card2.icon) {
+    if (card1.image === card2.image) {
       setTimeout(() => {
         const matchedCards = currentCards.map(c => 
-          c.icon === card1.icon ? { ...c, isMatched: true } : c
+          c.image === card1.image ? { ...c, isMatched: true } : c
         );
         setCards(matchedCards);
         setSelectedCards([]);
@@ -176,9 +311,16 @@ const MemoryGameScreen: React.FC<MemoryGameScreenProps> = ({ onBack }) => {
   const formatTime = (seconds: number) => `${seconds}s`;
 
   return (
-    <View style={styles.container}>
-      <StatusBar barStyle="light-content" backgroundColor={colors.background} />
+    <ImageBackground 
+      source={require('../../../../images/campo.png')}
+      style={styles.container}
+      resizeMode="cover"
+    >
+      <StatusBar barStyle="light-content" backgroundColor="transparent" translucent />
       
+      {/* Overlay para melhorar contraste */}
+      <View style={styles.bgOverlay} />
+
       {/* HEADER */}
       <View style={styles.header}>
         <TouchableOpacity onPress={onBack} style={styles.backButton}>
@@ -191,19 +333,32 @@ const MemoryGameScreen: React.FC<MemoryGameScreenProps> = ({ onBack }) => {
       {/* INFO DO JOGO */}
       <View style={styles.statsContainer}>
         <View style={styles.statBox}>
-            <Text style={styles.statLabel}>NÍVEL</Text>
+            <Ionicons name="trophy-outline" size={24} color="#ccc" style={{ marginBottom: 4 }} />
             <Text style={styles.statValue}>{level}</Text>
         </View>
         <View style={[styles.statBox, styles.timerBox]}>
-            <Text style={styles.statLabel}>TEMPO</Text>
+            <Ionicons name="timer-outline" size={24} color="#ccc" style={{ marginBottom: 4 }} />
             <Text style={[styles.statValue, timeLeft <= 10 ? { color: colors.danger } : {}]}>
                 {formatTime(timeLeft)}
             </Text>
         </View>
         <View style={styles.statBox}>
-            <Text style={styles.statLabel}>MOVIMENTOS</Text>
+            <Ionicons name="footsteps-outline" size={24} color="#ccc" style={{ marginBottom: 4 }} />
             <Text style={styles.statValue}>{moves}</Text>
         </View>
+      </View>
+
+      {/* BARRA DE TEMPO VISUAL */}
+      <View style={styles.progressBarContainer}>
+          <View 
+            style={[
+              styles.progressBarFill, 
+              { 
+                width: `${(timeLeft / config.time) * 100}%`,
+                backgroundColor: timeLeft <= 10 ? colors.danger : colors.success 
+              }
+            ]} 
+          />
       </View>
 
       {/* REINICIAR */}
@@ -216,23 +371,13 @@ const MemoryGameScreen: React.FC<MemoryGameScreenProps> = ({ onBack }) => {
       <ScrollView contentContainerStyle={styles.boardScroll}>
         <View style={styles.board}>
           {cards.map((card) => (
-            <TouchableOpacity
+            <MemoryCard
               key={card.id}
-              style={[
-                styles.card, 
-                { width: cardSize, height: cardSize },
-                card.isFlipped && styles.cardFlipped,
-                card.isMatched && styles.cardMatched
-              ]}
-              onPress={() => handleCardPress(card)}
-              activeOpacity={0.8}
-            >
-              {card.isFlipped || card.isMatched ? (
-                <FontAwesome5 name={card.icon} size={cardSize * 0.5} color={card.isMatched ? colors.background : colors.primary} />
-              ) : (
-                <Text style={styles.cardBackText}>?</Text>
-              )}
-            </TouchableOpacity>
+              card={card}
+              onPress={handleCardPress}
+              width={cardSize}
+              height={cardSize * 1.4}
+            />
           ))}
         </View>
       </ScrollView>
@@ -297,14 +442,62 @@ const MemoryGameScreen: React.FC<MemoryGameScreenProps> = ({ onBack }) => {
         </View>
       </Modal>
 
-    </View>
+    </ImageBackground>
   );
 };
 
 const styles = StyleSheet.create({
+    bgOverlay: {
+      ...StyleSheet.absoluteFillObject,
+      backgroundColor: 'rgba(0,0,0,0.6)', // Mais escuro para destacar as cartas
+    },
+    boardScroll: {
+      paddingVertical: 10,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    board: {
+      flexDirection: 'row',
+      flexWrap: 'wrap',
+      justifyContent: 'center',
+      alignItems: 'center',
+      marginBottom: 20,
+    },
+    card: {
+      width: 60,
+      height: 80,
+      // margin: 8, // Margin is handled in the wrapper now
+      backgroundColor: colors.cardBack,
+      borderRadius: 10,
+      alignItems: 'center',
+      justifyContent: 'center',
+      elevation: 4,
+      shadowColor: colors.primary,
+      shadowOffset: { width: 0, height: 0 },
+      shadowOpacity: 0.2,
+      shadowRadius: 6,
+    },
+    cardFace: {
+      backfaceVisibility: 'hidden',
+    },
+    cardFlipped: {
+      backgroundColor: colors.cardFront,
+      borderColor: colors.primary,
+      borderWidth: 2,
+    },
+    cardMatched: {
+      backgroundColor: colors.success,
+      opacity: 0.7,
+    },
+    cardBackText: {
+      color: colors.primary,
+      fontSize: 32,
+      fontWeight: 'bold',
+    },
   container: {
     flex: 1,
     backgroundColor: colors.background,
+    // Removido bordas e margens para tela cheia
   },
   header: {
     flexDirection: 'row',
@@ -358,6 +551,19 @@ const styles = StyleSheet.create({
       textShadowOffset: { width: 0, height: 0 },
       textShadowRadius: 5,
   },
+  progressBarContainer: {
+    width: '80%',
+    height: 6,
+    backgroundColor: 'rgba(255,255,255,0.2)',
+    borderRadius: 3,
+    alignSelf: 'center',
+    marginBottom: 15,
+    overflow: 'hidden',
+  },
+  progressBarFill: {
+    height: '100%',
+    borderRadius: 3,
+  },
   restartButton: {
       flexDirection: 'row',
       alignSelf: 'center',
@@ -366,39 +572,6 @@ const styles = StyleSheet.create({
       padding: 5,
   },
   restartText: { color: '#888', fontSize: 12, marginLeft: 5 },
-  // Tabuleiro
-  boardScroll: { flexGrow: 1, justifyContent: 'center', paddingBottom: 40 },
-  board: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'center',
-    gap: 10,
-    padding: 10,
-  },
-  card: {
-    backgroundColor: colors.cardBack,
-    borderRadius: 8,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderWidth: 1,
-    borderColor: colors.primary,
-    shadowColor: colors.primary,
-    shadowOffset: { width: 0, height: 0 },
-    shadowOpacity: 0.3,
-    shadowRadius: 5,
-  },
-  cardFlipped: { backgroundColor: colors.cardFront, borderColor: colors.text },
-  cardMatched: {
-    backgroundColor: colors.primary,
-    borderColor: colors.primary,
-    opacity: 0.8,
-  },
-  cardBackText: {
-    color: colors.primary,
-    fontSize: 24,
-    fontWeight: 'bold',
-    opacity: 0.5,
-  },
   // ESTILOS DO MODAL
   modalOverlay: {
       flex: 1,
@@ -408,16 +581,16 @@ const styles = StyleSheet.create({
   },
   modalContent: {
       width: '80%',
-      backgroundColor: '#1a1a1a',
+      backgroundColor: '#1a1a1a', // Voltar para fundo escuro no modal para contraste com o campo
       padding: 30,
       borderRadius: 15,
       alignItems: 'center',
       borderWidth: 2,
       borderColor: colors.primary,
-      shadowColor: colors.primary,
-      shadowOffset: { width: 0, height: 0 },
+      shadowColor: '#000',
+      shadowOffset: { width: 0, height: 2 },
       shadowOpacity: 0.5,
-      shadowRadius: 20,
+      shadowRadius: 10,
       elevation: 10,
   },
   modalTitle: {
@@ -430,14 +603,14 @@ const styles = StyleSheet.create({
   },
   modalText: {
       fontSize: 18,
-      color: '#fff',
+      color: '#fff', // Texto branco
       marginBottom: 5,
       textAlign: 'center',
   },
   modalSubText: {
       fontSize: 14,
-      color: '#aaa',
-      marginBottom: 10, // Ajustado para dar espaço entre os subtextos
+      color: '#ccc', // Cinza claro
+      marginBottom: 10, 
       textAlign: 'center',
   },
   modalButtons: {
@@ -445,7 +618,7 @@ const styles = StyleSheet.create({
       justifyContent: 'space-between',
       width: '100%',
       gap: 15,
-      marginTop: 20, // Espaço extra antes dos botões
+      marginTop: 20, 
   },
   modalBtnPrimary: {
       flex: 1,
@@ -456,7 +629,7 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
   },
   modalBtnTextPrimary: {
-      color: '#000',
+      color: '#000000', // Texto preto no botão branco/amarelo
       fontWeight: 'bold',
       fontSize: 14,
       textTransform: 'uppercase',
@@ -465,16 +638,16 @@ const styles = StyleSheet.create({
       flex: 1,
       backgroundColor: 'transparent',
       borderWidth: 1,
-      borderColor: '#666',
+      borderColor: colors.primary,
       paddingVertical: 12,
       borderRadius: 8,
       alignItems: 'center',
       justifyContent: 'center',
   },
   modalBtnTextOutline: {
-      color: '#fff',
+      color: colors.primary, // Texto da cor primária
       fontSize: 14,
-  }
+  },
 });
 
 export default MemoryGameScreen;

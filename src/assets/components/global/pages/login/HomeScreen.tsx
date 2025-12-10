@@ -39,21 +39,60 @@ const colors = {
 
 // Dados simulados
 const gameData = [
-  { id: '1', title: 'Jogo da Memória', status: 'Novo', color: '#16A085', imageUrl: 'https://picsum.photos/id/237/800/600' },
-  { id: '2', title: 'Quiz', status: 'Popular', color: '#E74C3C', imageUrl: 'https://picsum.photos/id/1040/800/600' },
-  { id: '3', title: 'Puzzle de Código', status: 'EM BREVE', color: '#F39C12', imageUrl: 'https://picsum.photos/id/1073/800/600' },
-  { id: '4', title: 'Corrida Turbo 3D', status: 'EM BREVE', color: '#2980B9', imageUrl: 'https://picsum.photos/id/1076/800/600' },
-  { id: '5', title: 'Fúria dos Dragões', status: 'EM BREVE', color: '#8E44AD', imageUrl: 'https://picsum.photos/id/1084/800/600' },
-  { id: '6', title: 'Estratégia Galáctica', status: 'EM BREVE', color: colors.primary, imageUrl: 'https://picsum.photos/id/1096/800/600' },
+    {
+        id: '1',
+        title: 'Jogo da Memória',
+        status: 'Novo',
+        color: '#16A085',
+        imageSource: require('../../../../images/NeymarCapa.png'), // Capa Personalizada
+        resizeMode: 'contain' as const,
+        backgroundColor: '#1a1a1a', // Ajuste este código HEX para a cor exata do fundo da imagem
+    },
+    {
+        id: '2',
+        title: 'Quiz',
+        status: 'Popular',
+        color: '#E74C3C',
+        imageSource: { uri: 'https://images.unsplash.com/photo-1633613286991-611fe299c4be?q=80&w=800&auto=format&fit=crop' }, // Ponto de Interrogação 3D
+    },
+    {
+        id: '3',
+        title: 'Puzzle de Código',
+        status: 'EM BREVE',
+        color: '#F39C12',
+        imageSource: { uri: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=800&auto=format&fit=crop' }, // Matrix / Código Hacker
+    },
+    {
+        id: '4',
+        title: 'Corrida Turbo 3D',
+        status: 'EM BREVE',
+        color: '#2980B9',
+        imageSource: { uri: 'https://images.unsplash.com/photo-1511994714008-b6d68a8b32a2?q=80&w=800&auto=format&fit=crop' }, // Carro de Corrida (F1)
+    },
+    {
+        id: '5',
+        title: 'Fúria dos Dragões',
+        status: 'EM BREVE',
+        color: '#8E44AD',
+        imageSource: { uri: 'https://images.unsplash.com/photo-1577493340887-b7bfff550145?q=80&w=800&auto=format&fit=crop' }, // Olho de Dragão / Gato místico
+    },
+    {
+        id: '6',
+        title: 'Estratégia Galáctica',
+        status: 'EM BREVE',
+        color: colors.primary,
+        imageSource: { uri: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=800&auto=format&fit=crop' }, // Terra vista do espaço
+    },
 ];
 
 interface HomeScreenProps {
-  onLogout: () => void;
-  onGameSelect: (gameTitle: string) => void;
+    onLogout: () => void;
+    onGameSelect: (gameTitle: string) => void;
+    onOpenFriends?: () => void;
 }
 
-const HomeScreen: React.FC<HomeScreenProps> = ({ onLogout, onGameSelect }) => {
-  const [activeIndex, setActiveIndex] = useState(0);
+const HomeScreen: React.FC<HomeScreenProps> = ({ onLogout, onGameSelect, onOpenFriends }) => {
+    const [activeIndex, setActiveIndex] = useState(0);
 
   const handleGamePress = (game: typeof gameData[0]) => {
     if (game.status.toUpperCase() === 'EM BREVE') {
@@ -67,9 +106,13 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ onLogout, onGameSelect }) => {
     }
   };
 
-  const handleTabPress = (tabName: string) => {
-      Alert.alert("Navegação", `Abrindo ${tabName}... (Funcionalidade em breve)`);
-  };
+    const handleTabPress = (tabName: string) => {
+        if (tabName === 'Amigos' && onOpenFriends) {
+            onOpenFriends();
+        } else {
+            Alert.alert("Navegação", `Abrindo ${tabName}... (Funcionalidade em breve)`);
+        }
+    };
 
   // Atualiza o índice ativo ao rolar o carrossel
   const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
@@ -120,15 +163,18 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ onLogout, onGameSelect }) => {
                 return (
                 <View key={game.id} style={styles.slideWrapper}>
                     <TouchableOpacity
-                        style={styles.gameCard}
+                        style={[
+                            styles.gameCard, 
+                            (game as any).backgroundColor ? { backgroundColor: (game as any).backgroundColor } : {}
+                        ]}
                         onPress={() => handleGamePress(game)}
                         activeOpacity={0.9}
                     >
                         {/* Imagem de Fundo */}
                         <Image
-                            source={{ uri: game.imageUrl }}
+                            source={game.imageSource}
                             style={styles.cardImage}
-                            resizeMode="cover"
+                            resizeMode={(game as any).resizeMode || "cover"}
                         />
 
                         {/* Overlay Gradiente/Escuro */}
@@ -212,7 +258,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingHorizontal: 20,
-    paddingTop: 15,
+    paddingTop: 40, // Aumentado para baixar o conteúdo do header
     paddingBottom: 15,
     backgroundColor: colors.background,
     zIndex: 10,
@@ -258,13 +304,15 @@ const styles = StyleSheet.create({
   // --- ESTRUTURA DO CARROSSEL ---
   mainContainer: {
       flex: 1,
-      justifyContent: 'flex-start', // Começa do topo
-      paddingTop: 20,
+      justifyContent: 'center', // Centraliza verticalmente
+      paddingTop: 0,
+      paddingBottom: 100, // Espaço extra para não sobrepor a barra inferior
   },
   sectionTitleContainer: {
     width: '100%',
     paddingHorizontal: 20,
-    marginBottom: 15,
+    marginBottom: 20,
+    alignItems: 'center', // Centraliza o título
   },
   sectionTitle: {
     fontSize: 28,
@@ -275,16 +323,19 @@ const styles = StyleSheet.create({
     textShadowColor: colors.primary,
     textShadowOffset: { width: 0, height: 0 },
     textShadowRadius: 8,
+    textAlign: 'center',
   },
   carouselContainer: {
-      height: height * 0.55, // Reduzido para ficar mais compacto
+      height: height * 0.6, // Aumentado um pouco para dar respiro
       alignItems: 'center',
+      justifyContent: 'center',
   },
   scrollContent: {
       alignItems: 'center',
+      justifyContent: 'center',
   },
   slideWrapper: {
-      width: width, // O container do slide tem a largura total
+      width: width, // Ocupa a largura total da tela para o pagingEnabled funcionar corretamente
       height: '100%',
       justifyContent: 'center',
       alignItems: 'center',
@@ -292,8 +343,8 @@ const styles = StyleSheet.create({
 
   // --- ESTILO DO CARD GIGANTE ---
   gameCard: {
-      width: width * 0.8, // 80% da largura da tela para um bom destaque sem ocupar tudo
-      height: '90%',
+      width: '85%', // Largura relativa ao slideWrapper
+      aspectRatio: 0.7, // Mantém proporção retangular vertical (tipo carta)
       backgroundColor: colors.cardBackground,
       borderRadius: 20,
       overflow: 'hidden',
@@ -303,10 +354,6 @@ const styles = StyleSheet.create({
       shadowOpacity: 0.5,
       shadowRadius: 10,
       position: 'relative',
-      // Transformação para simular o paralelogramo de forma sutil se desejar,
-      // mas em carrossel paginado, cards retos costumam funcionar melhor.
-      // Se quiser inclinado, descomente a linha abaixo:
-      // transform: [{ skewY: '-2deg' }],
   },
   cardImage: {
       width: '100%',
@@ -391,15 +438,20 @@ const styles = StyleSheet.create({
       flexDirection: 'row',
       backgroundColor: colors.tabBarBackground,
       height: 70,
-      borderTopWidth: 1,
-      borderTopColor: '#222',
       justifyContent: 'space-around',
       alignItems: 'center',
       position: 'absolute',
-      bottom: 0,
-      left: 0,
-      right: 0,
-      paddingBottom: 10, 
+      bottom: 20,
+      left: 20,
+      right: 20,
+      borderRadius: 35,
+      borderWidth: 2,
+      borderColor: colors.primary,
+      elevation: 10,
+      shadowColor: colors.primary,
+      shadowOffset: { width: 0, height: 0 },
+      shadowOpacity: 0.5,
+      shadowRadius: 10,
   },
   tabItem: {
       alignItems: 'center',

@@ -1,0 +1,536 @@
+id,tema,pergunta,opcoes,correta,dificuldade
+003e94fd-8a4f-4ef1-ba4a-ce3397239129,Música,Em que cidade nasceu Mozart?,"[""Viena"",""Salzburgo"",""Berlim"",""Praga""]",1,dificil
+01b72e4c-ee6c-41c8-aa63-8a1976e5e19d,Ciências,"O que significa um animal ser ""carnívoro""?","[""Come plantas"",""Come carne"",""Come tudo"",""Come insetos""]",1,facil
+01f08f89-e6c2-4f91-ad79-9214e075081c,Música,Qual foi o último álbum gravado pelos Beatles?,"[""Let It Be"",""Abbey Road"",""Sgt. Pepper"",""Revolver""]",1,dificil
+0230aa3f-5cdf-47fd-a855-2c71ae827704,Música,"O que é um ""Hit""?","[""Uma música ruim"",""Uma música de muito sucesso"",""Um instrumento quebrado"",""Um cantor iniciante""]",1,facil
+02bd32a7-c3b9-4cc1-8b33-afa1f4d8162b,Cinema,"Quem é o vilão em ""101 Dálmatas""?","[""Malévola"",""Cruella de Vil"",""Úrsula"",""Rainha Má""]",1,facil
+037dafed-feed-46b1-8a28-31096eb9f179,Esportes,"Qual esporte pratica Rayssa Leal (""Fadinha"")?","[""Ginástica"",""Skate"",""Surfe"",""Natação""]",1,media
+038bf34b-7b54-42a2-b605-fbf236fdc02c,Tecnologia,"Na segurança da informação, o que é um ataque DDoS?","[""Roubo de senha"",""Negação de serviço distribuída"",""Injeção de SQL"",""Vírus de macro""]",1,dificil
+04015dda-f2f1-4e62-b1ce-77793aeef780,Esportes,Qual a distância de uma maratona oficial?,"[""21 km"",""42.195 km"",""50 km"",""10 km""]",1,media
+04a64982-8689-42e2-913a-5039d22f81eb,Tecnologia,Qual linguagem é conhecida como a mãe das linguagens?,"[""C"",""Assembly"",""Fortran"",""Java""]",0,facil
+0527c975-e2e1-4f9f-9cd4-93f7d06b327d,Geografia,O Monte Kilimanjaro fica em qual país?,"[""Quênia"",""África do Sul"",""Tanzânia"",""Nigéria""]",2,dificil
+055711a5-8027-4adc-89ef-7cb984e06bff,Música,Qual banda foi liderada por Jim Morrison?,"[""The Doors"",""The Who"",""Led Zeppelin"",""Janis Joplin""]",0,dificil
+05746931-ec6e-4682-b4f0-74dc77ba906e,Geografia,Qual é a capital da Índia?,"[""Mumbai"",""Nova Delhi"",""Calcutá"",""Bangalore""]",1,dificil
+05e1f9cf-53ea-4308-9ec2-caf80928ad42,Música,Quantas teclas tem um piano padrão completo?,"[""66"",""76"",""88"",""100""]",2,dificil
+064e1584-bb9c-4b0d-95b8-2af4e20f38f8,Tecnologia,O que significa a sigla SQL?,"[""Structured Query Language"",""Simple Question List"",""System Quality Label"",""Standard Query Level""]",0,dificil
+06f1a4c3-6701-43ce-bf8e-88841998d70f,Cinema,Qual é a arma principal do Thor?,"[""Escudo"",""Arco e flecha"",""Martelo"",""Espada""]",2,facil
+06fd3035-d35e-48ac-8938-01b62b42a2af,Esportes,Qual ginasta americana é considerada uma das maiores da história?,"[""Nadia Comaneci"",""Simone Biles"",""Daiane dos Santos"",""Rebeca Andrade""]",1,media
+077e1cbf-db14-4ccb-8821-8224bf41b848,Cinema,"Qual peixe o pai procura em ""Procurando Nemo""?","[""Dory"",""Nemo"",""Marlin"",""Tubarão""]",1,facil
+08f77305-7ce6-47f4-a95f-c352e84a57de,Música,"Qual banda canta ""Yellow Submarine""?","[""Rolling Stones"",""The Beatles"",""Queen"",""Pink Floyd""]",1,facil
+09092c5c-5519-4eb0-9a39-fb7ff5f02514,Geografia,Qual é a capital da Austrália?,"[""Sydney"",""Melbourne"",""Canberra"",""Perth""]",2,media
+091972ac-5862-4948-b24a-c0ae9e8d73d2,Cinema,Quem foi o primeiro ator a interpretar James Bond no cinema?,"[""Roger Moore"",""Sean Connery"",""Timothy Dalton"",""Pierce Brosnan""]",1,dificil
+09ed3690-b800-4913-865a-d132d0a53d87,Música,Qual estilo musical é associado a Bob Marley?,"[""Jazz"",""Reggae"",""Blues"",""Rock""]",1,facil
+0a83138a-082b-4e02-a9a0-e5fb79a34c48,Música,"O que é ""a cappella""?","[""Cantar sem instrumentos"",""Cantar gritando"",""Tocar bateria"",""Dançar""]",0,facil
+0be2af11-8a19-4d31-914a-10a815eac518,Ciências,Qual instrumento é usado para ver coisas muito pequenas?,"[""Telescópio"",""Microscópio"",""Periscópio"",""Estetoscópio""]",1,facil
+0c19b787-be2b-473e-8c1a-d8b2c94ae666,Cinema,"Qual a única cor que aparece em destaque em ""A Lista de Schindler""?","[""Azul"",""Amarelo"",""Verde"",""Vermelho""]",3,dificil
+0c259ecc-18e2-42a5-bb19-e578e98ab252,Música,Qual é o álbum mais vendido da história (até 2023)?,"[""Back in Black"",""Thriller"",""The Bodyguard"",""Dark Side of the Moon""]",1,media
+0cdccc2b-2e2d-4a3f-af1c-66ab7bb0719e,Geografia,Qual é a capital da Inglaterra?,"[""Paris"",""Dublin"",""Londres"",""Edimburgo""]",2,facil
+0d7a453f-29fb-4dc1-8996-39b16b05de29,Esportes,Qual país sediou a Copa do Mundo de 2014?,"[""África do Sul"",""Brasil"",""Rússia"",""Alemanha""]",1,facil
+0da9c436-fec2-4c1f-b0d5-bb1bf6c6c8e6,Música,"Qual cantora brasileira é conhecida como ""A Pequena Notável""?","[""Elis Regina"",""Carmen Miranda"",""Gal Costa"",""Rita Lee""]",1,facil
+0dc31311-dc82-471a-a89d-24b6d42265c8,Cinema,Qual era o nome verdadeiro de Marilyn Monroe?,"[""Norma Jeane"",""Audrey Hepburn"",""Grace Kelly"",""Elizabeth Taylor""]",0,dificil
+0e175f39-b9a6-4dbb-a4ba-8dfff2f1337a,Tecnologia,"O que é um ""Pen Drive""?","[""Dispositivo de armazenamento"",""Antena de internet"",""Tipo de tela"",""Cabo de vídeo""]",0,facil
+0ea756bc-4972-4686-b58f-92c2fd00db61,Ciências,Qual é o símbolo químico do Ouro?,"[""Ou"",""Ag"",""Au"",""Fe""]",2,media
+0f247427-68f9-4362-a67b-e82f6e03fbda,Tecnologia,Qual empresa fabrica o iPhone?,"[""Samsung"",""Motorola"",""Apple"",""Xiaomi""]",2,facil
+0f902511-e8f0-4828-adca-370d640679d8,Ciências,Quem formulou a Tabela Periódica original?,"[""Marie Curie"",""Dmitri Mendeleev"",""Niels Bohr"",""Rutherford""]",1,dificil
+0fbf1900-1570-4c1a-a41c-279abb8a6489,Ciências,O que protege o nosso cérebro?,"[""Costelas"",""Crânio"",""Bacia"",""Fêmur""]",1,facil
+0fcf87e2-6caa-468e-a9ea-d709f37c63bb,Tecnologia,Hexadecimal é um sistema de base:,"[""10"",""8"",""2"",""16""]",3,dificil
+0fd11752-9690-48a6-a07b-de90dd036b91,Geografia,Qual é a capital da Holanda (Países Baixos)?,"[""Roterdã"",""Haia"",""Amsterdã"",""Utrecht""]",2,media
+103c4628-ffde-4fe8-8deb-1b19e6fce8d4,Tecnologia,Qual aplicativo é famoso por mensagens instantâneas no Brasil?,"[""Skype"",""ICQ"",""WhatsApp"",""Outlook""]",2,facil
+105e0a12-ed0a-4b58-a50b-9cf11f88a61c,Geografia,O Japão fica em qual continente?,"[""Europa"",""Ásia"",""Oceania"",""África""]",1,facil
+110ddbe0-7a6b-4429-a728-85969d1e109c,Geografia,Qual é a floresta mais famosa do Brasil?,"[""Mata Atlântica"",""Caatinga"",""Amazônia"",""Cerrado""]",2,facil
+111b25bf-eac4-4d3a-92a0-85aaf763e0e2,Esportes,Em qual ano Ayrton Senna faleceu?,"[""1992"",""1993"",""1994"",""1995""]",2,dificil
+1148cd90-0a0b-4176-b644-a25b65c5e12d,Geografia,Qual é o rio mais extenso do mundo?,"[""Nilo"",""Amazonas"",""Mississipi"",""Yangtzé""]",1,media
+11f01ed0-7f49-418f-894e-a6a73adb0746,Ciências,Qual partícula atômica não possui carga elétrica?,"[""Próton"",""Elétron"",""Nêutron"",""Fóton""]",2,dificil
+1234f00f-a40a-422c-8ca1-d750526ffe00,Geografia,Qual é a capital da Espanha?,"[""Barcelona"",""Sevilha"",""Madri"",""Valência""]",2,media
+1423cc78-cd79-4892-a82e-9862558639f6,Música,"Quem cantou ""Thriller""?","[""Prince"",""Michael Jackson"",""Stevie Wonder"",""Bruno Mars""]",1,facil
+15993b1d-e94d-4e25-998d-8c48a01278c9,Geografia,Qual destes países NÃO faz parte do Reino Unido?,"[""Inglaterra"",""Escócia"",""Irlanda (República)"",""País de Gales""]",2,dificil
+160ca7d9-fcf1-473d-9cc3-4ae2cf07639a,Cinema,Qual filme é famoso pela cena do chuveiro e a trilha sonora estridente?,"[""Halloween"",""Pânico"",""Psicose"",""Sexta-feira 13""]",2,media
+161cd9b4-8a57-46a3-baac-25e2b422be17,Esportes,"Qual jogador fez o gol conhecido como ""A Mão de Deus""?","[""Pelé"",""Messi"",""Maradona"",""Zico""]",2,dificil
+163233ff-0e2b-4a81-b8ce-baac33922816,Ciências,O que a camada de ozônio protege?,"[""Contra meteoros"",""Contra raios ultravioleta (UV)"",""Contra o frio"",""Contra alienígenas""]",1,media
+16afe6c7-06b1-44d9-abb1-211c3ab1820a,Esportes,"No tênis, o que é um ""Ace""?","[""Um saque que o adversário não toca na bola"",""Uma falta"",""Um ponto perdido"",""Uma raquete quebrada""]",0,facil
+172b9722-abb3-43d1-b499-69241a6f43fe,Geografia,Onde fica o ponto mais profundo dos oceanos (Fossa das Marianas)?,"[""Oceano Atlântico"",""Oceano Índico"",""Oceano Pacífico"",""Oceano Ártico""]",2,dificil
+173f63ef-b9bd-4411-9e61-9d552ccfed6f,Música,"Qual cantora é conhecida pelo álbum ""Back to Black""?","[""Adele"",""Amy Winehouse"",""Lana Del Rey"",""Duffy""]",1,media
+18162f2b-1dc0-4382-bda2-b5d1015bd98e,Geografia,Onde fica a cidade de Machu Picchu?,"[""Chile"",""Brasil"",""Peru"",""Colômbia""]",2,facil
+1832ef6f-394d-455e-9f8f-b2f558fba81f,Geografia,Qual é o maior lago da América do Sul?,"[""Lago Titicaca"",""Lago de Maracaibo"",""Lagoa dos Patos"",""Lago Argentino""]",0,media
+193a35c7-1fa6-4d2c-9f6c-5bfd3357ffa9,Geografia,Qual país tem a maior quantidade de fusos horários (incluindo territórios)?,"[""Rússia"",""EUA"",""França"",""China""]",2,dificil
+19b20d25-c054-4ef3-a015-a76c99a3fbca,Esportes,Qual esporte usa cavalos?,"[""Hipismo"",""Ciclismo"",""Atletismo"",""Esgrima""]",0,facil
+1a1addbd-bbfb-4ec6-b482-1f720a950158,Geografia,Qual a cor principal da bandeira da China?,"[""Azul"",""Branco"",""Vermelho"",""Amarelo""]",2,facil
+1a2102d8-c17d-4d40-9c63-4872b96fe47a,Música,"Em teoria musical, o que é ""Andante""?","[""Um andamento rápido"",""Um andamento moderado/lento"",""Um tipo de instrumento"",""Uma nota aguda""]",1,dificil
+1a512b49-323b-4dcb-8247-fe22aca63923,Cinema,"Quem é o compositor famoso pelas trilhas de Star Wars, Tubarão e Indiana Jones?","[""Hans Zimmer"",""Ennio Morricone"",""John Williams"",""Danny Elfman""]",2,dificil
+1aa9eda9-7d33-47be-887e-e9243dd1d32a,Esportes,Quantos anéis formam o símbolo das Olimpíadas?,"[""4"",""5"",""6"",""3""]",1,facil
+1b400a38-a4d0-4ac4-87f4-663b6591219a,Ciências,Qual metal é o melhor condutor elétrico (em condições normais)?,"[""Ouro"",""Cobre"",""Prata"",""Alumínio""]",2,dificil
+1bbe8ecc-4ad5-4d3b-bfb4-1c6c7ff7e19d,Cinema,Qual filme cometeu a gafe de ser anunciado vencedor do Oscar errado em 2017?,"[""Moonlight"",""La La Land"",""A Chegada"",""Spotlight""]",1,media
+1cd2d67e-3889-46c0-9e5b-483b329fbab1,Cinema,"Em ""Shrek"", quem é o melhor amigo do ogro?","[""Gato de Botas"",""Burro"",""Fiona"",""Dragão""]",1,facil
+1cda2577-8578-4b71-a3ad-57339d7e7d91,Geografia,Qual país da América do Sul não tem saída para o mar?,"[""Uruguai"",""Paraguai"",""Venezuela"",""Equador""]",1,dificil
+1e0b27af-29cf-4a0d-a8fe-dbb7ba9155fe,Esportes,"Qual esporte usa a expressão ""Checkmate"" (Xeque-mate)?","[""Damas"",""Xadrez"",""Gamão"",""Dominó""]",1,media
+1e8ac524-73d9-454d-a2bd-525938273fe5,Ciências,As baleias e golfinhos respiram por onde?,"[""Brânquias"",""Guelras"",""Pulmões"",""Pele""]",2,media
+1f1eddb2-1990-4ee0-b0e5-a3438385ecb9,Geografia,Qual país europeu é dividido em Cantões?,"[""Alemanha"",""França"",""Suíça"",""Bélgica""]",2,dificil
+1ff5fd6e-a225-4ada-83fe-7fbebb1336c7,Cinema,Qual o nome da boneca possuída no universo de Invocação do Mal?,"[""Chucky"",""Annabelle"",""Tiffany"",""Samara""]",1,media
+206c906d-a7d1-45f2-aef2-7653e2a73b82,Tecnologia,O que significa CPU?,"[""Central Process Unit"",""Computer Personal Unit"",""Central Power Unit"",""Core Processing Unit""]",0,facil
+20f14f84-9d85-4260-ad34-d4eee4252f94,Geografia,Qual é a capital do Irã?,"[""Bagdá"",""Teerã"",""Cabul"",""Damasco""]",1,dificil
+216a55e2-a8e1-4024-9783-d444659b300c,Música,Qual instrumento é a base do Choro (Chorinho)?,"[""Guitarra"",""Cavaquinho"",""Bateria"",""Violoncelo""]",1,media
+2199b1bc-8595-4ec3-ba5e-b220bd506da6,Tecnologia,Qual é o mascote do sistema Linux?,"[""Um pinguim (Tux)"",""Uma maçã"",""Uma janela"",""Um robô""]",0,dificil
+22cf9459-e6b7-417d-ba0f-f68ba91b3500,Cinema,"Qual o tema principal da franquia ""Velozes e Furiosos""?","[""Motos"",""Carros"",""Aviões"",""Barcos""]",1,facil
+241c72e9-76c0-4bca-b8e7-bf4ec49dde24,Geografia,Qual deserto cobre grande parte do norte da África?,"[""Kalahari"",""Saara"",""Gobi"",""Atacama""]",1,media
+2457a710-446d-45e4-8249-e56798704ee4,Esportes,Qual jogador marcou o milésimo gol da carreira no Maracanã?,"[""Romário"",""Pelé"",""Zico"",""Roberto Dinamite""]",1,dificil
+246d886a-558d-4a00-8b45-58904710a58d,Ciências,O que é um ano-luz?,"[""Uma medida de tempo"",""Uma medida de distância"",""Uma medida de brilho"",""Uma medida de velocidade""]",1,media
+256cfa9a-9cd3-4dbc-b66b-55e2c451d4dc,Tecnologia,Python é uma linguagem de qual nível?,"[""Baixo nível"",""Médio nível"",""Alto nível"",""Nível de máquina""]",2,media
+2587f39a-a81a-4c40-b437-3a6420288e91,Tecnologia,Qual é o nome da supercomputador da IBM que venceu no Jeopardy?,"[""Deep Blue"",""Watson"",""Hal 9000"",""AlphaGo""]",1,dificil
+25ec7a31-d7f7-442a-8b0a-d9cdfd4d9652,Música,O violino é tocado com o quê?,"[""Palheta"",""Arco"",""Baquetas"",""Dedais""]",1,facil
+26355002-83c3-4394-a49c-821f952ff552,Música,Qual é o nome verdadeiro da cantora Anitta?,"[""Larissa"",""Amanda"",""Anita"",""Carolina""]",0,media
+265c1528-0bab-466b-a613-033592ce64c5,Música,Em qual cidade os Beatles começaram?,"[""Londres"",""Liverpool"",""Manchester"",""Birmingham""]",1,media
+2726700a-87f5-43c1-b5b6-c880a4898874,Música,Qual destes é um serviço de música (streaming)?,"[""Netflix"",""Spotify"",""Uber"",""Instagram""]",1,facil
+273405c4-d791-44a4-b7dd-d4ca2b4cd563,Cinema,"Em ""Jurassic Park"", que animais são recriados?","[""Mamutes"",""Dinossauros"",""Dragões"",""Tigres""]",1,facil
+2741e6c7-eb29-4b4b-865d-18ad44b1e515,Música,Robert Johnson é uma lenda de qual estilo?,"[""Jazz"",""Blues"",""Rock"",""Country""]",1,dificil
+294f0765-abcb-422e-82ab-636ab90a88a8,Geografia,Onde fica a Estátua da Liberdade?,"[""Paris"",""Nova York"",""Londres"",""Rio de Janeiro""]",1,facil
+29c1c6ae-92f2-4288-87f0-2b0ea6b111df,Geografia,Qual é a capital das Filipinas?,"[""Jacarta"",""Manila"",""Bangkok"",""Hanoi""]",1,dificil
+2a2be73b-8429-481a-9078-b506dd1738bd,Ciências,Onde o bebê humano se desenvolve antes de nascer?,"[""Estômago"",""Útero"",""Coração"",""Fígado""]",1,facil
+2b765233-699d-43c2-8cb9-7a78b61cb2c3,Tecnologia,Qual atalho de teclado é usado para copiar?,"[""Ctrl+V"",""Ctrl+C"",""Ctrl+Z"",""Alt+F4""]",1,facil
+2b979a39-a81b-4e19-aa40-61352bf671f4,Esportes,"O que significa ""K.O."" no boxe?","[""Knock Out (Nocaute)"",""Kick Off"",""Keep On"",""King Of""]",0,facil
+2ba1cd31-d540-4941-91da-94e77ae71581,Esportes,Quem é Usain Bolt?,"[""Nadador"",""Corredor"",""Joador de basquete"",""Goleiro""]",1,facil
+2bb566c3-6ccf-44c5-bd2d-5a2fb8d9262c,Tecnologia,Qual foi o primeiro computador eletrônico de uso geral?,"[""ENIAC"",""Macintosh"",""Altair"",""IBM PC""]",0,dificil
+2be1c31c-d282-4adc-93fd-adc5d99cdff9,Cinema,"Em ""Piratas do Caribe"", quem é o Capitão?","[""Jack Sparrow"",""Barba Negra"",""Capitão Gancho"",""Davy Jones""]",0,facil
+2e480fda-9781-488a-aa96-c2cbe1663caa,Música,Quem é conhecido como o Rei do Pop?,"[""Elvis Presley"",""Michael Jackson"",""Prince"",""Freddie Mercury""]",1,facil
+2f15af43-8fd6-432b-8aea-45e59de3f687,Música,"Quem canta ""Como Nossos Pais""? (Famosa na voz de...)","[""Rita Lee"",""Elis Regina"",""Maria Bethânia"",""Cássia Eller""]",1,media
+2fc9c89f-2e39-4d8d-bdd4-ad6b93027d0d,Esportes,Qual é o objetivo do Golfe?,"[""Fazer gols"",""Acertar a bola no buraco com menos tacadas"",""Correr mais rápido"",""Nocautear o oponente""]",1,facil
+3005b8ff-b5db-474c-97fe-f641a83cd7c8,Geografia,Em qual país fica o Taj Mahal?,"[""Índia"",""Tailândia"",""China"",""Egito""]",0,facil
+30f0e153-00de-4ec7-8f91-86bb8c16da47,Música,"Qual cantora britânica canta ""Hello"" e ""Rolling in the Deep""?","[""Rihanna"",""Adele"",""Dua Lipa"",""Amy Winehouse""]",1,facil
+33177a08-6f35-4966-b54d-5599be4c515e,Cinema,Quem interpretou o Coringa no filme de 1989?,"[""Heath Ledger"",""Jack Nicholson"",""Jared Leto"",""Cesar Romero""]",1,media
+33d1d2a2-7224-4eba-b1c9-da2bb8662be3,Tecnologia,O que é um Emoji?,"[""Um vírus"",""Um pictograma usado em mensagens"",""Uma marca de celular"",""Um comando de voz""]",1,facil
+348efcf6-06a0-46eb-9863-e149417c253a,Esportes,"O que é um ""Hat-trick"" no futebol?","[""Fazer 3 gols no mesmo jogo"",""Ser expulso"",""Defender um pênalti"",""Fazer um gol de cabeça""]",0,media
+349cb565-4464-4b79-aa50-901c6cdc0787,Tecnologia,Qual foi a primeira linguagem de programação de alto nível?,"[""C"",""Fortran"",""Assembly"",""COBOL""]",1,dificil
+357e8e01-d164-4f41-9c87-be57c4010690,Geografia,O Estreito de Bósforo divide qual cidade em dois continentes?,"[""Istambul"",""Cairo"",""Atenas"",""Roma""]",0,dificil
+35c35b63-4c33-41da-a5cc-3206abbe0a1e,Geografia,Qual é a capital da França?,"[""Londres"",""Berlim"",""Paris"",""Madri""]",2,facil
+35de3f73-cdec-40ac-b090-f3b804a09e09,Música,Qual é a nacionalidade da banda AC/DC?,"[""Americana"",""Inglesa"",""Australiana"",""Canadense""]",2,media
+36543822-1d4a-4aa4-b59f-172485cfea39,Esportes,Qual objeto é usado no Hóquei no Gelo?,"[""Bola"",""Disco (Puck)"",""Peteca"",""Dado""]",1,facil
+377cceff-463f-4fb7-a2c4-9ad3b3c49ca1,Cinema,O que significa a sigla CGI?,"[""Computer Generated Imagery"",""Cinema Graphic Interface"",""Central Graphics Integration"",""Color Grade Image""]",0,dificil
+3856889a-5ab9-4830-8edf-d832338bdaa4,Tecnologia,Qual empresa criou a linguagem Java?,"[""Microsoft"",""Sun Microsystems"",""Apple"",""IBM""]",1,dificil
+38620812-4de9-45a0-9944-06462646fe2a,Ciências,Qual é o maior animal do mundo?,"[""Elefante Africano"",""Baleia Azul"",""Girafa"",""Dinossauro""]",1,facil
+39a01829-1ac7-4e51-a5fd-be77440ecdda,Esportes,Qual a altura da rede de vôlei masculino?,"[""2,24m"",""2,35m"",""2,43m"",""2,50m""]",2,media
+3aa1e5a8-fbf6-48c7-b900-1f67069d64c8,Ciências,Qual é o satélite natural da Terra?,"[""Sol"",""Marte"",""Lua"",""Estrela""]",2,facil
+3afeca1b-113e-47bb-a11e-d71a9559a555,Geografia,Qual é a cachoeira mais alta do mundo (Salto Ángel)?,"[""Niágara (EUA)"",""Iguaçu (Brasil)"",""Salto Ángel (Venezuela)"",""Victoria (Zâmbia)""]",2,dificil
+3b34dda9-a024-4d34-8fbc-45fc84c45d84,Música,"Quem é conhecido como ""The Boss""?","[""Bob Dylan"",""Bruce Springsteen"",""Elvis Presley"",""David Bowie""]",1,media
+3b50145d-c03d-43cd-a55b-8c1cd596d3df,Geografia,Qual é a capital da Polônia?,"[""Cracóvia"",""Varsóvia"",""Gdansk"",""Poznan""]",1,dificil
+3bd3db61-78e6-4ab4-b510-ae4238d555ab,Tecnologia,"O que significa ""Download""?","[""Enviar arquivo"",""Baixar arquivo"",""Apagar arquivo"",""Editar arquivo""]",1,facil
+40b9d626-a2df-4a07-8474-e4b23935599a,Esportes,Quem é conhecido como o Rei do Futebol?,"[""Maradona"",""Messi"",""Pelé"",""Cristiano Ronaldo""]",2,facil
+41960db2-431a-4035-9a92-6d003995977a,Cinema,"Qual família mafiosa é retratada em ""O Poderoso Chefão""?","[""Soprano"",""Corleone"",""Capone"",""Gambino""]",1,media
+41b12658-e78a-47cb-abe6-7e979a95f794,Música,Qual o nome do vocalista dos Rolling Stones?,"[""Paul McCartney"",""Mick Jagger"",""Bono"",""Steven Tyler""]",1,facil
+425e3cf1-aea9-4bbc-8906-bee9942ea15a,Cinema,Qual esporte é jogado em vassouras em Harry Potter?,"[""Quadribol"",""Futebol"",""Vôlei"",""Xadrez""]",0,facil
+4313174a-17d1-419f-acdc-d235b0a7bc73,Geografia,Qual é a capital da Argentina?,"[""Santiago"",""Buenos Aires"",""Montevidéu"",""Bogotá""]",1,facil
+4322f043-a510-445a-a47b-ce6c0addb750,Geografia,Onde ficam as Cataratas do Iguaçu?,"[""Divisa Brasil/Argentina"",""Divisa Brasil/Paraguai"",""Divisa Brasil/Uruguai"",""No centro do Brasil""]",0,media
+43ac06e4-9a9c-4442-a8f3-88d649073a11,Ciências,O que o pulmão respira?,"[""Água"",""Comida"",""Ar"",""Sangue""]",2,facil
+44d8cc55-a486-4b60-80f4-5fccde7b55df,Esportes,Qual país inventou o Badminton?,"[""China"",""Índia (como Poona)"",""Inglaterra"",""Japão""]",1,dificil
+455e6b5a-a55c-4e1b-875c-9c5e3a84169f,Esportes,Em qual esporte se usa uma raquete e uma bola amarela?,"[""Futebol"",""Tênis"",""Basquete"",""Vôlei""]",1,facil
+45aba5e8-47d9-4521-9c4a-a740cf3e4bca,Ciências,O que o termômetro mede?,"[""Tempo"",""Peso"",""Distância"",""Temperatura""]",3,facil
+46256e49-51ec-46ca-8bbc-c6b459850094,Música,Justin Bieber nasceu em qual país?,"[""EUA"",""Canadá"",""Inglaterra"",""Austrália""]",1,facil
+464a09d0-69e5-4cc2-b84e-3add8008a4e0,Ciências,Qual cor reflete todas as cores de luz?,"[""Preto"",""Branco"",""Vermelho"",""Azul""]",1,facil
+468577e7-66aa-4e65-b8bc-68198c4e9b00,Esportes,Qual seleção feminina de futebol tem mais títulos mundiais?,"[""Brasil"",""Alemanha"",""Estados Unidos"",""Japão""]",2,media
+4691f289-3eda-46cf-8073-39274b454eff,Música,Quantas cordas tem um violão padrão?,"[""4"",""5"",""6"",""7""]",2,facil
+46c6ac0f-9e09-4051-ba83-4b7b2186ae4d,Esportes,Qual time venceu o primeiro Super Bowl da história?,"[""Green Bay Packers"",""New England Patriots"",""Dallas Cowboys"",""Kansas City Chiefs""]",0,dificil
+46f58dda-8181-428e-bbb1-e7e09606165b,Cinema,Quem é o único ator a ganhar 3 Oscars de Melhor Ator Principal?,"[""Jack Nicholson"",""Daniel Day-Lewis"",""Marlon Brando"",""Tom Hanks""]",1,dificil
+4701e9bb-9907-418a-a973-95fd11a08bb9,Geografia,Qual é o formato aproximado da Terra?,"[""Plana"",""Esférica (Geoide)"",""Quadrada"",""Triangular""]",1,facil
+4732a8e7-cdc5-4d99-be44-770fa441b1e6,Música,Qual a cor do submarino na música dos Beatles?,"[""Azul"",""Vermelho"",""Amarelo"",""Verde""]",2,facil
+475fe3b7-4a75-47fa-bf37-9ec967d9c701,Cinema,"Quem dirigiu ""A Lista de Schindler""?","[""Steven Spielberg"",""Martin Scorsese"",""Francis Ford Coppola"",""George Lucas""]",0,media
+48e2c94f-bf78-4404-b0ef-570ffbb4fbbf,Ciências,Qual é o símbolo químico do Ferro?,"[""F"",""Fe"",""Ir"",""Fr""]",1,dificil
+49ea77d8-c881-4a2f-b607-a359f992c0bd,Música,Lady Gaga é conhecida por chamar seus fãs de:,"[""Little Monsters"",""Beliebers"",""KatyCats"",""Swifties""]",0,facil
+4aa91978-a4b3-4725-9bff-cda8d327cf3b,Tecnologia,Qual o computador pessoal mais vendido da história?,"[""Commodore 64"",""iMac"",""Raspberry Pi"",""MSX""]",0,dificil
+4ad5fb1b-7b48-4346-8c45-e4def852dacb,Tecnologia,Qual a principal função da memória RAM?,"[""Armazenamento permanente"",""Armazenamento temporário de acesso rápido"",""Processamento gráfico"",""Conexão com a internet""]",1,media
+4b3067ec-0443-4cef-8e36-19178e78a440,Música,"Quem compôs ""Bolero""?","[""Debussy"",""Ravel"",""Chopin"",""Liszt""]",1,dificil
+4b604434-2231-4118-b631-58b63d7f0432,Geografia,Qual é a capital do Peru?,"[""Cusco"",""Lima"",""Arequipa"",""Quito""]",1,media
+4ba8b89c-c42c-47ae-a054-7428feca2afc,Ciências,"O que é ""Cinética"" na física?","[""Estudo do calor"",""Estudo do movimento"",""Estudo da luz"",""Estudo do som""]",1,media
+4bcf4c50-a033-43bb-83f1-3e1aad9e86d7,Tecnologia,O que diz a Lei de Moore?,"[""A velocidade da luz é constante"",""O número de transistores dobra a cada 2 anos"",""Todo software tem bugs"",""O armazenamento é infinito""]",1,dificil
+4c4c4e9d-6fd5-4400-b0dc-2840a7595109,Tecnologia,"O que é o ""Teste de Turing""?","[""Teste de velocidade de internet"",""Teste para verificar inteligência artificial"",""Teste de resistência de hardware"",""Teste de vídeo""]",1,dificil
+4d7c6707-64a6-4e11-8787-8624d2c61888,Cinema,Quem é o grande vilão roxo dos Vingadores?,"[""Loki"",""Ultron"",""Thanos"",""Caveira Vermelha""]",2,facil
+4e479d23-2af2-45bf-a759-8ac59fc73f86,Ciências,"O que é a ""Viúva Negra""?","[""Uma cobra"",""Uma aranha"",""Uma planta"",""Um fungo""]",1,media
+4e77b961-e2a7-4fd3-9fcb-ed39af6ccb83,Esportes,Qual piloto brasileiro foi tricampeão de Fórmula 1?,"[""Rubens Barrichello"",""Felipe Massa"",""Ayrton Senna"",""Emerson Fittipaldi""]",2,facil
+4f0f3fb1-d5f2-42af-ab88-fd7e3b6f3896,Esportes,Onde o goleiro de futebol pode pegar a bola com a mão?,"[""Em qualquer lugar"",""No meio de campo"",""Dentro da grande área"",""Na lateral""]",2,facil
+4f23c799-0b26-4ba3-93e0-f89126c5928b,Geografia,"Qual país é conhecido como a ""Terra do Sol Nascente""?","[""China"",""Japão"",""Coreia"",""Tailândia""]",1,media
+4f26390a-74e6-48bf-a695-bf84d632e61f,Geografia,Qual é a língua oficial do Brasil?,"[""Espanhol"",""Inglês"",""Português"",""Italiano""]",2,facil
+4f453453-fd29-4985-9f4c-66ff55cab327,Música,"Qual músico de jazz é famoso pelo trompete e voz rouca (""What a Wonderful World"")?","[""Miles Davis"",""Louis Armstrong"",""John Coltrane"",""Duke Ellington""]",1,dificil
+4fd188f9-5f84-449e-a888-9f576481f94f,Cinema,"Qual o nome do teste usado para identificar replicantes em ""Blade Runner""?","[""Turing"",""Voight-Kampff"",""Rorschach"",""IQ Test""]",1,dificil
+4ffff2df-caea-49e4-8e15-22a8f9e63112,Esportes,Qual esporte é praticado em um tatame?,"[""Natação"",""Judô"",""Tênis"",""Golfe""]",1,facil
+50fe41ce-eb17-4a55-8a6d-2fd8db1e4b20,Cinema,"Qual o nome do computador vilão em ""2001: Uma Odisseia no Espaço""?","[""Skynet"",""Ultron"",""HAL 9000"",""Deep Blue""]",2,dificil
+51249d6b-128c-46f7-8642-43190d1e7dad,Geografia,Qual é a capital da Alemanha?,"[""Munique"",""Berlim"",""Hamburgo"",""Frankfurt""]",1,facil
+5131ab6a-066d-48c8-b5da-5d4bfd4ccfcd,Tecnologia,"Qual estrutura de dados utiliza o princípio LIFO (Last In, First Out)?","[""Fila"",""Pilha"",""Árvore"",""Grafo""]",1,dificil
+51755325-6550-4839-9910-4356ea6f2622,Ciências,"O que é a ""Teoria do Big Bang""?","[""Teoria sobre vulcões"",""Teoria sobre a origem do universo"",""Teoria sobre a extinção dos dinossauros"",""Teoria sobre o átomo""]",1,dificil
+52bb2098-188c-40e6-b3fd-0a39405cf414,Cinema,"Qual o nome do tubarão mecânico usado nas filmagens de ""Tubarão""?","[""Bruce"",""Jaws"",""Megalodon"",""Steven""]",0,dificil
+52cc2551-50ae-4507-880e-dd86faea6931,Geografia,Qual é a capital do Egito?,"[""Alexandria"",""Cairo"",""Luxor"",""Gisé""]",1,media
+5354b00f-8428-4860-a83e-abf6ad916f05,Música,Quem é o baterista dos Beatles?,"[""Ringo Starr"",""George Harrison"",""John Bonham"",""Keith Moon""]",0,media
+539580b8-4179-4c5f-817d-20b67414f0c6,Tecnologia,Qual destes programas é usado para criar planilhas?,"[""Word"",""Excel"",""PowerPoint"",""Paint""]",1,facil
+544a860a-9147-48d6-a182-a07339ad0d81,Música,Qual o nome da guitarra famosa de B.B. King?,"[""Lucille"",""Betty"",""Mary"",""Roxanne""]",0,dificil
+5529cc72-2069-466a-98af-c933be92a088,Geografia,Qual é o rio mais longo da Europa (que deságua no Mar Cáspio)?,"[""Danúbio"",""Reno"",""Volga"",""Sena""]",2,dificil
+557ee5c8-a956-44ba-b555-89e0fa8d16b3,Esportes,Quantos sets são necessários para vencer uma partida de vôlei (melhor de 5)?,"[""2"",""3"",""4"",""5""]",1,media
+55ed6032-b4d9-405c-89b3-3a0dcf141d00,Esportes,Qual a cor da camisa principal da Seleção Brasileira de Futebol?,"[""Azul"",""Branca"",""Amarela"",""Verde""]",2,facil
+5701e575-38b8-4a0d-9ae5-cffd8f2a2342,Geografia,O que é latitude?,"[""Distância em relação ao Equador"",""Distância em relação a Greenwich"",""Altura de uma montanha"",""Profundidade do mar""]",0,media
+5753f18f-23f2-4877-9bce-f62f9d152035,Música,Qual banda de rock usa maquiagem preta e branca no rosto?,"[""KISS"",""Iron Maiden"",""Slipknot"",""Bon Jovi""]",0,facil
+5767c209-e0f7-41fe-b926-92b029b3475d,Música,Qual banda de rock tem um vocalista chamado Axl Rose?,"[""Guns N Roses"",""Metallica"",""Red Hot Chili Peppers"",""Nirvana""]",0,media
+588161b7-bb4e-4ef1-9ee2-d802145c3eb6,Tecnologia,"O que é um ""Browser""?","[""Um jogo"",""Um navegador de internet"",""Um editor de texto"",""Um antivírus""]",1,facil
+592a1bca-ef3e-49c0-947c-9419648741bc,Ciências,Qual a função dos glóbulos vermelhos?,"[""Combater vírus"",""Transportar oxigênio"",""Coagular o sangue"",""Produzir hormônios""]",1,media
+5b426a94-d2d3-4bff-bdf0-29331894ec92,Tecnologia,"O que é um ""Qubit""?","[""Bit Quântico"",""Quick Bit"",""Quad Core"",""Quality Bit""]",0,dificil
+5d353864-06ce-4c0a-8181-8e17cf3ac4f1,Esportes,Quantos jogadores compõem um time de Rugby Union?,"[""11"",""13"",""15"",""7""]",2,dificil
+5dfc14d6-af66-402f-852b-cf498a6d9e40,Esportes,Qual piloto detém o recorde de 7 títulos mundiais de F1 junto com Hamilton?,"[""Ayrton Senna"",""Alain Prost"",""Michael Schumacher"",""Sebastian Vettel""]",2,media
+5eb4cd89-7e15-4943-8f81-acc103e93dd2,Ciências,Qual destes animais põe ovos?,"[""Gato"",""Cachorro"",""Galinha"",""Vaca""]",2,facil
+5f14ed92-924f-4b6c-b4fa-f94d92a9b441,Esportes,"O que significa ""VAR"" no futebol?","[""Árbitro de Vídeo"",""Vaga Arriscada Rápida"",""Verificação de Arbitragem"",""Vamos Ao Rio""]",0,facil
+5f3e6b8f-7f0b-4d6a-a444-ad9e910bb56a,Ciências,Quantos sentidos o ser humano possui tradicionalmente?,"[""3"",""4"",""5"",""6""]",2,facil
+5f4b62a4-05d5-4f60-8d42-82dc0def4062,Tecnologia,O que é HTML?,"[""Linguagem de programação"",""Linguagem de marcação"",""Framework"",""Banco de dados""]",1,facil
+5f8714d3-d033-441a-bfcf-55b3e9ca0694,Música,Qual banda grunge era liderada por Kurt Cobain?,"[""Pearl Jam"",""Nirvana"",""Soundgarden"",""Alice in Chains""]",1,media
+5fbb7245-f19d-48f5-8c35-229c70c0a8f6,Cinema,"O que Bilbo e Frodo devem destruir em ""O Senhor dos Anéis""?","[""Uma espada"",""Um anel"",""Um livro"",""Uma coroa""]",1,facil
+5fecc2df-23c9-4c30-94fd-ee6050a6cfdd,Esportes,Quem é Marta no esporte?,"[""Jogadora de Vôlei"",""Jogadora de Futebol"",""Ginasta"",""Nadadora""]",1,facil
+60114045-34a4-4554-8b22-1a614abfd894,Cinema,"Qual é o nome da princesa do gelo em ""Frozen""?","[""Anna"",""Elsa"",""Moana"",""Cinderela""]",1,facil
+613e1a51-7528-4a1e-817d-04dbba15ffaf,Ciências,Qual é o mineral natural mais duro da Terra?,"[""Ouro"",""Ferro"",""Diamante"",""Quartzo""]",2,facil
+61e2f00d-c0e9-46a7-bab9-7847cbc71b26,Cinema,Em que ano foi realizada a primeira cerimônia do Oscar?,"[""1929"",""1935"",""1940"",""1920""]",0,dificil
+6265cefb-0e56-4fd9-b03d-32141bd40f9c,Esportes,O que significa a sigla FIFA?,"[""Federation International Football Association"",""Fédération Internationale de Football Association"",""Football International Federation Agency"",""Federation of International Football Alliances""]",1,dificil
+63f2a0c4-7204-4272-a0e0-ba86b2432486,Cinema,"Qual golpe Daniel LaRusso usa no final de ""Karatê Kid""?","[""Soco do Dragão"",""Chute da Garça"",""Voadora"",""Mata-leão""]",1,media
+64371f6d-4703-4b59-b138-81b463cc89e8,Geografia,Qual é o menor país do mundo?,"[""Mônaco"",""Vaticano"",""San Marino"",""Malta""]",1,media
+644353ce-effa-4b89-953b-8191bd0bc69c,Tecnologia,"O que é um ""mouse""?","[""Dispositivo de saída"",""Dispositivo de entrada"",""Memória"",""Processador""]",1,facil
+6468c346-e88d-409d-ac39-be364d1a6b89,Esportes,"Qual time tem a torcida chamada de ""Fiel""?","[""Flamengo"",""São Paulo"",""Corinthians"",""Palmeiras""]",2,facil
+64d61245-db9c-402b-9ede-57a4970c0146,Tecnologia,Qual o sistema numérico usado nativamente pelos computadores?,"[""Decimal"",""Hexadecimal"",""Binário"",""Octal""]",2,dificil
+64e2171e-d45e-4475-8c6b-398767c34d57,Ciências,Qual é o valor aproximado do Número de Avogadro?,"[""3,14"",""6,02 x 10^23"",""9,8 m/s²"",""1,6 x 10^-19""]",1,dificil
+66140a5a-e76c-43c0-9d70-0b60f18b74ca,Tecnologia,Qual porta é padrão para o protocolo DNS?,"[""80"",""21"",""53"",""443""]",2,dificil
+6675e21b-a58a-46c4-a80e-9b937807e0cd,Cinema,Qual pseudônimo era usado por diretores que não queriam seus nomes nos créditos?,"[""John Doe"",""Alan Smithee"",""Richard Bachman"",""George Spelvin""]",1,dificil
+68a5a96d-8614-4355-829e-e52d9d614d4e,Tecnologia,"Qual é a capacidade de um disquete padrão de 3,5 polegadas?","[""1 GB"",""1.44 MB"",""700 MB"",""512 KB""]",1,dificil
+68c0175b-79c6-4074-a342-f1ac7a18efe8,Ciências,Qual é o pH da água pura (neutro)?,"[""0"",""14"",""7"",""5""]",2,media
+692a4f5d-3053-4b74-b919-ff3c9bb8b6d7,Geografia,"Qual país tem o formato de uma ""bota""?","[""Portugal"",""Espanha"",""Itália"",""Grécia""]",2,facil
+697ab13e-74fa-4432-9775-b6ec7943e88e,Música,Qual álbum do Pink Floyd tem um prisma na capa?,"[""The Wall"",""Dark Side of the Moon"",""Animals"",""Wish You Were Here""]",1,media
+69eb81d9-5c5b-44b6-b282-2fa576a8cba0,Tecnologia,"O que é um ""Selfie""?","[""Foto de paisagem"",""Autorretrato fotográfico"",""Foto de comida"",""Foto tremida""]",1,facil
+6a1febd3-b13e-4943-aa54-29fc3df78618,Tecnologia,Qual empresa criou o Android?,"[""Apple"",""Google"",""Microsoft"",""Samsung""]",1,facil
+6a21152e-1fb4-4b11-9598-d4db8d410eb8,Esportes,O Maracanã fica em qual cidade?,"[""São Paulo"",""Belo Horizonte"",""Rio de Janeiro"",""Porto Alegre""]",2,facil
+6a3336e0-c2cf-4697-82ea-701c4bab098a,Geografia,Onde ficam as Pirâmides de Gizé?,"[""Egito"",""México"",""Peru"",""Índia""]",0,facil
+6a8a755b-55c6-468b-8154-8090644afbc0,Ciências,Qual é o planeta mais quente do Sistema Solar?,"[""Mercúrio"",""Vênus"",""Marte"",""Júpiter""]",1,media
+6aa7298f-b062-4e39-aca4-7f8d1ae8eab4,Esportes,Qual a altura da cesta de basquete (aro ao chão)?,"[""2,90m"",""3,05m"",""3,15m"",""3,00m""]",1,dificil
+6b41a501-5087-4b50-b2ca-034a2f930b05,Esportes,Quantos jogadores tem um time de Basquete em quadra?,"[""4"",""5"",""6"",""7""]",1,media
+6b889867-c315-4960-b384-932dc7933bcc,Cinema,"Quem escreveu o livro que inspirou ""O Iluminado""?","[""H.P. Lovecraft"",""Edgar Allan Poe"",""Stephen King"",""Agatha Christie""]",2,dificil
+6b981414-0322-4998-a040-e997a3a01d4a,Tecnologia,Qual empresa é dona do sistema Windows?,"[""Apple"",""Google"",""Microsoft"",""IBM""]",2,facil
+6e343c3f-b322-4395-af58-8191427d6f32,Cinema,Qual o código do agente secreto James Bond?,"[""001"",""007"",""777"",""999""]",1,facil
+6e3f2fdd-00e8-472e-82d2-8e6c633996b5,Música,Qual instrumento Squidward (Lula Molusco) toca?,"[""Clarinete"",""Flauta"",""Violino"",""Trombone""]",0,facil
+6e889c6a-a65b-4ff6-ba79-8e992d22b5c0,Ciências,Qual é o estado físico do gelo?,"[""Líquido"",""Sólido"",""Gasoso"",""Plasma""]",1,facil
+6eae90c4-40fb-4676-bb78-df84fef6cc01,Cinema,"Qual o modelo do carro em ""De Volta para o Futuro""?","[""Ferrari"",""Mustang"",""DeLorean"",""Camaro""]",2,media
+6f52f79e-e9de-47b3-961d-89a80ec1e7ba,Geografia,Em qual país nasce o Rio Amazonas?,"[""Brasil"",""Colômbia"",""Peru"",""Bolívia""]",2,dificil
+6f7e98b3-d157-485c-9eb6-702c0c477ec0,Geografia,Onde fica a Península Ibérica?,"[""Itália e Grécia"",""Espanha e Portugal"",""Suécia e Noruega"",""Dinamarca e Alemanha""]",1,dificil
+6f7f2c23-cf54-40fc-b8d4-6cd214bc32e7,Cinema,Qual famoso diretor é conhecido por aparecer em pontas nos seus próprios filmes?,"[""Steven Spielberg"",""Alfred Hitchcock"",""Christopher Nolan"",""Martin Scorsese""]",1,dificil
+6f86e2d2-5819-46f2-ac85-a7a8a35d59b8,Ciências,"Qual tipo de sangue é considerado o ""Doador Universal""?","[""A Positivo"",""O Negativo"",""AB Positivo"",""B Negativo""]",1,media
+7085adce-7e68-4761-910a-0809d370ef06,Música,"O que é um ""Cover""?","[""Uma música original"",""Uma regravação de música de outro artista"",""Um show ao vivo"",""Um clipe musical""]",1,media
+70cdd9a1-7137-4cf5-9d95-870b32ef8c70,Ciências,Qual órgão produz insulina?,"[""Fígado"",""Pâncreas"",""Rim"",""Estômago""]",1,media
+71be2cd3-148f-41e9-ad4a-42a8a78df8ca,Esportes,Qual evento esportivo acontece a cada 4 anos e reúne o mundo todo?,"[""Copa do Mundo"",""Olimpíadas"",""Super Bowl"",""Champions League""]",1,facil
+71f89415-b74f-4ac6-bfe8-17d9c0d91a25,Música,"Quem é o compositor de ""Bachianas Brasileiras""?","[""Heitor Villa-Lobos"",""Chiquinha Gonzaga"",""Pixinguinha"",""Ernesto Nazareth""]",0,dificil
+721bfc1d-3edc-4480-855d-cf99b55eec0b,Geografia,Qual é a capital da Rússia?,"[""São Petersburgo"",""Moscou"",""Kiev"",""Sibéria""]",1,facil
+72768ab7-3127-4cda-b377-8a22cb88904e,Ciências,Qual a função das mitocôndrias na célula?,"[""Produzir energia (Respiração celular)"",""Fazer digestão"",""Controlar o núcleo"",""Armazenar água""]",0,dificil
+72bd5f47-d4f7-4a8a-acd2-6b7e8eaa4615,Tecnologia,O que é Docker?,"[""Editor de texto"",""Plataforma de conteinerização"",""Banco de dados"",""Sistema Operacional""]",1,dificil
+72c309eb-42c7-4358-958e-d780a09fd347,Esportes,Quem é o maior artilheiro da história das Copas do Mundo (até 2022)?,"[""Ronaldo Fenômeno"",""Miroslav Klose"",""Pelé"",""Gerd Müller""]",1,media
+74662389-4a1a-48cb-8d4f-3e8f30c1cf7f,Esportes,"Quem é conhecido como ""The Goat"" (O Maior de Todos) no Surf?","[""Gabriel Medina"",""Kelly Slater"",""John John Florence"",""Italo Ferreira""]",1,media
+74840ab2-f0c8-4a6e-a83c-25d6ab33025f,Geografia,O Canal do Panamá liga quais oceanos?,"[""Atlântico e Índico"",""Atlântico e Pacífico"",""Pacífico e Índico"",""Ártico e Atlântico""]",1,facil
+74af4ccf-eae6-4dbe-b1ac-d933e11e0e63,Música,Qual destes não é um ritmo brasileiro?,"[""Axé"",""Sertanejo"",""Salsa"",""Frevo""]",2,facil
+7555d64d-2e04-446a-b74c-990496e6798c,Geografia,Qual é a capital do Paquistão?,"[""Karachi"",""Lahore"",""Islamabad"",""Cabul""]",2,dificil
+75c7d326-bba9-4647-bbfd-8b19686b5c42,Geografia,Qual país é vizinho do Brasil ao sul?,"[""Venezuela"",""Colômbia"",""Uruguai"",""Suriname""]",2,facil
+75c80b7f-3047-4387-a07c-20269f57e0a0,Música,"Qual banda tem os integrantes: John, Paul, George e Ringo?","[""The Beach Boys"",""The Beatles"",""The Rolling Stones"",""The Who""]",1,media
+75f80c7f-b1e6-4b02-a043-0ab1183486eb,Cinema,Qual esporte Rocky Balboa pratica?,"[""Futebol"",""Basquete"",""Boxe"",""Natação""]",2,facil
+760998cc-8fd9-4c2b-97f5-3ef1cd5d2e5c,Música,Qual país é o berço do K-Pop?,"[""Japão"",""Coreia do Sul"",""China"",""Tailândia""]",1,facil
+76aa1f9e-0e25-4ea5-a3f2-8502dd977e30,Ciências,Qual destes é renovável?,"[""Carvão"",""Petróleo"",""Energia Solar"",""Gás Natural""]",2,facil
+76e95e05-57fc-4770-a00e-779ac2b3b2af,Esportes,Qual país sediou a primeira Copa do Mundo em 1930?,"[""Brasil"",""Itália"",""Uruguai"",""França""]",2,media
+77618841-bca0-4739-b103-150065d55b2b,Ciências,Qual o nome do supercontinente que existia há milhões de anos?,"[""Atlântida"",""Pangeia"",""Gondwana"",""Eurásia""]",1,dificil
+77ac45b7-3a1a-4b93-a21a-4ea912957293,Geografia,Qual é o continente gelado no sul do planeta?,"[""Ártico"",""Antártida"",""Groenlândia"",""Alasca""]",1,facil
+7843f1fa-253f-45e5-82a2-7b326d4caa9e,Cinema,O que os Caça-Fantasmas capturam?,"[""Ladrões"",""Fantasmas"",""Animais"",""Vampiros""]",1,facil
+790105be-206e-4fdb-b3a8-3ad69d24b1cf,Geografia,Onde fica o deserto do Saara?,"[""América"",""Ásia"",""África"",""Oceania""]",2,facil
+79397d1e-ffdf-4099-a208-57b71a472899,Tecnologia,Qual empresa é liderada por Elon Musk (em 2024)?,"[""Amazon"",""Tesla"",""Facebook"",""Apple""]",1,facil
+7982c616-fb58-46b0-91bc-3e514ade8946,Música,Qual é a voz feminina mais aguda na ópera?,"[""Contralto"",""Mezzo-soprano"",""Soprano"",""Tenor""]",2,dificil
+79ba3407-0829-46a2-bf00-97259bd5d990,Música,"O que é ""Timbre""?","[""A altura da nota"",""A duração da nota"",""A qualidade/cor do som que distingue instrumentos"",""O volume do som""]",2,dificil
+79ff10e9-08f7-46ff-86cc-ad237e2e9528,Geografia,Qual destes países NÃO faz fronteira com o Brasil?,"[""Argentina"",""Colômbia"",""Chile"",""Peru""]",2,media
+7a0c3807-0b45-4d53-b4c9-f1501baa70a8,Música,Qual destes é um instrumento de sopro?,"[""Violoncelo"",""Trompete"",""Piano"",""Tambor""]",1,facil
+7a253f89-aee9-4eb1-ae50-9e968ae773d2,Esportes,Qual país ganhou a Copa do Mundo Feminina de 2011?,"[""EUA"",""Japão"",""Alemanha"",""Brasil""]",1,dificil
+7b4dc17d-f632-4e5e-b159-46836128dde2,Esportes,Em qual esporte se usa luvas de boxe?,"[""Boxe"",""Natação"",""Futebol"",""Xadrez""]",0,facil
+7b7a9915-8b64-46b9-bc3f-2f48bcf5a7e0,Geografia,Qual é a capital da Suíça?,"[""Zurique"",""Genebra"",""Berna"",""Basileia""]",2,dificil
+7c4f06ed-92c7-41a0-af61-d2be0ab6366c,Geografia,Qual é a capital do Canadá?,"[""Toronto"",""Vancouver"",""Montreal"",""Ottawa""]",3,media
+7d19f9f9-7b8b-4de2-94ea-3073286f8209,Cinema,"Em ""O Show de Truman"", o que é a vida do protagonista?","[""Um sonho"",""Um reality show"",""Uma simulação de computador"",""Um experimento científico""]",1,media
+7d78f0e2-d0d9-49ad-a9d8-dfa144e8be65,Cinema,O que o E.T. quer fazer no filme?,"[""Dominar o mundo"",""Telefonar para casa"",""Comer pizza"",""Pilotar uma nave""]",1,facil
+7e0e6fd9-52b2-44de-a947-65275cf95b98,Música,"Quem é o autor da ópera ""O Guarani""?","[""Villa-Lobos"",""Carlos Gomes"",""Francisco Mignone"",""Claudio Santoro""]",1,dificil
+7f65f9be-5d10-422f-8ed0-f97eee420705,Geografia,Qual a língua mais falada na América do Sul?,"[""Português"",""Espanhol"",""Inglês"",""Francês""]",1,facil
+8066b377-69aa-446a-9203-36eef0edbab1,Geografia,Qual é a capital dos Estados Unidos?,"[""Nova York"",""Los Angeles"",""Washington D.C."",""Miami""]",2,facil
+8171ff70-4826-4741-8d3f-dd67abf5ae54,Música,Qual o estilo musical originário do Rio de Janeiro?,"[""Samba"",""Tango"",""Jazz"",""Country""]",0,facil
+8187d1f4-c1a0-4525-a9e7-1ec6037e0ccb,Tecnologia,Qual destes é um sistema operacional móvel?,"[""Excel"",""Android"",""Photoshop"",""Word""]",1,facil
+82358d1d-452d-4c9a-9815-5061bb539aad,Tecnologia,Qual destas é uma distribuição Linux?,"[""Ubuntu"",""MacOS"",""Windows 10"",""iOS""]",0,media
+824fe4fb-1981-4d3e-bdc8-a31437dcc86c,Geografia,Em qual país fica a cidade de Barcelona?,"[""Portugal"",""França"",""Espanha"",""Itália""]",2,facil
+827fa39f-d2b6-4eb1-82f2-e5ee8de7dd54,Geografia,Qual é a capital do Japão?,"[""Seul"",""Pequim"",""Tóquio"",""Kyoto""]",2,facil
+83e4654b-3b10-4506-8afd-0db62b2c6c13,Geografia,Qual país tem o maior número de ilhas?,"[""Filipinas"",""Suécia"",""Indonésia"",""Japão""]",1,media
+83f7853e-f437-494c-a0f6-fe67586d1a49,Esportes,Qual a velocidade máxima permitida nos boxes da Fórmula 1 (geralmente)?,"[""60 km/h"",""80 km/h"",""100 km/h"",""120 km/h""]",1,dificil
+842d65b0-d2c1-4b41-8379-deb1d9bfb54f,Esportes,Qual o nome do estádio do Barcelona?,"[""Santiago Bernabéu"",""Camp Nou"",""Old Trafford"",""San Siro""]",1,dificil
+85146225-af07-4654-9f78-153cccf16677,Música,O que significa a sigla BTS?,"[""Bangtan Sonyeondan"",""Boys The Stars"",""Best Teen Singers"",""Big Time Sound""]",0,media
+85660c48-4c64-4d9a-acc1-352b27a84821,Ciências,Para que servem as raízes da planta?,"[""Fazer fotossíntese"",""Absorver água e nutrientes"",""Produzir flores"",""Atrair abelhas""]",1,facil
+85926afd-7356-4a7a-8456-a974614fb286,Tecnologia,O que é um SSD?,"[""Super Speed Disc"",""Solid State Drive"",""System Storage Device"",""Silicon State Disc""]",1,media
+85d2d133-ae03-4a9c-95ee-31875f6e9d6d,Esportes,Qual instrumento é usado para iniciar corridas de atletismo?,"[""Apito"",""Pistola de largada"",""Sino"",""Bandeira""]",1,facil
+863377e8-8da5-4bf8-a7cd-75908c59a65f,Geografia,A cidade de Orlando (Disney) fica em qual estado dos EUA?,"[""Califórnia"",""Texas"",""Flórida"",""Nova York""]",2,facil
+8670494b-c34a-4771-9786-f0f0043d46b6,Ciências,Como se chama o processo da lagarta virar borboleta?,"[""Fotossíntese"",""Metamorfose"",""Hibernação"",""Ebulição""]",1,facil
+86fbe029-08ca-43c7-b722-7dcd703edd61,Tecnologia,O que é um algoritmo?,"[""Sequência de passos"",""Banco de dados"",""Sistema operacional"",""Placa de vídeo""]",0,media
+881ef3c3-9b23-4241-b260-5116807b5ad2,Tecnologia,Quantos bits tem 1 Byte?,"[""4"",""8"",""16"",""32""]",1,facil
+8868053a-390d-45a2-8739-1dbec94b6793,Cinema,Em qual cidade mora o Batman?,"[""Metrópolis"",""Nova York"",""Gotham City"",""Star City""]",2,facil
+89cba682-61f7-4b55-a11d-dc9cceb77630,Tecnologia,O que é Phishing?,"[""Pescaria virtual"",""Técnica de fraude online"",""Manutenção de hardware"",""Instalação de drivers""]",1,media
+8a56a2af-72d3-4356-b551-5e58c81a737a,Música,Quem é o vocalista da banda Aerosmith?,"[""Axl Rose"",""Steven Tyler"",""Jon Bon Jovi"",""David Coverdale""]",1,media
+8acafdb3-1be8-4284-8910-a002e635e783,Tecnologia,Qual atalho de teclado é usado para colar?,"[""Ctrl+P"",""Ctrl+C"",""Ctrl+V"",""Esc""]",2,facil
+8b4bd1e5-32d2-4ad2-b07a-286559c51d2f,Cinema,Qual é o nome da babá mágica que voa com um guarda-chuva?,"[""Nanny McPhee"",""Mary Poppins"",""Matilda"",""Sra. Doubtfire""]",1,facil
+8b5f046e-155c-411b-a88f-f42f9cb3331f,Esportes,Qual a distância exata de uma piscina olímpica?,"[""25 metros"",""50 metros"",""100 metros"",""40 metros""]",1,dificil
+8cbadcf4-8262-4858-ba1b-d2f884bbfc82,Geografia,Qual é a capital da Ucrânia?,"[""Minsk"",""Kiev"",""Moscou"",""Odessa""]",1,dificil
+8cc218ed-fc0b-41da-bdd6-88a04b48fe80,Esportes,Qual time Neymar jogou antes de ir para o Barcelona?,"[""Flamengo"",""Santos"",""São Paulo"",""Palmeiras""]",1,facil
+8d54c13c-34f3-4779-b9c9-86782bc85a07,Geografia,Qual é a capital da Colômbia?,"[""Caracas"",""Quito"",""Bogotá"",""Lima""]",2,media
+8da626fb-6e5c-487a-b65d-803779da0193,Geografia,Qual o nome do mar entre a Europa e a África?,"[""Mar do Norte"",""Mar Negro"",""Mar Mediterrâneo"",""Mar Báltico""]",2,dificil
+8e3621ee-c1bd-48af-ba9d-367bd8bb8f5a,Tecnologia,O que é cloud computing?,"[""Computação em nuvem"",""Banco de dados"",""Rede local"",""Placa de vídeo""]",0,media
+8e412a19-139b-4035-9de0-4e9715261351,Geografia,Onde fica a Patagônia?,"[""No norte da Europa"",""No sul da América do Sul"",""No centro da África"",""Na Ásia""]",1,media
+8eda2316-6b23-448d-9fd5-ac56427e123a,Geografia,Qual é a capital da Noruega?,"[""Estocolmo"",""Helsinque"",""Copenhague"",""Oslo""]",3,dificil
+8f2a87c6-0f0b-43fa-a60f-356d15b58d58,Geografia,Qual é a capital do Marrocos?,"[""Casablanca"",""Marrakech"",""Rabat"",""Fez""]",2,dificil
+8f8232fd-180f-4c9d-a3c2-abb76f8a0c30,Ciências,Qual é a fórmula do sal de cozinha?,"[""H2O"",""CO2"",""NaCl"",""HCl""]",2,media
+90894e0a-e4c9-450c-99e1-319e0552b616,Tecnologia,"O que é ""Bluetooth""?","[""Tecnologia de conexão sem fio curta distância"",""Marca de computador"",""Tipo de teclado"",""Cabo de rede""]",0,facil
+911713a9-bf13-4aac-aca7-9df53e12bf6a,Cinema,Qual o nome da ilha onde King Kong é encontrado?,"[""Ilha da Caveira"",""Ilha Nublar"",""Ilha Perdida"",""Ilha dos Monstros""]",0,dificil
+9127042c-944b-46ff-9f30-535c6f482e7e,Música,Qual destes ritmos nasceu em Pernambuco?,"[""Samba"",""Frevo"",""Bossa Nova"",""Pagode""]",1,media
+9165b2b7-e043-47e1-94d3-5be001eada93,Tecnologia,O que significa a sigla HTTP?,"[""HyperText Transfer Protocol"",""High Tech Transfer Point"",""HyperText Terminal Program"",""Host Type Transfer Protocol""]",0,media
+9170dfa5-d68c-481f-b1ad-eeb1b628df12,Música,O que significa MPB?,"[""Música Popular Brasileira"",""Música Para Bailar"",""Melhor Pagode Brasileiro"",""Música Pop Band""]",0,facil
+91d62a74-c650-4665-a85e-1a7373f7c77a,Geografia,Em qual continente fica o Egito?,"[""Ásia"",""Europa"",""África"",""Oriente Médio""]",2,facil
+92113ca6-f1fa-4db7-8576-68eb90850c85,Geografia,Qual país europeu tem o formato de um hexágono?,"[""Alemanha"",""França"",""Polônia"",""Espanha""]",1,media
+92f5cc9a-ff85-4a4e-a070-e0997c3157a8,Ciências,O que é a Via Láctea?,"[""Um planeta"",""Uma estrela"",""Uma galáxia"",""Um cometa""]",2,facil
+93ef89e2-f920-44a9-9e53-faf732771f16,Tecnologia,"O que é ""Blockchain""?","[""Um tipo de Lego"",""Tecnologia de registro distribuído usada em criptomoedas"",""Um bloqueador de anúncios"",""Um cabo de alta velocidade""]",1,dificil
+95fcb1af-2ec7-4ff9-961e-a4f55ad05c48,Geografia,Qual oceano é o maior do mundo?,"[""Atlântico"",""Índico"",""Pacífico"",""Ártico""]",2,media
+9606880d-bb1f-4e49-b416-2d0dc231bc54,Ciências,Qual é a unidade de medida de força na Física?,"[""Joule"",""Watt"",""Newton"",""Pascal""]",2,media
+96bbfc10-78cf-4216-95e8-a2290ed62c23,Esportes,"Qual esporte usa uma mesa, raquetes pequenas e uma bolinha leve?","[""Tênis de Mesa (Pingue-pongue)"",""Badminton"",""Squash"",""Bilhar""]",0,facil
+978dca5f-4770-4bd5-8c54-29b168fa418b,Tecnologia,Qual destes é um serviço de streaming de filmes?,"[""Spotify"",""Netflix"",""Uber"",""Tinder""]",1,facil
+97e5996e-beb0-4de5-afdc-fbfc9ff16220,Geografia,Qual rio atravessa a cidade de Londres?,"[""Rio Sena"",""Rio Danúbio"",""Rio Tâmisa"",""Rio Reno""]",2,media
+98bfcbc3-2cbb-47af-9c95-9875759936f7,Geografia,O Estreito de Gibraltar separa quais continentes?,"[""Europa e Ásia"",""Europa e África"",""África e Ásia"",""América e Europa""]",1,dificil
+99c0b879-9f1b-43f8-82f1-b19c544b130a,Esportes,O que o juiz mostra para expulsar um jogador de futebol?,"[""Cartão Amarelo"",""Cartão Vermelho"",""Cartão Verde"",""Apito""]",1,facil
+99ef7adc-576b-4437-ae99-99f5125035a1,Ciências,A qual temperatura a água congela?,"[""0°C"",""-10°C"",""10°C"",""100°C""]",0,facil
+9a9ba0f1-4332-4765-9f83-f7829ac04d43,Música,"Qual o nome do acorde formado pelas notas Dó, Mi e Sol?","[""Dó Maior"",""Dó Menor"",""Ré Maior"",""Mi Menor""]",0,dificil
+9ad19a19-6978-4817-abbf-16561f64ada9,Tecnologia,"O que significa a sigla ""SaaS""?","[""System as a Service"",""Software as a Service"",""Storage as a Soluction"",""Security as a Shield""]",1,dificil
+9ae3ed68-1dba-4bb9-a497-8b8ed8dd280b,Ciências,O que as abelhas produzem?,"[""Seda"",""Leite"",""Mel"",""Algodão""]",2,facil
+9b19f653-79c9-4669-966a-a2bd4ecd7d60,Ciências,Qual planeta tem anéis visíveis famosos?,"[""Marte"",""Vênus"",""Saturno"",""Mercúrio""]",2,facil
+9b71d38c-50ea-4369-8899-c0e3d875a302,Esportes,Em qual cidade aconteceram as Olimpíadas de 2016?,"[""Londres"",""Tóquio"",""Rio de Janeiro"",""Pequim""]",2,media
+9b99db54-dab2-40bc-a487-ddf2c0a18246,Cinema,Qual a profissão de Indiana Jones?,"[""Médico"",""Arqueólogo"",""Policial"",""Advogado""]",1,facil
+9b9c18fb-c26b-4d72-8925-cb3c18604cd6,Música,Quem é o pai da cantora Sandy?,"[""Leonardo"",""Xororó"",""Chitãozinho"",""Zezé Di Camargo""]",1,facil
+9c35b949-543e-4757-b302-b4053da00e80,Esportes,Qual a cor da bola de Tênis de Mesa em competições oficiais?,"[""Branca ou Laranja Fosca"",""Amarela"",""Azul"",""Verde""]",0,dificil
+9dcd2994-b77d-4984-ad08-340f09a34189,Geografia,Em qual continente fica o Brasil?,"[""América do Norte"",""África"",""América do Sul"",""Europa""]",2,facil
+9e5f4b96-527b-4d87-8942-cefce364f2f5,Tecnologia,Qual cabo é usado para transmitir áudio e vídeo em alta definição?,"[""VGA"",""HDMI"",""USB"",""P2""]",1,facil
+9e7f6d6f-711d-43e1-8221-4ec2daf439cc,Geografia,Qual linha imaginária divide a Terra em Norte e Sul?,"[""Meridiano de Greenwich"",""Trópico de Câncer"",""Linha do Equador"",""Trópico de Capricórnio""]",2,media
+9e990307-afb5-4c22-a887-21085cbe49a9,Tecnologia,O que é Wi-Fi?,"[""Rede com fio"",""Rede sem fio"",""Marca de computador"",""Tipo de vírus""]",1,facil
+9e9f43d5-a077-4671-9cd6-0fa28c64da5f,Ciências,Qual é a velocidade aproximada do som no ar (ao nível do mar)?,"[""340 m/s"",""300.000 km/s"",""100 km/h"",""1000 km/h""]",0,dificil
+9fb3b746-d6fd-49f8-803b-9bb6c1ac3f45,Ciências,Quantas estações do ano existem?,"[""2"",""3"",""4"",""5""]",2,facil
+9fc56199-86bd-4270-92e0-9ce3743ef594,Ciências,O que causa as marés nos oceanos?,"[""O vento"",""A gravidade da Lua"",""O movimento dos peixes"",""O calor do sol""]",1,media
+9ff1b2d9-8726-49b8-b3e3-076ad0b04e4b,Esportes,"Qual tenista é conhecido como ""Rei do Saibro""?","[""Roger Federer"",""Novak Djokovic"",""Rafael Nadal"",""Gustavo Kuerten""]",2,media
+a0608f51-6c69-4668-b3c5-3135e93ad56e,Cinema,"Em ""MIB - Homens de Preto"", o que eles monitoram?","[""Fantasmas"",""Alienígenas"",""Demônios"",""Robôs""]",1,facil
+a09057a5-a2db-4f0a-a269-402c64f63b3e,Esportes,Quem acendeu a pira olímpica nas Olimpíadas de Atlanta 1996?,"[""Michael Jordan"",""Muhammad Ali"",""Carl Lewis"",""Magic Johnson""]",1,dificil
+a09f32b5-9502-46a8-8206-8877e72930a8,Tecnologia,"O que é um ""Bug""?","[""Um recurso novo"",""Uma falha no código"",""Um tipo de hardware"",""Um antivírus""]",1,media
+a15746d0-5606-42ef-9255-01bba4b043c9,Tecnologia,"Qual a principal função do botão ""Power""?","[""Aumentar volume"",""Ligar/Desligar"",""Tirar foto"",""Conectar Wi-Fi""]",1,facil
+a22c1db6-943b-402e-8066-37173c669bd6,Música,"Quem compôs a ""Nona Sinfonia""?","[""Mozart"",""Beethoven"",""Bach"",""Chopin""]",1,media
+a2d2b39c-d8b8-4420-a4df-c16e4a5fe366,Música,Quem escreveu o Hino Nacional Brasileiro (melodia)?,"[""Joaquim Osório Duque-Estrada"",""Francisco Manuel da Silva"",""Villa-Lobos"",""Carlos Gomes""]",1,media
+a3138a53-8fb5-4d63-aec7-ae6b0dbca70d,Esportes,Qual clube brasileiro ganhou o Mundial de Clubes de 1981?,"[""Santos"",""Grêmio"",""Flamengo"",""São Paulo""]",2,dificil
+a368bf06-b71e-417e-bf1b-5ea288d7bc09,Esportes,Lewis Hamilton é piloto de qual categoria?,"[""MotoGP"",""Fórmula 1"",""Stock Car"",""Rally""]",1,facil
+a38bdd65-6b6b-4570-bcdb-38f6052d8720,Geografia,Qual é o maior país da África em território (atualmente)?,"[""Sudão"",""Argélia"",""Congo"",""África do Sul""]",1,dificil
+a3a69000-6af3-4f5e-94c5-07dcd67bc291,Tecnologia,O que significa a sigla PDF?,"[""Portable Document Format"",""Personal Data File"",""Public Digital File"",""Print Data Format""]",0,facil
+a51bb127-5f58-4f2f-84ce-d3339f743a46,Cinema,"Qual atriz protagonizou ""Jogos Vorazes""?","[""Emma Stone"",""Jennifer Lawrence"",""Kristen Stewart"",""Brie Larson""]",1,media
+a5306d8a-fe1c-4075-8021-98cc5e9c6c88,Ciências,Qual vitamina é produzida pelo corpo quando exposto ao sol?,"[""Vitamina C"",""Vitamina A"",""Vitamina D"",""Vitamina B12""]",2,media
+a5373829-6b64-4b06-a41d-d3b79247bb68,Ciências,Qual é a fonte de energia natural da Terra?,"[""A Lua"",""O Sol"",""O Mar"",""O Vento""]",1,facil
+a57a300b-5730-49c7-8f10-543e3a39098b,Música,Qual instrumento é tocado soprando e movendo uma vara?,"[""Trompete"",""Trombone"",""Saxofone"",""Flauta""]",1,facil
+a5a0acd0-ded1-4597-b307-09bad83c32d9,Cinema,"Qual o nome do vilão canibal em ""O Silêncio dos Inocentes""?","[""Hannibal Lecter"",""Norman Bates"",""Jason Voorhees"",""Freddy Krueger""]",0,media
+a6968c54-37b3-4718-bacd-a4354d5b9498,Ciências,O que acontece se você misturar amarelo e azul?,"[""Fica Roxo"",""Fica Verde"",""Fica Laranja"",""Fica Marrom""]",1,facil
+a6c138a4-8c06-41d2-93b1-4822e24248a4,Ciências,Quem propôs a teoria da evolução por seleção natural?,"[""Isaac Newton"",""Charles Darwin"",""Albert Einstein"",""Louis Pasteur""]",1,media
+a6fbfe0e-ce06-4053-8b93-d107b9680bb6,Ciências,Qual é a estrela mais próxima da Terra depois do Sol?,"[""Sirius"",""Alpha Centauri (Próxima Centauri)"",""Betelgeuse"",""Vega""]",1,dificil
+a733dd56-162d-4256-bb80-212f8e56c1e9,Música,"Qual banda gravou ""Bohemian Rhapsody""?","[""Led Zeppelin"",""Queen"",""The Doors"",""Deep Purple""]",1,media
+a7c32761-8ca0-4c33-8438-5cd7ca3927c9,Música,Qual instrumento é símbolo do forró?,"[""Violino"",""Sanfona (Acordeão)"",""Harpa"",""Clarinete""]",1,facil
+a7c73359-2449-43d3-bc31-23deb6a5266d,Cinema,Qual a pílula que mantém você na Matrix?,"[""Vermelha"",""Azul"",""Verde"",""Branca""]",1,media
+a8db26bf-c5a5-48a5-83d4-8b25e48a54c2,Música,"Quem canta ""Evidências""?","[""Chitãozinho & Xororó"",""Leandro & Leonardo"",""Zezé Di Camargo & Luciano"",""Bruno & Marrone""]",0,facil
+a9cb65b7-74ac-41d1-971b-b7c765367551,Esportes,"Qual peça do Xadrez pode se mover em ""L""?","[""Torre"",""Bispo"",""Cavalo"",""Peão""]",2,facil
+aac39aa2-d67d-439e-a6ff-cbf29dfb9466,Música,Qual instrumento tem 4 cordas grossas e som grave?,"[""Baixo"",""Guitarra"",""Cavaquinho"",""Ukulele""]",0,facil
+aade675d-959e-406d-802e-158ca3575469,Ciências,Qual destes animais é um mamífero?,"[""Tubarão"",""Pinguim"",""Baleia"",""Jacaré""]",2,facil
+abc0f75e-9e18-45e1-beb6-48a684e29cbf,Tecnologia,"O que é ""Ransomware""?","[""Software de backup"",""Malware que sequestra dados e pede resgate"",""Antivírus gratuito"",""Driver de áudio""]",1,dificil
+ac0abff5-a76e-4641-a13b-471e21c5253d,Tecnologia,Qual rede social é focada em fotos e pertence ao Facebook (Meta)?,"[""Twitter"",""LinkedIn"",""Instagram"",""Reddit""]",2,facil
+ad02e438-9565-4e4f-b3e5-85ac65777e8c,Esportes,"No basquete, quanto vale o arremesso de fora da linha de três?","[""1 ponto"",""2 pontos"",""3 pontos"",""4 pontos""]",2,facil
+ad10a86f-4ed0-4a19-8d44-91c3b541cd09,Geografia,Qual é a capital da Nova Zelândia?,"[""Auckland"",""Wellington"",""Christchurch"",""Queenstown""]",1,dificil
+adcca197-be27-49ff-80bc-ba10cb6b7883,Música,"Quem cantou ""I Will Always Love You"" no filme O Guarda-Costas?","[""Mariah Carey"",""Whitney Houston"",""Celine Dion"",""Aretha Franklin""]",1,media
+ae157347-a2e9-445c-8c18-da4063acd0d7,Música,Qual o nome do grupo de pagode do vocalista Thiaguinho (antigo)?,"[""Raça Negra"",""Exaltasamba"",""Sorriso Maroto"",""Só Pra Contrariar""]",1,facil
+aebd5703-64ed-44d0-803b-223403c5b82c,Geografia,Qual é o nome do oceano entre a América e a Europa?,"[""Pacífico"",""Atlântico"",""Índico"",""Glacial""]",1,facil
+aec728f1-e019-4d4a-ab9f-ec4e2ede7505,Cinema,"Em ""Wall-E"", qual é a função do robô?","[""Combater o crime"",""Compactar lixo"",""Cultivar plantas"",""Ensinar crianças""]",1,media
+af95eea1-ce54-4013-b6e2-a6ddcc872570,Cinema,"Qual diretor é conhecido pelo ""plano sequência"" (longas cenas sem cortes)?","[""Michael Bay"",""Alfonso Cuarón"",""Tim Burton"",""George Lucas""]",1,dificil
+affad6be-6c01-40a4-a8f7-c236d003c084,Ciências,Quantas pernas tem uma aranha?,"[""4"",""6"",""8"",""10""]",2,facil
+b01199fe-29a1-4404-8e42-f3d762d93ccd,Esportes,Qual arte marcial foi criada no Brasil?,"[""Judô"",""Jiu-Jitsu Brasileiro"",""Karate"",""Kung Fu""]",1,media
+b0c7d014-bc75-4e69-b435-d5e4fafa23ac,Geografia,A ilha de Madagascar pertence a qual continente?,"[""África"",""Ásia"",""Oceania"",""Europa""]",0,media
+b0e749ef-f413-4e85-a2b8-c74e134aa37c,Esportes,Qual é o nome do troféu da NBA?,"[""Vince Lombardi"",""Larry O Brien"",""Stanley Cup"",""World Cup""]",1,media
+b1260cc2-4f75-4dbc-8afd-9cbe9b665369,Ciências,A Terra gira em torno de quem?,"[""Da Lua"",""Do Sol"",""De Marte"",""De si mesma apenas""]",1,facil
+b24c542d-2de2-460a-85b1-5583f7cadcf4,Tecnologia,"Qual a função do ""Modo Avião"" no celular?","[""Fazer o celular voar"",""Desativar conexões sem fio"",""Economizar bateria apenas"",""Aumentar o volume""]",1,facil
+b3a1507e-e6e0-4ec7-89dc-5a1fd6ada9e3,Cinema,"Qual ator fez o papel principal em ""Missão Impossível""?","[""Brad Pitt"",""Tom Cruise"",""Leonardo DiCaprio"",""Matt Damon""]",1,media
+b56b483c-67ac-4d0d-a761-b9bb4b6eac67,Música,"Quem compôs a música ""Garota de Ipanema""?","[""Caetano Veloso"",""Tom Jobim e Vinícius de Moraes"",""Chico Buarque"",""Tim Maia""]",1,facil
+b625e2f6-6a58-4019-851d-f24393306d3e,Cinema,Qual o nome do boneco astronauta em Toy Story?,"[""Woody"",""Buzz Lightyear"",""Rex"",""Slinky""]",1,facil
+b692dac9-13df-4ffe-abcd-15d5f86df727,Geografia,Qual é a capital da Coreia do Sul?,"[""Pyongyang"",""Seul"",""Busan"",""Incheon""]",1,media
+b6b138f8-fa06-445b-b254-657174d2fc32,Tecnologia,Qual foi o nome da rede precursora da Internet?,"[""Skynet"",""ARPANET"",""Ethernet"",""Intranet""]",1,dificil
+b76b706a-af57-4ba4-83f9-0afcb6696fec,Geografia,Em qual cordilheira fica o Monte Everest?,"[""Andes"",""Alpes"",""Himalaia"",""Rochosas""]",2,media
+b7ab872b-5649-4b99-b50c-9fb644da639a,Música,Onde surgiu o gênero Jazz?,"[""Nova York"",""New Orleans"",""Chicago"",""Memphis""]",1,media
+b7f9f8dd-6425-4554-b930-a200a82bb70b,Esportes,Qual a duração normal de uma partida de futebol?,"[""60 minutos"",""80 minutos"",""90 minutos"",""100 minutos""]",2,facil
+b833ca0d-a0e6-40d2-939f-d419d5acc9fc,Geografia,Qual destes países é um enclave (totalmente cercado por outro)?,"[""Luxemburgo"",""Lesoto"",""Andorra"",""Mônaco""]",1,dificil
+b887fd66-9ffb-42b5-8e74-e91679d2e465,Tecnologia,Quem criou a World Wide Web (WWW)?,"[""Tim Berners-Lee"",""Bill Gates"",""Steve Jobs"",""Vint Cerf""]",0,dificil
+b888e16d-2bc0-4661-bd8f-e0e66cc9ef3b,Cinema,Qual é o nome do país fictício do Pantera Negra?,"[""Zamunda"",""Wakanda"",""Genovia"",""Latvéria""]",1,media
+b94fe8bf-bded-4ccb-9889-459788d19939,Esportes,Qual tenista feminina tem o maior número de Grand Slams na Era Aberta?,"[""Steffi Graf"",""Serena Williams"",""Martina Navratilova"",""Margaret Court""]",1,dificil
+b96eeb5e-cf26-4890-a423-cb6093c93c0f,Ciências,Quantas vértebras cervicais tem uma girafa?,"[""7 (igual aos humanos)"",""50"",""20"",""12""]",0,dificil
+b99d0a4b-6f93-4fcc-8877-d67810a7037c,Geografia,Qual é a capital de Portugal?,"[""Porto"",""Lisboa"",""Coimbra"",""Braga""]",1,facil
+ba9452d3-693d-43a8-ba5f-f423a6252e57,Geografia,Qual é a moeda usada nos Estados Unidos?,"[""Euro"",""Real"",""Dólar"",""Libra""]",2,facil
+bb43e2c4-26d7-4387-a17a-b813ba79ab49,Cinema,"Qual objeto é usado para saber se está sonhando em ""A Origem""?","[""Um dado"",""Um pião"",""Uma moeda"",""Um anel""]",1,media
+bc5115b8-0ddd-48b6-8d2e-f224d5512efd,Música,"Quem compôs ""O Lago dos Cisnes""?","[""Stravinsky"",""Tchaikovsky"",""Prokofiev"",""Rachmaninoff""]",1,dificil
+bc64036f-c9f4-4ffc-a406-c195975e9b55,Cinema,Qual foi o primeiro filme falado da história do cinema?,"[""O Cantor de Jazz"",""Tempos Modernos"",""Cantando na Chuva"",""Metrópolis""]",0,dificil
+bcb846f9-8241-4322-a682-31df2d94c2b7,Música,"Qual banda britânica lançou o álbum ""OK Computer""?","[""Oasis"",""Radiohead"",""Blur"",""Coldplay""]",1,dificil
+bcfe6e57-0504-4df3-8d2b-5473170795a4,Tecnologia,Quem criou o kernel do Linux?,"[""Linus Torvalds"",""Bill Gates"",""Steve Jobs"",""Dennis Ritchie""]",0,dificil
+bd12dcca-b2d0-4130-a9d1-2132bbb5d739,Tecnologia,"O que é ""Overclocking""?","[""Resfriar o PC"",""Aumentar a frequência do componente acima do padrão"",""Desligar o PC forçadamente"",""Limpar a memória""]",1,dificil
+bd5453d1-f17d-4fd6-9a1a-7f42a9887a11,Esportes,"No surfe, qual a nota máxima possível para uma onda?","[""5.0"",""10.0"",""20.0"",""100.0""]",1,dificil
+be3dafe5-aa9b-4646-936f-169614d9f32b,Esportes,Qual a única equipe de F1 a participar de todas as temporadas?,"[""McLaren"",""Williams"",""Ferrari"",""Lotus""]",2,dificil
+be7d41cb-1778-4ae2-a0f6-44e298b3f470,Cinema,"Em ""Divertida Mente"", quem é a emoção amarela?","[""Tristeza"",""Raiva"",""Alegria"",""Medo""]",2,facil
+bfaaeb7d-89ac-4f97-8497-7a5cdf37248c,Tecnologia,"Qual a cor padrão da ""Tela Azul da Morte"" do Windows?","[""Verde"",""Preto"",""Azul"",""Vermelho""]",2,facil
+bfe75bc0-43de-4bf1-83ce-3fc442c28b78,Ciências,Qual é o planeta com a maior lua do sistema solar (Ganimedes)?,"[""Saturno"",""Júpiter"",""Terra"",""Netuno""]",1,dificil
+c0ec3560-934b-40bb-9a3d-4e60aa2d279b,Tecnologia,Qual destes é um console de videogame da Sony?,"[""Xbox"",""Switch"",""PlayStation"",""Mega Drive""]",2,facil
+c0fbc74b-e57d-41dc-9644-6f8309316984,Cinema,"O que tem dentro da maleta em ""Pulp Fiction""?","[""Ouro"",""Diamantes"",""A alma do Marsellus Wallace"",""Nunca é revelado""]",3,dificil
+c173336f-0152-4e32-a6da-cecf095f3670,Ciências,"Qual lei afirma que ""A energia não pode ser criada nem destruída, apenas transformada""?","[""Lei da Inércia"",""Lei da Conservação da Energia"",""Lei da Gravidade"",""Lei de Ohm""]",1,dificil
+c19b534f-358c-4a73-8940-fc3464c0ca51,Cinema,"Qual ser sobrenatural brilha no sol em ""Crepúsculo""?","[""Lobisomem"",""Fantasma"",""Vampiro"",""Bruxa""]",2,facil
+c2619e47-013c-44b5-91eb-c68b33f5f5e0,Ciências,"Em genética, o que é um alelo recessivo?","[""Aquele que sempre se manifesta"",""Aquele que só se manifesta em dose dupla (homozigose)"",""Um defeito genético"",""Um gene extra""]",1,dificil
+c27e1039-c4ab-415c-ae7b-ef3add8e08e6,Esportes,Quantas medalhas de ouro o Brasil ganhou no vôlei masculino (quadra) até 2020?,"[""1"",""2"",""3"",""4""]",2,dificil
+c3171f7a-b00e-4b59-999a-40fcab76f8b8,Tecnologia,Quem fundou a Microsoft?,"[""Steve Jobs"",""Bill Gates"",""Elon Musk"",""Mark Zuckerberg""]",1,facil
+c3368779-e715-466c-b657-da6d5b51c6da,Esportes,Qual a cor da faixa mais alta no Judô?,"[""Marrom"",""Preta"",""Vermelha"",""Branca""]",1,facil
+c3aa4faa-537f-4404-9e71-a6af8bea90a4,Tecnologia,"Para que serve o ""Caps Lock""?","[""Apagar texto"",""Deixar letras maiúsculas"",""Salvar arquivo"",""Imprimir""]",1,facil
+c3b1af65-b298-4df0-bdf5-c84c06aedc2f,Ciências,Qual metal é líquido à temperatura ambiente (além do Mercúrio em condições específicas)?,"[""Gálio"",""Ferro"",""Chumbo"",""Cobre""]",0,media
+c3be9ec5-cf29-4519-8488-1190d567b009,Esportes,Qual nadador tem o maior número de medalhas olímpicas?,"[""Cesar Cielo"",""Michael Phelps"",""Gustavo Borges"",""Mark Spitz""]",1,facil
+c3faeb10-8bbe-4b89-bb49-1573a07bce4c,Geografia,Qual é o estado brasileiro com maior área territorial?,"[""Minas Gerais"",""Mato Grosso"",""Pará"",""Amazonas""]",3,media
+c4cf6749-28d1-462a-afae-b75b64485382,Ciências,"O que é um ""Isótopo""?","[""Átomo com mesmo nº de prótons, mas diferente nº de nêutrons"",""Átomo com carga positiva"",""Átomo sem núcleo"",""Molécula instável""]",0,dificil
+c5729673-0aa3-4d45-a330-af57bcc2ee4b,Esportes,Quantos jogadores titulares tem um time de futebol?,"[""11"",""10"",""12"",""9""]",0,facil
+c5ac735e-2dfd-425a-8269-8f25affdb9be,Esportes,Qual esporte usa uma peteca?,"[""Tênis"",""Badminton"",""Vôlei"",""Squash""]",1,facil
+c67e48de-0bcc-4196-b563-36e9a5f05362,Ciências,Qual é o menor osso do corpo humano?,"[""Fêmur"",""Estribo"",""Martelo"",""Falange""]",1,dificil
+c793b83d-0043-4a85-97a8-c34f03368712,Geografia,Onde fica o Polo Norte?,"[""Antártida"",""Ártico"",""Alasca"",""Groenlândia""]",1,facil
+c8256c68-205d-423e-9fdb-de426a321b39,Música,O que o maestro usa para reger a orquestra?,"[""Uma varinha"",""Uma batuta"",""Um arco"",""Um microfone""]",1,facil
+c8940a4c-bb9e-4f4b-b17a-fb38dbf88579,Cinema,"Qual o nome da bola de vôlei em ""Náufrago""?","[""Wilson"",""Spalding"",""Nike"",""Fred""]",0,media
+c8ba1e02-6f56-449d-b554-7f37f27db5f0,Ciências,Qual é o maior osso do corpo humano?,"[""Fêmur"",""Tíbia"",""Úmero"",""Bacia""]",0,dificil
+c9398a46-91ce-4229-ac13-ec3e8f7bffa9,Tecnologia,Qual a função da lixeira no computador?,"[""Armazenar arquivos excluídos temporariamente"",""Limpar a tela"",""Organizar ícones"",""Melhorar a velocidade""]",0,facil
+c93d44b8-0bb8-44ec-8531-fd10697906e7,Geografia,Qual país é famoso pelos cangurus?,"[""Áustria"",""Austrália"",""Nova Zelândia"",""África do Sul""]",1,facil
+c93dc519-acc3-4daa-af6e-cb9047f7326e,Ciências,Qual animal é conhecido por ter 3 corações?,"[""Polvo"",""Baleia"",""Cavalo"",""Barata""]",0,media
+c9641791-6a43-4f65-b379-92b8d86850c5,Esportes,"No Futsal, quantos jogadores jogam em cada time?","[""4"",""5"",""6"",""7""]",1,media
+c965c2da-d95f-4bd1-b3be-0893cfb756e1,Geografia,O Alasca pertence a qual país?,"[""Canadá"",""Rússia"",""Estados Unidos"",""Groenlândia""]",2,media
+c96b20d3-6cfd-4433-b785-840b32044669,Geografia,O Deserto do Atacama fica em qual país?,"[""Argentina"",""Chile"",""Bolívia"",""Peru""]",1,dificil
+c9926fc9-5c27-4176-bfb6-cafdc19d39fc,Ciências,"O que é o ""Zero Absoluto"" em graus Celsius?","[""0°C"",""-100°C"",""-273,15°C"",""-500°C""]",2,dificil
+c994d318-9d27-4efd-9715-8a75c9edd797,Ciências,A qual temperatura a água ferve (ao nível do mar)?,"[""50°C"",""90°C"",""100°C"",""200°C""]",2,facil
+cb22a25a-0bdc-4202-8cbd-40ff3d45c905,Música,"Quem é conhecido como ""Síndico"" na música brasileira?","[""Jorge Ben Jor"",""Tim Maia"",""Roberto Carlos"",""Erasmo Carlos""]",1,media
+cbec5db2-0dac-4d2d-b793-a2f5e3092fb0,Tecnologia,Quem criou a linguagem Python?,"[""Guido van Rossum"",""James Gosling"",""Bjarne Stroustrup"",""Dennis Ritchie""]",0,dificil
+cc89e6ad-c612-43ce-bee6-ac9397506418,Tecnologia,O que significa a sigla PC?,"[""Personal Computer"",""Private Center"",""Public Computer"",""Process Core""]",0,facil
+cc92b2ba-3646-49a9-814f-2b10aaef274a,Cinema,Quem interpreta o Homem de Ferro no universo Marvel?,"[""Chris Evans"",""Robert Downey Jr."",""Chris Hemsworth"",""Mark Ruffalo""]",1,facil
+cd1e488f-3a42-419e-a807-8339359541bd,Geografia,O que é uma ilha?,"[""Pedaço de terra cercado de água"",""Uma montanha alta"",""Um deserto"",""Um rio grande""]",0,facil
+cd9715de-4077-4ac2-bd8e-2ea77e283f03,Geografia,Qual é o maior país do mundo em território?,"[""China"",""EUA"",""Brasil"",""Rússia""]",3,facil
+cdb0e73c-2bb3-40e8-a4ba-3bd68f6becf6,Esportes,Em qual cidade fica o circuito de Interlagos?,"[""Rio de Janeiro"",""São Paulo"",""Curitiba"",""Brasília""]",1,media
+cdb552b2-0ceb-428b-8c35-4b95ead80674,Ciências,Qual destes é um Gás Nobre?,"[""Oxigênio"",""Nitrogênio"",""Neônio"",""Cloro""]",2,dificil
+ce631a8b-d649-42d9-8a8c-c4b370e3ff2f,Geografia,Qual a capital do Chile?,"[""Lima"",""Quito"",""Santiago"",""La Paz""]",2,facil
+ce6e2d5d-c492-4097-8b82-5cea4608b182,Esportes,"No tênis, qual a pontuação seguinte ao ""30""?","[""40"",""45"",""50"",""60""]",0,media
+cf280bfa-e060-4acc-b3cc-3df16b3a2635,Tecnologia,O que é spam?,"[""Um vírus"",""Lixo eletrônico / Email indesejado"",""Um tipo de site"",""Uma linguagem""]",1,facil
+cf339c61-13a4-4876-a2b6-bbf61597f03a,Geografia,Em qual país fica a Muralha da China?,"[""Japão"",""Coreia"",""China"",""Vietnã""]",2,facil
+cf54bf86-00c8-4e59-b788-8e17dce04f54,Geografia,Qual a capital da Itália?,"[""Veneza"",""Milão"",""Roma"",""Nápoles""]",2,facil
+cf839758-06ea-4263-9d17-ea95ece81e47,Música,"O que significa a sigla ""bpm"" na música?","[""Batidas por minuto"",""Barulhos por metro"",""Baixos por música"",""Bandas por mês""]",0,dificil
+cfa93d4d-71f9-4a6c-a105-e7e9cb8774b6,Ciências,Qual a cor da clorofila nas plantas?,"[""Amarela"",""Verde"",""Azul"",""Marrom""]",1,facil
+cfd8a973-6b93-4d7f-af92-88a68e0b1fd3,Cinema,"Qual filme ganhou 11 Oscars, igualando Titanic e Ben-Hur?","[""O Senhor dos Anéis: O Retorno do Rei"",""La La Land"",""Avatar"",""A Lista de Schindler""]",0,dificil
+d05d77f3-967e-471c-a871-1c340a4d046d,Música,Qual a nacionalidade do DJ David Guetta?,"[""Francês"",""Americano"",""Holandês"",""Sueco""]",0,media
+d077550c-e8ef-4647-b0a5-9ec390a84b5d,Cinema,"Em ""Top Gun"", qual é o apelido do piloto Maverick?","[""Ice"",""Goose"",""Maverick"",""Viper""]",2,media
+d08ad280-d4f4-4c22-9330-92197e74bbc5,Geografia,Qual é a capital do Brasil?,"[""Rio de Janeiro"",""São Paulo"",""Brasília"",""Salvador""]",2,facil
+d12e7afe-49a6-432a-8c0b-78717f7fcc10,Cinema,"Em ""Meninas Malvadas"", que dia elas usam rosa?","[""Segundas"",""Terças"",""Quartas"",""Sextas""]",2,media
+d1816118-81f3-4ec5-9d0e-80bff33fae80,Esportes,Qual esporte envolve subir montanhas?,"[""Alpinismo"",""Ciclismo"",""Remo"",""Surfe""]",0,facil
+d181d326-9a2c-482b-9505-96fa0f0820f1,Esportes,Qual esporte é jogado na água com uma bola e traves?,"[""Natação"",""Polo Aquático"",""Surfe"",""Mergulho""]",1,facil
+d185cbb4-5d44-483d-90d2-40bb8571bdf2,Cinema,Quem dirige a fábrica de chocolate no filme famoso?,"[""Willy Wonka"",""Harry Potter"",""Oz"",""Peter Pan""]",0,facil
+d197c9bd-c25e-443f-9cf5-0b24870cf1d9,Tecnologia,Em que ano foi lançado o primeiro iPhone?,"[""2005"",""2007"",""2009"",""2003""]",1,dificil
+d251f670-5519-4d40-a161-4dcbf6a5a2fe,Música,Quem foi o guitarrista canhoto famoso que morreu aos 27 anos?,"[""Eric Clapton"",""Jimi Hendrix"",""Slash"",""Jimmy Page""]",1,media
+d256af78-b50c-4297-b2fc-6c5fae706e01,Música,"Quem é o compositor das ""Quatro Estações""?","[""Vivaldi"",""Bach"",""Mozart"",""Verdi""]",0,media
+d3a2ca79-3873-4eda-8457-defa50565f2b,Esportes,Qual é o esporte de Gabriel Medina?,"[""Skate"",""Surfe"",""Natação"",""Vôlei de Praia""]",1,facil
+d40d5159-3d9e-49c4-a885-c3c9e66c2d1a,Música,Qual destas é uma clave musical usada para sons graves?,"[""Clave de Sol"",""Clave de Fá"",""Clave de Dó (na 1ª linha)"",""Clave de Ré""]",1,dificil
+d4868521-2add-4d68-924a-830ee0bd1261,Tecnologia,"Em bancos de dados, o que significa ACID?","[""Atomicity, Consistency, Isolation, Durability"",""Access, Code, ID, Data"",""Auto, Corret, In, Direct"",""Nenhuma das anteriores""]",0,dificil
+d4c6df6a-c114-4456-a2b2-d12b401eda65,Tecnologia,Qual linguagem é usada para estilizar páginas Web?,"[""HTML"",""Python"",""CSS"",""Java""]",2,media
+d6131e7a-531f-4418-b268-b2d5e9e6c07e,Ciências,"Na tabela periódica, o que é o ""He""?","[""Hidrogênio"",""Hélio"",""Ferro"",""Mercúrio""]",1,media
+d6198e45-2f93-45f6-ac3c-2725ffe690a4,Música,Qual nota vem logo após o Si na escala diatônica de Dó?,"[""Dó"",""Lá"",""Ré"",""Fá""]",0,dificil
+d6290492-5306-4f87-9119-b118d3e1ff5d,Cinema,Qual é o filme de maior bilheteria de todos os tempos ajustado pela inflação?,"[""Vingadores: Ultimato"",""Avatar"",""E o Vento Levou"",""Star Wars""]",2,dificil
+d73b9e02-f49f-4bd7-84f3-2f156004813a,Música,"Quem compôs a ópera ""A Flauta Mágica""?","[""Beethoven"",""Mozart"",""Wagner"",""Puccini""]",1,dificil
+d7552f07-a85e-467e-82c5-a9dcde772242,Esportes,Quem venceu a Copa do Mundo de 2022?,"[""França"",""Argentina"",""Brasil"",""Croácia""]",1,media
+d78aefd6-ab59-4728-a190-b0e2c0fa3ea8,Esportes,Quem foi o técnico da Seleção Brasileira no tetra em 1994?,"[""Telê Santana"",""Luiz Felipe Scolari"",""Carlos Alberto Parreira"",""Zagallo""]",2,dificil
+d89ca524-11a1-4d6e-92a0-1ec933e9eea0,Esportes,Qual país venceu a Copa do Mundo de 2002?,"[""Alemanha"",""França"",""Brasil"",""Itália""]",2,media
+d9a424f1-d216-48aa-b475-7643ae812537,Tecnologia,Quem é conhecido como o pai da computação?,"[""Alan Turing"",""Steve Jobs"",""Bill Gates"",""Thomas Edison""]",0,media
+d9e2e918-8b4a-4a7d-9a6a-b5636a783d12,Ciências,Qual animal nasce de um girino?,"[""Peixe"",""Sapo"",""Tartaruga"",""Cobra""]",1,facil
+d9e8465e-92fa-430f-a491-d7ef50702a40,Geografia,Qual é a capital da África do Sul (Executiva)?,"[""Joanesburgo"",""Cidade do Cabo"",""Pretória"",""Durban""]",2,dificil
+da181e91-0763-4f1f-b324-fc5a73f5d2bd,Ciências,Qual a principal função dos dentes?,"[""Cheirar"",""Ouvir"",""Triturar alimentos"",""Respirar""]",2,facil
+da20e170-cb37-4155-878a-e79611c48389,Música,"Qual cantora pop começou na série ""Hannah Montana""?","[""Selena Gomez"",""Miley Cyrus"",""Demi Lovato"",""Vanessa Hudgens""]",1,media
+da3968eb-de5f-499a-b693-05b1eed7b892,Música,Qual o nome do intervalo de 8 notas (ex: Dó a Dó)?,"[""Quinta"",""Oitava"",""Sétima"",""Décima""]",1,dificil
+db038f9e-fa1f-473e-b1e0-7e638b455d01,Música,Qual instrumento não faz parte de um quarteto de cordas clássico?,"[""Violino"",""Viola"",""Violoncelo"",""Contrabaixo""]",3,media
+db073fe6-f4c4-4e34-bead-6265785cef91,Esportes,"No vôlei, quantos toques a equipe pode dar na bola antes de passar?","[""1"",""2"",""3"",""4""]",2,facil
+db418770-02e5-4c34-bb03-076d3ebdec4e,Geografia,Qual oceano banha o litoral brasileiro?,"[""Pacífico"",""Atlântico"",""Índico"",""Ártico""]",1,facil
+dc33cd82-934e-4040-9d73-25bb2a35bf2c,Esportes,"Em qual esporte se usa o termo ""Birdie""?","[""Badminton"",""Tênis"",""Golfe"",""Caça""]",2,dificil
+dc60254f-9196-4f2f-9e5c-97d7545321ee,Cinema,"Como a casa do Sr. Fredricksen voa em ""Up - Altas Aventuras""?","[""Com foguetes"",""Com magia"",""Com balões"",""Com um tornado""]",2,media
+dd57f9fa-1635-4b0c-86e5-0a3e5edd28c5,Cinema,"Qual língua fictícia é falada pelos jovens em ""Laranja Mecânica""?","[""Esperanto"",""Nadsat"",""Klingon"",""Élfico""]",1,dificil
+de5f22d5-5128-441b-90e4-d9c439071e8e,Esportes,"Em qual esporte se disputa a ""Stanley Cup""?","[""Futebol Americano"",""Hóquei no Gelo (NHL)"",""Basquete"",""Beisebol""]",1,media
+debe7f44-b852-4602-873d-99972f89f8e0,Tecnologia,Qual destas é uma linguagem de baixo nível?,"[""Python"",""Assembly"",""Java"",""Ruby""]",1,dificil
+ded26a1c-c0c3-4cae-a75b-bdc93e1b115d,Esportes,"Qual jogador é apelidado de ""Black Mamba""?","[""Michael Jordan"",""LeBron James"",""Kobe Bryant"",""Shaquille O Neal""]",2,dificil
+df435fdb-6391-40a2-8d91-b8bbf8f2eb46,Tecnologia,Qual é o site de busca mais usado do mundo?,"[""Bing"",""Yahoo"",""Google"",""DuckDuckGo""]",2,facil
+df9aeec9-b6f7-46b0-8ed1-6cfaa2c376cf,Música,Qual foi a primeira música exibida na MTV Brasil?,"[""Garota de Ipanema"",""Pela Internet (Gilberto Gil)"",""Vital e Sua Moto"",""Polícia""]",0,dificil
+e0053430-08db-4540-862a-c480819143d6,Esportes,Qual esporte Michael Jordan jogava?,"[""Beisebol"",""Futebol Americano"",""Basquete"",""Golfe""]",2,facil
+e0160313-b63a-484b-a802-ed3967e87259,Esportes,"O que é ""Ippon"" no Judô?","[""Uma falta"",""O golpe perfeito que encerra a luta"",""Um empate"",""O início da luta""]",1,media
+e05e6395-3b8e-4ca2-aa15-31cf462bfb94,Esportes,"Qual o nome da manobra de skate criada por Rodney Mullen (""O pai do skate de rua"")?","[""Ollie"",""Kickflip"",""900"",""Manual""]",0,dificil
+e06bd5e4-0c88-4c14-9899-a14e59ca712a,Esportes,Qual a duração de um round no boxe profissional masculino?,"[""2 minutos"",""3 minutos"",""4 minutos"",""5 minutos""]",1,media
+e083d370-330d-46ce-a810-13ec8e0a3f7c,Esportes,Quem foi o primeiro brasileiro a ganhar uma medalha de ouro olímpica?,"[""Adhemar Ferreira da Silva"",""Guilherme Paraense"",""Joaquim Cruz"",""Aurélio Miguel""]",1,dificil
+e1b6382a-5127-40a3-aaf4-c3a640ec4e85,Esportes,Qual país é conhecido como o país do futebol?,"[""Argentina"",""Inglaterra"",""Brasil"",""Alemanha""]",2,facil
+e1f84f05-a7da-4d68-9c01-bb49d3e76b2c,Tecnologia,Qual porta padrão é usada para navegação web segura (HTTPS)?,"[""80"",""21"",""443"",""22""]",2,media
+e2cd4d01-9801-4147-b4b9-7780de432c05,Ciências,Qual é o nome da primeira ovelha clonada?,"[""Daisy"",""Dolly"",""Molly"",""Bella""]",1,dificil
+e31c1c17-13a5-49ab-aea2-60219de8a7e4,Tecnologia,Quem é considerada a primeira programadora da história?,"[""Marie Curie"",""Ada Lovelace"",""Grace Hopper"",""Katherine Johnson""]",1,dificil
+e4931d82-d607-4394-84a1-2f55e14664ca,Esportes,Qual equipe de Fórmula 1 tem a cor vermelha como tradicional?,"[""Mercedes"",""Red Bull"",""Ferrari"",""McLaren""]",2,media
+e50eb9e7-9d0e-4b19-a3b4-d1b4d23d8512,Cinema,O que Forrest Gump faz por muito tempo no filme?,"[""Nada"",""Corre"",""Dorme"",""Voa""]",1,facil
+e5cc24bd-5913-49e6-8bff-4171aae86949,Tecnologia,"Qual o nome do primeiro ""bug"" de computador registrado?","[""Uma falha lógica"",""Uma mariposa (inseto) presa no relé"",""Um curto circuito"",""Um erro de digitação""]",1,dificil
+e623feee-a09e-4a25-b5c2-5c72184e957a,Cinema,Qual é a fraqueza do Superman?,"[""Chumbo"",""Kryptonita"",""Fogo"",""Gelo""]",1,facil
+e67e5c90-daab-46ee-9e6b-82859da9ea75,Esportes,"No futebol americano, quantos pontos vale um Touchdown?","[""3"",""5"",""6"",""7""]",2,media
+e69e33f8-556d-48ec-bd6c-c0e6b9e4137f,Geografia,Qual é a montanha mais alta do mundo?,"[""K2"",""Everest"",""Aconcágua"",""Mont Blanc""]",1,media
+e6c64b21-9478-4072-b526-b8e6a0d6fe4a,Esportes,Qual o limite de faltas individuais na NBA antes da expulsão?,"[""4"",""5"",""6"",""7""]",2,media
+e73b69e4-cae2-4aa2-933f-2c07e5de29ac,Geografia,Qual é o país mais populoso do mundo (2023)?,"[""China"",""Índia"",""EUA"",""Indonésia""]",1,media
+e749f7c1-4bd9-4126-8ceb-955ce6680c12,Música,"O que é um ""Stradivarius""?","[""Um piano"",""Um violino valioso"",""Uma marca de bateria"",""Um tipo de partitura""]",1,dificil
+e74dea28-def7-48a5-808c-8dd60a03dc47,Geografia,Qual é o nome da região disputada entre Índia e Paquistão?,"[""Tibet"",""Caxemira"",""Punjab"",""Bengala""]",1,dificil
+e76b06f4-b97f-4983-a7f6-981db46d0405,Cinema,"Qual ator recusou o papel de Neo em Matrix para fazer ""As Loucas Aventuras de James West""?","[""Brad Pitt"",""Will Smith"",""Tom Cruise"",""Nicolas Cage""]",1,dificil
+e83bc7b6-48ad-426d-a448-26c9c30941db,Música,Qual instrumento tem teclas brancas e pretas?,"[""Violão"",""Piano"",""Flauta"",""Bateria""]",1,facil
+e8755e98-fa2f-4185-a948-e14f2de6d8f5,Música,"Quem canta ""Ai, Se Eu Te Pego""?","[""Luan Santana"",""Michel Teló"",""Gusttavo Lima"",""Zé Felipe""]",1,facil
+e8809c63-4733-40f7-a95a-367bac39581f,Cinema,"Qual filme tem a frase ""Ao infinito e além""?","[""Star Wars"",""Toy Story"",""Interestelar"",""Guardiões da Galáxia""]",1,facil
+e880b2ff-82a6-41ef-89d9-a9acbc2edf64,Música,"Qual banda de rock progressivo gravou ""Roundabout""?","[""Yes"",""Genesis"",""King Crimson"",""Rush""]",0,dificil
+e91a2b81-f007-45ed-a54c-cfe1bcdfc08f,Música,Qual banda brasileira teve Renato Russo como vocalista?,"[""Titãs"",""Legião Urbana"",""Paralamas do Sucesso"",""Barão Vermelho""]",1,facil
+e935de69-ed59-4057-8f6a-c9c793707996,Esportes,Quem detém o recorde de mais pontos na história da NBA (até 2023)?,"[""Kareem Abdul-Jabbar"",""Michael Jordan"",""LeBron James"",""Kobe Bryant""]",2,dificil
+e96df3a5-4862-4c32-9070-70c6f75a5c4c,Geografia,Qual é a capital da China?,"[""Xangai"",""Hong Kong"",""Pequim (Beijing)"",""Cantão""]",2,media
+e97738cc-e074-4cb8-8ffd-ef2d2321d63e,Geografia,O Rio Nilo fica em qual continente?,"[""Ásia"",""América"",""África"",""Europa""]",2,media
+e99baf2b-2207-42e1-a4d9-48b47c0e51d5,Música,Qual instrumento é percussivo?,"[""Violino"",""Bateria"",""Saxofone"",""Guitarra""]",1,facil
+e9a2774b-6901-4d37-831b-f099a5eadb71,Ciências,Qual destes é um réptil?,"[""Sapo"",""Cachorro"",""Tartaruga"",""Águia""]",2,facil
+e9c7a6f3-8464-4254-b92c-46f858a4cab5,Música,"Qual cantora lançou o álbum ""Lemonade"" em 2016?","[""Rihanna"",""Beyoncé"",""Nicki Minaj"",""Shakira""]",1,media
+ea2c0670-65b9-4fef-8d40-b8b9e443b399,Ciências,"O que é o ""centro"" de um átomo?","[""Elétron"",""Núcleo"",""Órbita"",""Molécula""]",1,media
+eb884fe4-39c6-4935-a8b7-d03358e5a304,Esportes,Em que cidade ocorreram as primeiras Olimpíadas da Era Moderna (1896)?,"[""Paris"",""Londres"",""Atenas"",""Roma""]",2,dificil
+eb8ec425-929e-4381-85e5-52f81beca8e0,Música,Quem é o Rei do Rock?,"[""Michael Jackson"",""Elvis Presley"",""Mick Jagger"",""John Lennon""]",1,facil
+ec0da0a5-8dc2-464d-b17b-79beb869d94e,Cinema,"Qual é o segredo do personagem de Bruce Willis em ""O Sexto Sentido""?","[""Ele é um fantasma"",""Ele é o assassino"",""Ele é um anjo"",""Ele nunca existiu""]",0,media
+ec15c61e-c77d-4b49-a0f6-333548a2bdbc,Cinema,"Quem dirigiu o clássico ""Casablanca""?","[""Michael Curtiz"",""Orson Welles"",""Billy Wilder"",""Frank Capra""]",0,dificil
+eca1b68a-cdb4-4143-8a79-db8f767a7e09,Cinema,Quem é o namorado da Barbie no filme de 2023?,"[""Max"",""Allan"",""Ken"",""Bob""]",2,facil
+ed1508c8-0198-4778-a77a-d9bbb8df34cb,Ciências,Qual cientista ganhou dois Prêmios Nobel em áreas diferentes (Física e Química)?,"[""Albert Einstein"",""Marie Curie"",""Isaac Newton"",""Stephen Hawking""]",1,dificil
+ee59f4be-4ca3-4cb3-b736-dd6681767b28,Ciências,O que estuda a Micologia?,"[""Vírus"",""Bactérias"",""Fungos"",""Plantas""]",2,dificil
+ee6a6b26-30f0-467c-aba8-ce9399077717,Música,Qual compositor ficou surdo no final da vida?,"[""Mozart"",""Beethoven"",""Bach"",""Schubert""]",1,dificil
+ef3b9669-a81b-4c89-85b7-175c68aa2424,Tecnologia,Qual é a função do monitor?,"[""Processar dados"",""Armazenar arquivos"",""Exibir imagens"",""Resfriar o PC""]",2,facil
+ef9118e5-88d1-47c6-bf0a-ad79e139bdd0,Música,"Quem canta o hit ""Show das Poderosas""?","[""Ivete Sangalo"",""Anitta"",""Ludmilla"",""Claudia Leitte""]",1,facil
+f08e1b79-bebf-4003-85b6-a5d718f0ad1e,Cinema,"Quem dirigiu ""Avatar"" (2009)?","[""James Cameron"",""Ridley Scott"",""George Lucas"",""Michael Bay""]",0,media
+f110f0ac-ae40-4cc3-887a-665e710fc76f,Música,Em que ano aconteceu o festival Woodstock original?,"[""1967"",""1969"",""1971"",""1975""]",1,dificil
+f1277990-1c65-4963-aa51-19c9edbe9f35,Esportes,Qual esporte é praticado no Super Bowl?,"[""Beisebol"",""Basquete"",""Futebol Americano"",""Hóquei""]",2,facil
+f129d140-0b6a-43db-9485-34eb2215c678,Música,Quem é a Rainha do Pop?,"[""Britney Spears"",""Madonna"",""Lady Gaga"",""Beyoncé""]",1,facil
+f38cb6ab-e0ae-4579-ad2e-b34318016696,Cinema,"Qual o nome do menino esquecido em ""Esqueceram de Mim""?","[""Harry"",""Kevin"",""Buzz"",""Fuller""]",1,facil
+f416f542-d60c-404a-aa98-1853defa4b4d,Esportes,"Em qual esporte se usa a expressão ""Touchdown""?","[""Futebol Americano"",""Rugby"",""Futebol"",""Basquete""]",0,facil
+f46bac25-87dc-44a9-bc58-4dd120e18ac6,Ciências,O som se propaga no vácuo?,"[""Sim, muito rápido"",""Sim, devagar"",""Não"",""Depende da temperatura""]",2,media
+f4730249-74d3-4c8b-b578-ce1ee8e9e0f5,Ciências,O que é o H2O no estado gasoso?,"[""Gelo"",""Vapor"",""Chuva"",""Neve""]",1,facil
+f47c0c17-6e51-4137-88c7-7296cc182542,Esportes,"No beisebol, o que é um ""Home Run""?","[""Uma rebatida para fora do campo que permite pontuar"",""Uma falta"",""Uma eliminação"",""Uma defesa""]",0,media
+f5becb80-1b03-47e1-82b2-dcef6b0efa87,Música,"Quem é considerado o ""Pai da Bossa Nova""?","[""João Gilberto"",""Roberto Carlos"",""Tim Maia"",""Gilberto Gil""]",0,dificil
+f5dd5099-0aee-4904-b12e-fc0329ebc08f,Tecnologia,"O que é ""Touchscreen""?","[""Tela sensível ao toque"",""Tela quebrada"",""Protetor de tela"",""Teclado virtual""]",0,facil
+f66069c0-0cbf-41e2-a784-4fedb67fdebf,Tecnologia,"O que é um ""Laptop""?","[""Computador de mesa"",""Computador portátil"",""Tablet"",""Celular""]",1,facil
+f6db6c37-1690-4bba-9cb4-9b3c0761cac3,Música,Quem foi o baixista original do Metallica que morreu em 1986?,"[""Jason Newsted"",""Cliff Burton"",""Robert Trujillo"",""Dave Mustaine""]",1,dificil
+f74bfe8e-ee62-48c0-b913-99b1cd024e03,Cinema,Qual é a taxa de quadros (fps) padrão do cinema?,"[""30 fps"",""60 fps"",""24 fps"",""48 fps""]",2,dificil
+f7a334eb-35a3-4e37-ad4b-024838f6c473,Música,Qual instrumento Paganini tocava virtuosamente?,"[""Piano"",""Violino"",""Flauta"",""Violão""]",1,dificil
+f81915a2-4b37-48c1-badf-bd494903c752,Geografia,Qual é a capital da Turquia?,"[""Istambul"",""Ankara"",""Antalya"",""Izmir""]",1,dificil
+f850dbff-b893-4983-957c-e62ce6556ca9,Música,Qual a banda de Freddie Mercury?,"[""Queen"",""AC/DC"",""Metallica"",""Nirvana""]",0,facil
+f864579e-4022-44e1-8644-b264dcb8972c,Música,Quem é o vocalista do U2?,"[""The Edge"",""Bono Vox"",""Sting"",""Elton John""]",1,facil
+f96b2d17-aba9-45e7-966a-712f0a08cf03,Esportes,Qual atleta ganhou 8 medalhas de ouro em uma única Olimpíada (2008)?,"[""Usain Bolt"",""Michael Phelps"",""Mark Spitz"",""Larisa Latynina""]",1,dificil
+f9dd2de9-a8ff-404a-925f-60242ebba038,Esportes,Qual a única seleção de futebol que jogou todas as Copas do Mundo?,"[""Alemanha"",""Argentina"",""Brasil"",""Itália""]",2,dificil
+fa2e9d06-4db8-46be-8355-9696eaa09fa4,Geografia,Em qual país fica a Torre Eiffel?,"[""Itália"",""Alemanha"",""França"",""Espanha""]",2,facil
+fa3c3268-825e-4523-8211-fac109c9b497,Ciências,"O que é ""Entropia""?","[""Medida de energia"",""Medida de desordem de um sistema"",""Medida de velocidade"",""Medida de calor""]",1,dificil
+fa989b1c-e228-4b90-b3b2-76aa243465dc,Ciências,O que é um vulcão?,"[""Uma montanha de gelo"",""Uma abertura na crosta terrestre que expele lava"",""Um buraco no mar"",""Uma nuvem de tempestade""]",1,facil
+faa509e2-d2ab-4e7f-9a6c-3be56022fa3c,Música,"Qual a cantora de ""Shake It Off""?","[""Katy Perry"",""Taylor Swift"",""Ariana Grande"",""Miley Cyrus""]",1,facil
+fb24a61f-9ed8-4b3c-9265-09b8b65b4e00,Ciências,Quantos pares de cromossomos tem um ser humano típico?,"[""20"",""23"",""46"",""12""]",1,media
+fc30eb03-f835-4bb1-86cd-9c4d2b285a14,Música,"Qual banda de Heavy Metal criou o álbum ""Master of Puppets""?","[""Megadeth"",""Slayer"",""Metallica"",""Iron Maiden""]",2,dificil
+fc840d22-bcb0-4eaa-9503-e695d73203df,Música,Qual o nome do festival de música criado em 1985 no Brasil?,"[""Lollapalooza"",""Rock in Rio"",""Tomorrowland"",""Planeta Atlântida""]",1,media
+fc85c3cd-a888-4a6d-a87a-cd4e8cda9ce4,Esportes,Em que ano o Brasil ganhou sua primeira Copa do Mundo?,"[""1950"",""1958"",""1962"",""1970""]",1,dificil
+fd1ce318-8691-410c-9b4b-52894007b8fe,Esportes,Quantas casas tem um tabuleiro de xadrez?,"[""50"",""60"",""64"",""72""]",2,dificil
+fd49d38b-c8d6-4960-8757-bda2dc823bfb,Cinema,"Que animal é o personagem Manny em ""A Era do Gelo""?","[""Preguiça"",""Tigre Dentes-de-Sabre"",""Mamute"",""Esquilo""]",2,facil
+fe2e2887-ae6c-4b7e-857d-a168f18ab406,Esportes,Quantos pinos são usados no Boliche?,"[""8"",""9"",""10"",""12""]",2,media
+fe4a25a3-71d6-4ce2-a58a-4227f41e248a,Tecnologia,Qual empresa comprou o GitHub em 2018?,"[""Google"",""Amazon"",""Microsoft"",""Facebook""]",2,dificil
+ffcc09d9-60c1-4acc-b1ae-1a79067aad64,Ciências,Qual é o nome do processo de divisão celular que gera células idênticas?,"[""Meiose"",""Mitose"",""Fecundação"",""Mutação""]",1,media
+ffdb9ef5-6de1-474c-b9e2-2d1c5f73db0c,Geografia,Qual país possui o maior número de vulcões ativos?,"[""Japão"",""Indonésia"",""EUA"",""Chile""]",1,dificil
+fffc5487-8b16-476b-ae7e-fa1c5ee3c840,Geografia,Em qual país fica o Coliseu?,"[""Grécia"",""França"",""Itália"",""Portugal""]",2,facil
