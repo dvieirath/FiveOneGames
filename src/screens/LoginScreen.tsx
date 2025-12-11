@@ -12,20 +12,10 @@ import {
   Alert
 } from 'react-native';
 
-import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage'; 
-import { v4 as uuidv4 } from 'uuid';
+import { supabase } from '../services/supabaseClient';
 
-const LOCAL_LOGO_PATH = require('../../../../FiveOneLogo.png'); 
-
-// 💻 CONFIGURAÇÃO DA API
-
-// Usar variável de ambiente (Expo)
-const API_URL = process.env.EXPO_PUBLIC_API_URL || 'http://localhost:3000/api/auth';
-
-// Credenciais de teste (remover em produção)
-const TEST_EMAIL = 'admin@teste.com';
-const TEST_PASSWORD = '123456';
+const LOCAL_LOGO_PATH = require('../assets/FiveOneLogo.png'); 
 
 // Cores do tema GAMING / DARK MODE (ATUALIZADO PARA LARANJA NEON)
 const colors = {
@@ -38,7 +28,7 @@ const colors = {
   error: '#FF4081',
 };
 
-const MIN_PASSWORD_LENGTH = 5;
+const MIN_PASSWORD_LENGTH = 6; // Supabase exige no mínimo 6 caracteres
 
 interface LoginScreenProps {
   onLoginSuccess: () => void; 
@@ -72,7 +62,7 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ onLoginSuccess }) => {
     outputRange: ['0deg', '360deg'],
   });
 
-  // --- LÓGICA DE SUBMISSÃO HÍBRIDA ---
+  // --- LÓGICA DE SUBMISSÃO COM SUPABASE ---
   const handleSubmit = async () => {
     setError('');
     setSuccess('');
@@ -105,56 +95,60 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ onLoginSuccess }) => {
 
     setIsLoading(true);
 
-    // Login de teste (bypass backend)
-    if (!isRegistering && identifier === TEST_EMAIL && password === TEST_PASSWORD) {
-      setIsLoading(true);
-      setTimeout(async () => {
-        await AsyncStorage.setItem('userToken', 'dummy-test-token');
-        await AsyncStorage.setItem('userName', 'Administrador');
-        setIsLoading(false);
-        onLoginSuccess();
-      }, 1000);
-      return;
-    }
-
-    // Fluxo real (backend)
-    let endpoint = isRegistering ? '/register' : '/login';
-    let payload: any = { email: identifier, password };
-    if (isRegistering) {
-      // Gera um ID único para o usuário
-      const userId = uuidv4();
-      payload = { email: identifier, password, username, userId };
-    }
-
     try {
-      const response = await axios.post(`${API_URL}${endpoint}`, payload);
-      const { token, username: dbUsername, userId: returnedId } = response.data;
-      if (token) {
-        await AsyncStorage.setItem('userToken', token);
-        const nameToSave = dbUsername || username || 'Jogador';
-        await AsyncStorage.setItem('userName', nameToSave);
-        // Salva o ID do usuário
-        await AsyncStorage.setItem('userId', returnedId || userId);
-        if (isRegistering) {
-          setSuccess('Conta criada com sucesso!');
+      if (isRegistering) {
+        // --- REGISTRO NO SUPABASE ---
+        const { data, error } = await supabase.auth.signUp({
+          email: identifier,
+          password: password,
+          options: {
+            data: {
+              username: username, // Salva o nome de usuário nos metadados
+            },
+          },
+        });
+
+        if (error) throw error;
+
+        if (data.user) {
+          setSuccess('Conta criada com sucesso! Faça login.');
           setIsRegistering(false);
           setPassword('');
           setConfirmPassword('');
-          setUsername('');
-          setIdentifier('');
-        } else {
+          // Opcional: Limpar outros campos ou já logar o usuário automaticamente
+        }
+      } else {
+        // --- LOGIN NO SUPABASE ---
+        const { data, error } = await supabase.auth.signInWithPassword({
+          email: identifier,
+          password: password,
+        });
+
+        if (error) throw error;
+
+        if (data.session && data.user) {
+          const token = data.session.access_token;
+          const userMetadata = data.user.user_metadata;
+          const nameToSave = userMetadata?.username || 'Jogador';
+          const userId = data.user.id;
+
+          await AsyncStorage.setItem('userToken', token);
+          await AsyncStorage.setItem('userName', nameToSave);
+          await AsyncStorage.setItem('userId', userId);
+
           onLoginSuccess();
         }
-        return;
       }
     } catch (err: any) {
-      let errorMessage = 'Erro de comunicação. Verifique o backend.';
-      if (err.response && err.response.data) {
-        errorMessage = err.response.data.message || errorMessage;
-        if (err.response.status === 401) errorMessage = 'Credenciais inválidas.';
-      } else if (err.message && err.message.includes('Network Error')) {
-        errorMessage = `Erro de Rede: Backend inacessível em ${API_URL}`;
+      console.error("Erro Supabase:", err);
+      let errorMessage = 'Ocorreu um erro. Tente novamente.';
+      
+      if (err.message) {
+        if (err.message.includes('Invalid login credentials')) errorMessage = 'E-mail ou senha incorretos.';
+        else if (err.message.includes('User already registered')) errorMessage = 'E-mail já cadastrado.';
+        else errorMessage = err.message;
       }
+      
       setError(errorMessage);
     } finally {
       setIsLoading(false);

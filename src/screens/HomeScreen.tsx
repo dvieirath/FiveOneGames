@@ -10,6 +10,7 @@ import {
   Image,
   Dimensions,
   Alert,
+  Modal, // Adicionado Modal
   NativeSyntheticEvent,
   NativeScrollEvent
 } from 'react-native';
@@ -20,7 +21,7 @@ import { FontAwesome5, MaterialIcons, Ionicons } from '@expo/vector-icons';
 // O caminho correto é subir 5 níveis: ../../../../../FiveOneLogo.png
 // MAS, para garantir, vamos usar o require direto do assets se possível ou ajustar conforme a estrutura real.
 // Assumindo que a logo está na raiz de assets dentro de src:
-const LOCAL_LOGO_PATH = require('../../../../FiveOneLogo.png');
+const LOCAL_LOGO_PATH = require('../assets/FiveOneLogo.png');
 
 const { width, height } = Dimensions.get('window');
 
@@ -35,6 +36,7 @@ const colors = {
   darkOverlay: 'rgba(0,0,0,0.5)', // Overlay um pouco mais suave
   tabBarBackground: '#0a0a0a',
   indicatorInactive: '#333',
+  modalBackground: 'rgba(0,0,0,0.9)', // Fundo do modal
 };
 
 // Dados simulados
@@ -44,16 +46,33 @@ const gameData = [
         title: 'Jogo da Memória',
         status: 'Novo',
         color: '#16A085',
-        imageSource: require('../../../../images/NeymarCapa.png'), // Capa Personalizada
+        imageSource: require('../assets/images/NeymarCapa.png'), // Capa Personalizada
         resizeMode: 'contain' as const,
-        backgroundColor: '#1a1a1a', // Ajuste este código HEX para a cor exata do fundo da imagem
+        backgroundColor: '#1a1a1a', 
+        description: 'Teste sua memória encontrando os pares de cartas antes que o tempo acabe! Um desafio clássico com um toque de futebol.',
+        rules: [
+            'Vire duas cartas por vez.',
+            'Se forem iguais, elas permanecem viradas e você ganha pontos.',
+            'Se forem diferentes, elas viram de volta.',
+            'Complete todos os pares antes do tempo acabar para avançar de nível.',
+            'Fique atento ao embaralhamento das cartas!'
+        ]
     },
     {
         id: '2',
         title: 'Quiz',
         status: 'Popular',
         color: '#E74C3C',
-        imageSource: { uri: 'https://images.unsplash.com/photo-1633613286991-611fe299c4be?q=80&w=800&auto=format&fit=crop' }, // Ponto de Interrogação 3D
+        imageSource: { uri: 'https://d9radp1mruvh.cloudfront.net/media/challenge_img/509655_shutterstock_1506580442_769367.jpg' }, // Capa Quiz
+        resizeMode: 'contain' as const,
+        backgroundColor: '#000000',
+        description: 'Desafie seus conhecimentos em diversas categorias como Esportes, Cinema, Tecnologia e muito mais.',
+        rules: [
+            'Escolha um tema de sua preferência.',
+            'Responda as perguntas corretamente dentro do tempo limite.',
+            'Cada acerto vale pontos.',
+            'Tente bater seu recorde e aprender curiosidades novas!'
+        ]
     },
     {
         id: '3',
@@ -61,6 +80,8 @@ const gameData = [
         status: 'EM BREVE',
         color: '#F39C12',
         imageSource: { uri: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=800&auto=format&fit=crop' }, // Matrix / Código Hacker
+        description: 'Resolva quebra-cabeças lógicos baseados em programação.',
+        rules: ['Em breve...']
     },
     {
         id: '4',
@@ -68,6 +89,8 @@ const gameData = [
         status: 'EM BREVE',
         color: '#2980B9',
         imageSource: { uri: 'https://images.unsplash.com/photo-1511994714008-b6d68a8b32a2?q=80&w=800&auto=format&fit=crop' }, // Carro de Corrida (F1)
+        description: 'Acelere em pistas futuristas e vença seus oponentes.',
+        rules: ['Em breve...']
     },
     {
         id: '5',
@@ -75,6 +98,8 @@ const gameData = [
         status: 'EM BREVE',
         color: '#8E44AD',
         imageSource: { uri: 'https://images.unsplash.com/photo-1577493340887-b7bfff550145?q=80&w=800&auto=format&fit=crop' }, // Olho de Dragão / Gato místico
+        description: 'Entre em um mundo de fantasia e batalhe contra dragões.',
+        rules: ['Em breve...']
     },
     {
         id: '6',
@@ -82,6 +107,8 @@ const gameData = [
         status: 'EM BREVE',
         color: colors.primary,
         imageSource: { uri: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=800&auto=format&fit=crop' }, // Terra vista do espaço
+        description: 'Conquiste planetas e gerencie recursos no espaço.',
+        rules: ['Em breve...']
     },
 ];
 
@@ -93,6 +120,8 @@ interface HomeScreenProps {
 
 const HomeScreen: React.FC<HomeScreenProps> = ({ onLogout, onGameSelect, onOpenFriends }) => {
     const [activeIndex, setActiveIndex] = useState(0);
+    const [infoModalVisible, setInfoModalVisible] = useState(false);
+    const [selectedGameInfo, setSelectedGameInfo] = useState<any>(null);
 
   const handleGamePress = (game: typeof gameData[0]) => {
     if (game.status.toUpperCase() === 'EM BREVE') {
@@ -104,6 +133,11 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ onLogout, onGameSelect, onOpenF
             Alert.alert("Jogo", `Iniciando o jogo: ${game.title}`);
         }
     }
+  };
+
+  const handleOpenInfo = (game: any) => {
+      setSelectedGameInfo(game);
+      setInfoModalVisible(true);
   };
 
     const handleTabPress = (tabName: string) => {
@@ -162,43 +196,54 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ onLogout, onGameSelect, onOpenF
 
                 return (
                 <View key={game.id} style={styles.slideWrapper}>
-                    <TouchableOpacity
-                        style={[
-                            styles.gameCard, 
-                            (game as any).backgroundColor ? { backgroundColor: (game as any).backgroundColor } : {}
-                        ]}
-                        onPress={() => handleGamePress(game)}
-                        activeOpacity={0.9}
-                    >
-                        {/* Imagem de Fundo */}
-                        <Image
-                            source={game.imageSource}
-                            style={styles.cardImage}
-                            resizeMode={(game as any).resizeMode || "cover"}
-                        />
+                    <View style={[
+                        styles.gameCard, 
+                        (game as any).backgroundColor ? { backgroundColor: (game as any).backgroundColor } : {}
+                    ]}>
+                        <TouchableOpacity
+                            style={StyleSheet.absoluteFill}
+                            onPress={() => handleGamePress(game)}
+                            activeOpacity={0.9}
+                        >
+                            {/* Imagem de Fundo */}
+                            <Image
+                                source={game.imageSource}
+                                style={styles.cardImage}
+                                resizeMode={(game as any).resizeMode || "cover"}
+                            />
 
-                        {/* Overlay Gradiente/Escuro */}
-                        <View style={styles.cardOverlay} />
+                            {/* Overlay Gradiente/Escuro */}
+                            <View style={styles.cardOverlay} />
 
-                        {/* Conteúdo do Card */}
-                        <View style={styles.cardContent}>
-                            <View style={[styles.statusBadge, { backgroundColor: itemColor }]}>
-                                <Text style={styles.statusText}>{game.status}</Text>
+                            {/* Conteúdo do Card */}
+                            <View style={styles.cardContent}>
+                                <View style={[styles.statusBadge, { backgroundColor: itemColor }]}>
+                                    <Text style={styles.statusText}>{game.status}</Text>
+                                </View>
+
+                                <Text style={[styles.gameTitle, styles.textShadow]}>
+                                    {game.title}
+                                </Text>
+
+                                <View style={[styles.playButton, { backgroundColor: itemColor }]}>
+                                    <Text style={styles.playButtonText}>JOGAR AGORA</Text>
+                                    <Ionicons name="play-circle" size={24} color="white" style={{marginLeft: 5}} />
+                                </View>
                             </View>
 
-                            <Text style={[styles.gameTitle, styles.textShadow]}>
-                                {game.title}
-                            </Text>
+                            {/* Borda Neon */}
+                            <View style={[styles.neonBorder, { borderColor: itemColor }]} />
+                        </TouchableOpacity>
 
-                            <View style={styles.playButton}>
-                                <Text style={styles.playButtonText}>JOGAR AGORA</Text>
-                                <Ionicons name="play-circle" size={24} color="white" style={{marginLeft: 5}} />
-                            </View>
-                        </View>
-
-                        {/* Borda Neon */}
-                        <View style={[styles.neonBorder, { borderColor: itemColor }]} />
-                    </TouchableOpacity>
+                        {/* Botão de Informação (Separado e no Topo) */}
+                        <TouchableOpacity 
+                            style={styles.infoButtonTopRight} 
+                            onPress={() => handleOpenInfo(game)}
+                            activeOpacity={0.7}
+                        >
+                            <Ionicons name="information-circle" size={36} color={colors.primary} />
+                        </TouchableOpacity>
+                    </View>
                 </View>
             )})}
             </ScrollView>
@@ -244,11 +289,137 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ onLogout, onGameSelect, onOpenF
           </TouchableOpacity>
       </View>
 
+      {/* MODAL DE INFORMAÇÕES */}
+      <Modal
+        animationType="fade"
+        transparent={true}
+        visible={infoModalVisible}
+        onRequestClose={() => setInfoModalVisible(false)}
+      >
+        <View style={styles.modalOverlay}>
+            <View style={styles.modalContent}>
+                {selectedGameInfo && (
+                    <>
+                        <View style={[styles.modalHeader, { borderBottomColor: selectedGameInfo.color === colors.primary ? colors.border : selectedGameInfo.color }]}>
+                            <Text style={[styles.modalTitle, { color: selectedGameInfo.color === colors.primary ? colors.border : selectedGameInfo.color }]}>
+                                {selectedGameInfo.title}
+                            </Text>
+                            <TouchableOpacity onPress={() => setInfoModalVisible(false)}>
+                                <Ionicons name="close-circle" size={30} color="#fff" />
+                            </TouchableOpacity>
+                        </View>
+                        
+                        <ScrollView style={styles.modalBody}>
+                            <Text style={styles.modalSectionTitle}>Sobre o Jogo</Text>
+                            <Text style={styles.modalDescription}>{selectedGameInfo.description}</Text>
+                            
+                            <Text style={styles.modalSectionTitle}>Regras</Text>
+                            {selectedGameInfo.rules && selectedGameInfo.rules.map((rule: string, index: number) => (
+                                <View key={index} style={styles.ruleRow}>
+                                    <Ionicons name="checkmark-circle" size={16} color={colors.primary} style={{marginRight: 8, marginTop: 2}} />
+                                    <Text style={styles.ruleText}>{rule}</Text>
+                                </View>
+                            ))}
+                        </ScrollView>
+
+                        <TouchableOpacity 
+                            style={[styles.modalPlayButton, { backgroundColor: selectedGameInfo.color === colors.primary ? colors.border : selectedGameInfo.color }]}
+                            onPress={() => {
+                                setInfoModalVisible(false);
+                                handleGamePress(selectedGameInfo);
+                            }}
+                        >
+                            <Text style={styles.modalPlayButtonText}>JOGAR AGORA</Text>
+                        </TouchableOpacity>
+                    </>
+                )}
+            </View>
+        </View>
+      </Modal>
+
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
+  modalOverlay: {
+      flex: 1,
+      backgroundColor: 'rgba(0,0,0,0.85)',
+      justifyContent: 'center',
+      alignItems: 'center',
+      padding: 20,
+  },
+  modalContent: {
+      width: '100%',
+      maxHeight: '80%',
+      backgroundColor: '#1a1a1a',
+      borderRadius: 20,
+      padding: 20,
+      borderWidth: 1,
+      borderColor: '#333',
+      elevation: 20,
+  },
+  modalHeader: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      paddingBottom: 15,
+      borderBottomWidth: 2,
+      marginBottom: 15,
+  },
+  modalTitle: {
+      fontSize: 24,
+      fontWeight: 'bold',
+      textTransform: 'uppercase',
+      flex: 1,
+  },
+  modalBody: {
+      marginBottom: 20,
+  },
+  modalSectionTitle: {
+      color: '#fff',
+      fontSize: 18,
+      fontWeight: 'bold',
+      marginTop: 15,
+      marginBottom: 10,
+  },
+  modalDescription: {
+      color: '#ccc',
+      fontSize: 16,
+      lineHeight: 24,
+  },
+  ruleRow: {
+      flexDirection: 'row',
+      alignItems: 'flex-start',
+      marginBottom: 8,
+  },
+  ruleText: {
+      color: '#ddd',
+      fontSize: 14,
+      lineHeight: 20,
+      flex: 1,
+  },
+  modalPlayButton: {
+      paddingVertical: 15,
+      borderRadius: 10,
+      alignItems: 'center',
+      marginTop: 10,
+  },
+  modalPlayButtonText: {
+      color: '#000',
+      fontWeight: 'bold',
+      fontSize: 16,
+      textTransform: 'uppercase',
+  },
+  infoButtonTopRight: {
+      position: 'absolute',
+      top: 15,
+      right: 15,
+      zIndex: 10,
+      backgroundColor: 'rgba(0,0,0,0.6)',
+      borderRadius: 20,
+      padding: 2,
+  },
   safeArea: {
     flex: 1,
     backgroundColor: colors.background,

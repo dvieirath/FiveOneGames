@@ -18,7 +18,7 @@ const SplashScreen: React.FC<SplashScreenProps> = ({ isLoading }) => {
       <StatusBar barStyle="light-content" backgroundColor={colors.background} />
 
       <Image 
-        source={require('../../../../FiveOneLogo.png')} 
+        source={require('../assets/FiveOneLogo.png')} 
         style={[styles.logo, styles.logoShadow]}
       />
       

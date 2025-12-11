@@ -11,12 +11,22 @@ import {
   Image,
   ImageBackground,
   Animated,
-  Easing
+  Easing,
+  LayoutAnimation,
+  Platform,
+  UIManager
 } from 'react-native';
 import { Audio } from 'expo-av';
 import { Ionicons } from '@expo/vector-icons';
 
 const { width, height } = Dimensions.get('window');
+
+// Habilita LayoutAnimation no Android
+if (Platform.OS === 'android') {
+  if (UIManager.setLayoutAnimationEnabledExperimental) {
+    UIManager.setLayoutAnimationEnabledExperimental(true);
+  }
+}
 
 // CORES - TEMA DARK (PRETO)
 const colors = {
@@ -32,17 +42,26 @@ const colors = {
 
 // Imagens do Neymar para o jogo
 const IMAGES = [
-  require('../../../../../assets/images/Neymar/1.png'),
-  require('../../../../../assets/images/Neymar/2.png'),
-  require('../../../../../assets/images/Neymar/3.png'),
-  require('../../../../../assets/images/Neymar/4.png'),
-  require('../../../../../assets/images/Neymar/5.png'),
-  require('../../../../../assets/images/Neymar/6.png'),
-  require('../../../../../assets/images/Neymar/7.png'),
-  require('../../../../../assets/images/Neymar/8.png'),
-  require('../../../../../assets/images/Neymar/9.png'),
-  require('../../../../../assets/images/Neymar/10.png'),
+  require('../assets/images/Neymar/1.png'),
+  require('../assets/images/Neymar/2.png'),
+  require('../assets/images/Neymar/3.png'),
+  require('../assets/images/Neymar/4.png'),
+  require('../assets/images/Neymar/5.png'),
+  require('../assets/images/Neymar/6.png'),
+  require('../assets/images/Neymar/7.png'),
+  require('../assets/images/Neymar/8.png'),
+  require('../assets/images/Neymar/9.png'),
+  require('../assets/images/Neymar/10.png'),
 ];
+
+// Função de Embaralhamento (Fisher-Yates)
+const shuffleArray = (array: any[]) => {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+};
 
 interface Card {
   id: string;
@@ -58,8 +77,8 @@ interface MemoryGameScreenProps {
 interface MemoryCardProps {
   card: Card;
   onPress: (card: Card) => void;
-  width: number;
-  height: number;
+  width: number | string;
+  height: number | string;
 }
 
 const MemoryCard: React.FC<MemoryCardProps> = ({ card, onPress, width, height }) => {
@@ -105,7 +124,7 @@ const MemoryCard: React.FC<MemoryCardProps> = ({ card, onPress, width, height })
     <TouchableOpacity
       activeOpacity={1}
       onPress={() => onPress(card)}
-      style={{ width, height, margin: 8 }}
+      style={{ width, height }} // Removed margin from here
     >
       <View style={{ flex: 1 }}>
         {/* Lado da frente (Capa / Bola) - Inicialmente visível */}
@@ -143,6 +162,7 @@ const MemoryCard: React.FC<MemoryCardProps> = ({ card, onPress, width, height })
 const MemoryGameScreen: React.FC<MemoryGameScreenProps> = ({ onBack }) => {
     const [sound, setSound] = useState<Audio.Sound | null>(null);
   const [level, setLevel] = useState(1);
+  const [totalTime, setTotalTime] = useState(0); // Tempo total acumulado
   const [cards, setCards] = useState<Card[]>([]);
   const [selectedCards, setSelectedCards] = useState<Card[]>([]);
   const [isProcessing, setIsProcessing] = useState(false);
@@ -150,7 +170,8 @@ const MemoryGameScreen: React.FC<MemoryGameScreenProps> = ({ onBack }) => {
   
   // Estados de controle do jogo
   const [gameWon, setGameWon] = useState(false);
-  const [gameOver, setGameOver] = useState(false); // Novo estado para Game Over
+  const [gameOver, setGameOver] = useState(false); 
+  const [isGathered, setIsGathered] = useState(false); // Estado para animação de juntar cartas
   
   // Estados para o cronômetro
   const [timeLeft, setTimeLeft] = useState(60);
@@ -162,15 +183,13 @@ const MemoryGameScreen: React.FC<MemoryGameScreenProps> = ({ onBack }) => {
 
       const playMusic = async () => {
         try {
-          // Configura o áudio para tocar mesmo no modo silencioso do iOS
           await Audio.setAudioModeAsync({
             playsInSilentModeIOS: true,
             staysActiveInBackground: false,
           });
 
-          // Carrega e toca a música
           const { sound } = await Audio.Sound.createAsync(
-            require('../../../../sounds/memory-theme.mp3'),
+            require('../assets/sounds/memory-theme.mp3'),
             { isLooping: true, volume: 0.3 }
           );
           
@@ -218,32 +237,66 @@ const MemoryGameScreen: React.FC<MemoryGameScreenProps> = ({ onBack }) => {
       }, 1000);
     } else if (timeLeft === 0 && isTimerActive && !gameWon) {
       setIsTimerActive(false);
-      setGameOver(true); // Ativa o modal de Game Over
+      setGameOver(true); 
     }
 
     return () => clearInterval(interval);
   }, [isTimerActive, timeLeft, gameWon]);
 
   const startNewGame = () => {
+    if (level === 1) setTotalTime(0); // Reseta tempo total no início
+
     const config = getLevelConfig(level);
-    // Seleciona imagens aleatórias do array IMAGES
-    const selectedImages = IMAGES.sort(() => 0.5 - Math.random()).slice(0, config.pairs);
+    // Seleciona imagens aleatórias e embaralha
+    const selectedImages = shuffleArray([...IMAGES]).slice(0, config.pairs);
     
     const gameCards = [...selectedImages, ...selectedImages].map((image, index) => ({
-      id: `card-${index}`, // ID único baseado no índice
+      id: `card-${index}`, 
       image,
-      isFlipped: false,
+      isFlipped: true, // Começa virada para cima (Preview)
       isMatched: false,
     }));
 
-    setCards(gameCards.sort(() => 0.5 - Math.random()));
+    setCards(shuffleArray(gameCards)); // Mostra as cartas inicialmente (pode ser embaralhado ou não)
     setMoves(0);
     setGameWon(false);
-    setGameOver(false); // Reseta game over
+    setGameOver(false); 
     setSelectedCards([]);
-    setIsProcessing(false);
+    setIsProcessing(true); // Bloqueia interação durante preview
     setTimeLeft(config.time);
-    setIsTimerActive(true);
+    setIsTimerActive(false);
+
+    // Preview de 2 segundos antes de começar
+    setTimeout(() => {
+        // 1. Vira as cartas para baixo
+        setCards(prev => prev.map(c => ({ ...c, isFlipped: false })));
+        
+        // 2. Aguarda a animação de virar terminar (1.5s)
+        setTimeout(() => {
+            // 3. Junta as cartas no centro (Efeito de embaralhar)
+            LayoutAnimation.configureNext({
+                duration: 2000, // 2 segundos para juntar (Bem lento)
+                update: { type: LayoutAnimation.Types.easeInEaseOut },
+            });
+            setIsGathered(true);
+
+            // 4. Aguarda elas ficarem juntas (2.5s), embaralha os dados e espalha novamente
+            setTimeout(() => {
+                setCards(prev => shuffleArray([...prev]));
+                
+                LayoutAnimation.configureNext({
+                    duration: 2000, // 2 segundos para espalhar (Bem lento)
+                    create: { type: LayoutAnimation.Types.spring, property: LayoutAnimation.Properties.scaleXY, springDamping: 0.9 }, // Damping alto para menos balanço e mais suavidade
+                    update: { type: LayoutAnimation.Types.spring, springDamping: 0.9 },
+                });
+                
+                setIsGathered(false); // Espalha as cartas
+                
+                setIsProcessing(false); // Libera o jogo
+                setIsTimerActive(true); // Inicia o tempo
+            }, 2500); // Tempo parado no centro
+        }, 1500); 
+    }, 2000);
   };
 
   const handleCardPress = (card: Card) => {
@@ -298,6 +351,9 @@ const MemoryGameScreen: React.FC<MemoryGameScreenProps> = ({ onBack }) => {
   };
 
   const handleNextLevel = () => {
+      const timeTaken = getLevelConfig(level).time - timeLeft;
+      setTotalTime(prev => prev + timeTaken);
+
       if (level < 5) {
           setLevel(l => l + 1);
       } else {
@@ -312,7 +368,7 @@ const MemoryGameScreen: React.FC<MemoryGameScreenProps> = ({ onBack }) => {
 
   return (
     <ImageBackground 
-      source={require('../../../../images/campo.png')}
+      source={require('../assets/images/campo.png')}
       style={styles.container}
       resizeMode="cover"
     >
@@ -369,15 +425,28 @@ const MemoryGameScreen: React.FC<MemoryGameScreenProps> = ({ onBack }) => {
 
       {/* TABULEIRO */}
       <ScrollView contentContainerStyle={styles.boardScroll}>
-        <View style={styles.board}>
-          {cards.map((card) => (
-            <MemoryCard
-              key={card.id}
-              card={card}
-              onPress={handleCardPress}
-              width={cardSize}
-              height={cardSize * 1.4}
-            />
+        <View style={[styles.board, { minHeight: 400 }]}>
+          {cards.map((card, index) => (
+            <View 
+                key={card.id} 
+                style={[
+                    { width: cardSize, height: cardSize * 1.4, margin: 8 },
+                    isGathered ? { 
+                        position: 'absolute', 
+                        top: '40%', 
+                        left: width / 2 - cardSize / 2 - 20, // Centraliza horizontalmente
+                        zIndex: index,
+                        transform: [{ rotate: `${Math.random() * 10 - 5}deg` }] // Leve rotação aleatória para efeito de pilha
+                    } : {}
+                ]}
+            >
+                <MemoryCard
+                  card={card}
+                  onPress={handleCardPress}
+                  width={'100%'}
+                  height={'100%'}
+                />
+            </View>
           ))}
         </View>
       </ScrollView>
@@ -391,8 +460,13 @@ const MemoryGameScreen: React.FC<MemoryGameScreenProps> = ({ onBack }) => {
                     Nível {level} completo!
                 </Text>
                 <Text style={styles.modalSubText}>
-                    Tempo restante: {timeLeft}s
+                    Tempo da fase: {getLevelConfig(level).time - timeLeft}s
                 </Text>
+                {level === 5 && (
+                    <Text style={[styles.modalSubText, { color: colors.success, fontWeight: 'bold', fontSize: 16 }]}>
+                        Tempo Total: {totalTime + (getLevelConfig(level).time - timeLeft)}s
+                    </Text>
+                )}
                 {/* Exibe o total de movimentos ao vencer */}
                 <Text style={styles.modalSubText}>
                     Total de Movimentos: {moves}

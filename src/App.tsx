@@ -1,21 +1,20 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { View, StyleSheet, StatusBar, Text } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage'; 
 
 // Importações das telas
-import LoginScreen from './LoginScreen'; 
-import SplashScreen from './SplashScreen'; 
-import HomeScreen from './HomeScreen'; 
-import FriendsScreen from './FriendsScreen';
-import GameLoadingScreen from './GameLoadingScreen'; 
-import QuizLoadingScreen from './QuizLoadingScreen';
-import MemoryGameScreen from './MemoryGameScreen';   
-import QuizGameScreen from './QuizGameScreen'; 
+import LoginScreen from './screens/LoginScreen'; 
+import SplashScreen from './screens/SplashScreen'; 
+import HomeScreen from './screens/HomeScreen'; 
+import FriendsScreen from './screens/FriendsScreen';
+import GameLoadingScreen from './screens/GameLoadingScreen'; 
+import QuizLoadingScreen from './screens/QuizLoadingScreen';
+import MemoryGameScreen from './screens/MemoryGameScreen';   
+import QuizGameScreen from './screens/QuizGameScreen'; 
 
 const SPLASH_DURATION = 3000; 
 const BACKGROUND_COLOR = '#000000'; 
 
-// Tipos de telas possíveis
 // Tipos de telas possíveis
 type AppScreen = 'HOME' | 'LOADING_GAME' | 'MEMORY_GAME' | 'QUIZ_GAME' | 'FRIENDS';
 
@@ -27,7 +26,7 @@ const App: React.FC = () => {
   // Estado de Navegação
   const [currentScreen, setCurrentScreen] = useState<AppScreen>('HOME');
   const [selectedGame, setSelectedGame] = useState<string>('');
-  const [selectedQuizTheme, setSelectedQuizTheme] = useState<string | null>(null); // Estado para o tema do Quiz
+  const [selectedQuizTheme, setSelectedQuizTheme] = useState<string | null>(null);
 
   useEffect(() => {
     let isMounted = true;
@@ -63,33 +62,33 @@ const App: React.FC = () => {
           setSelectedGame(gameTitle);
           setCurrentScreen('LOADING_GAME');
       } else if (gameTitle === 'Quiz') {
-          // Para o Quiz, vamos direto para a tela de seleção de tema (sem loading ainda)
+          // Para o Quiz, vamos direto para a tela de seleção de tema
           setSelectedGame(gameTitle);
-          setSelectedQuizTheme(null); // Reseta tema
+          setSelectedQuizTheme(null); 
           setCurrentScreen('QUIZ_GAME');
       } else {
           console.log("Jogo não implementado:", gameTitle);
       }
   };
 
-  // 2. (Apenas Quiz) Usuário seleciona um tema dentro da tela do Quiz
+  // 2. Usuário seleciona um tema dentro da tela do Quiz
   const handleQuizThemeSelect = (theme: string) => {
       console.log("Tema selecionado:", theme);
       setSelectedQuizTheme(theme);
-      // Força o jogo selecionado para 'Quiz' caso tenha sido perdido
       setSelectedGame('Quiz');
-      // Agora sim, mostramos o loading específico do tema
       setCurrentScreen('LOADING_GAME');
   };
 
   // 3. O Loading termina
-  const handleGameLoaded = () => {
+  // CORREÇÃO: Usar useCallback para evitar que a função seja recriada e reinicie o timer
+  const handleGameLoaded = useCallback(() => {
+      console.log("Loading completo para o jogo:", selectedGame);
       if (selectedGame === 'Jogo da Memória') {
           setCurrentScreen('MEMORY_GAME');
       } else if (selectedGame === 'Quiz') {
-          setCurrentScreen('QUIZ_GAME'); // Volta para o Quiz, mas agora com tema selecionado e ativo
+          setCurrentScreen('QUIZ_GAME');
       }
-  };
+  }, [selectedGame]);
 
   // Voltar para Home
   const handleBackToHome = () => {
@@ -112,8 +111,6 @@ const App: React.FC = () => {
   }
 
   const renderContent = () => {
-    console.log(`Renderizando tela: ${currentScreen} | Jogo: ${selectedGame} | Tema: ${selectedQuizTheme}`);
-    
     switch (currentScreen) {
       case 'HOME':
         return (

@@ -8,10 +8,11 @@ import {
   ScrollView, 
   Dimensions,
   TextInput,
-  Image
+  Image,
+  Linking // Importado Linking
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { supabase } from '../../../../../../supabaseClient'; // Verifique se o caminho está correto
+import { supabase } from '../services/supabaseClient'; // Verifique se o caminho está correto
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const { width } = Dimensions.get('window');
@@ -27,6 +28,42 @@ const colors = {
   optionBg: '#1a1a1a',
   inputBg: '#222',
 };
+
+// --- DADOS DE MATERIAL DE APOIO (MOCK) ---
+const SUPPORT_MATERIALS = [
+  {
+    id: '1',
+    title: 'A Revolução da IA',
+    category: 'Tecnologia',
+    image: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?q=80&w=200&auto=format&fit=crop',
+    description: 'Como a inteligência artificial está mudando o mundo.',
+    link: 'https://www.google.com/search?q=inteligencia+artificial'
+  },
+  {
+    id: '2',
+    title: 'História das Copas',
+    category: 'Esportes',
+    image: 'https://images.unsplash.com/photo-1522770179533-24471fcdba45?q=80&w=200&auto=format&fit=crop',
+    description: 'Os momentos mais marcantes do futebol mundial.',
+    link: 'https://www.google.com/search?q=historia+das+copas'
+  },
+  {
+    id: '3',
+    title: 'O Sistema Solar',
+    category: 'Ciências',
+    image: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=200&auto=format&fit=crop',
+    description: 'Explorando os planetas e mistérios do espaço.',
+    link: 'https://www.google.com/search?q=sistema+solar'
+  },
+  {
+    id: '4',
+    title: 'Grandes Diretores',
+    category: 'Cinema',
+    image: 'https://images.unsplash.com/photo-1485846234645-a62644f84728?q=80&w=200&auto=format&fit=crop',
+    description: 'A vida e obra dos mestres do cinema.',
+    link: 'https://www.google.com/search?q=grandes+diretores+cinema'
+  }
+];
 
 // --- DADOS DOS TEMAS COM IMAGENS REAIS ---
 const QUIZ_THEMES: Record<string, { image: string }> = {
@@ -50,6 +87,9 @@ const QUIZ_THEMES: Record<string, { image: string }> = {
   },
   'Ciências': {
     image: 'https://images.unsplash.com/photo-1465101046530-73398c7f28ca?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3',
+  },
+  'NeymarJR': {
+    image: 'https://images.unsplash.com/photo-1543351611-58f69d7c1781?q=80&w=1470&auto=format&fit=crop',
   }
 };
 
@@ -71,6 +111,10 @@ const QuizGameScreen: React.FC<QuizGameScreenProps> = ({ onBack, onThemeSelect, 
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
   const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
   const [optionsDisabled, setOptionsDisabled] = useState<boolean>(false);
+  
+  // Estados para "Ver mais"
+  const [showAllCategories, setShowAllCategories] = useState(false);
+  const [showAllMaterials, setShowAllMaterials] = useState(false);
 
   useEffect(() => {
     const loadUser = async () => {
@@ -219,65 +263,177 @@ const QuizGameScreen: React.FC<QuizGameScreenProps> = ({ onBack, onThemeSelect, 
     );
 
     return (
-      <View style={[styles.container, {padding: 0}]}> 
-        <StatusBar barStyle="light-content" backgroundColor={colors.background} />
-        <View style={{padding: 20}}>
-          <View style={styles.header}>
-            <View style={styles.headerLeft}>
-              <Text style={styles.welcomeText}>Bem Vindo de Volta,</Text>
-              <Text style={[styles.welcomeName, styles.neonText]}>{userName}</Text>
+      <View style={[styles.container, {padding: 0, backgroundColor: '#000'}]}> 
+        <StatusBar barStyle="light-content" backgroundColor="#000" />
+        
+        <ScrollView contentContainerStyle={{paddingBottom: 30}}>
+          {/* HEADER */}
+          <View style={{paddingHorizontal: 20, paddingTop: 20, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
+            <View>
+              <Text style={{color: '#888', fontSize: 14}}>Bem vindo,</Text>
+              <Text style={{color: '#fff', fontSize: 24, fontWeight: 'bold'}}>{userName}!</Text>
             </View>
-            <TouchableOpacity onPress={onBack} style={styles.backButton}>
-              <Ionicons name="arrow-back" size={24} color={colors.primary} />
-            </TouchableOpacity>
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                <TouchableOpacity onPress={onBack}>
+                    <Ionicons name="arrow-back" size={24} color="#fff" />
+                </TouchableOpacity>
+            </View>
           </View>
-          <Text style={[styles.title, styles.neonText, {fontSize: 32, marginBottom: 10}]}>FiveQuiz</Text>
-          <View style={styles.searchContainer}>
-            <Ionicons name="search" size={20} color="#888" style={styles.searchIcon} />
-            <TextInput
-              style={styles.searchInput}
-              placeholder="Buscar tema..."
-              placeholderTextColor="#888"
-              value={searchQuery}
-              onChangeText={setSearchQuery}
-            />
-          </View>
-        </View>
-        <ScrollView contentContainerStyle={{paddingHorizontal: 10, paddingBottom: 30}}>
-          <View style={{flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center'}}>
-            {filteredThemes.map(([theme, data]: [string, any]) => (
-              <TouchableOpacity
-                key={theme}
-                style={{
-                  width: width * 0.42,
-                  height: 170,
-                  margin: 10,
-                  borderRadius: 18,
-                  overflow: 'hidden',
-                  backgroundColor: colors.cardBackground,
-                  elevation: 6,
-                  shadowColor: colors.primary,
-                  shadowOpacity: 0.3,
-                  shadowRadius: 12,
-                }}
-                onPress={() => onThemeSelect(theme)}
-                activeOpacity={0.85}
-              >
-                <Image
-                  source={{ uri: data.image }}
-                  style={{width: '100%', height: 110, borderTopLeftRadius: 18, borderTopRightRadius: 18}}
-                  resizeMode="cover"
+
+          {/* SEARCH BAR */}
+          <View style={{paddingHorizontal: 20, marginTop: 20}}>
+            <View style={{
+                flexDirection: 'row', 
+                alignItems: 'center', 
+                backgroundColor: '#1C1C1E', 
+                borderRadius: 15, 
+                paddingHorizontal: 15, 
+                height: 50
+            }}>
+                <Ionicons name="search" size={20} color="#888" style={{marginRight: 10}} />
+                <TextInput
+                style={{flex: 1, color: '#fff', fontSize: 16}}
+                placeholder="Search"
+                placeholderTextColor="#666"
+                value={searchQuery}
+                onChangeText={setSearchQuery}
                 />
-                <View style={{padding: 10, alignItems: 'center'}}>
-                  <Text style={{color: colors.primary, fontWeight: 'bold', fontSize: 18, textShadowColor: colors.primary, textShadowRadius: 8}}>{theme}</Text>
-                  <Text style={{color: colors.text, fontSize: 12, marginTop: 2}}>Perguntas online</Text>
+            </View>
+          </View>
+
+          {/* FEATURED BANNER */}
+          <View style={{paddingHorizontal: 20, marginTop: 25}}>
+            <View style={{
+                width: '100%', 
+                height: 180, 
+                borderRadius: 20, 
+                overflow: 'hidden',
+                position: 'relative',
+                backgroundColor: '#111', // Fundo escuro para a logo
+                alignItems: 'center',
+                justifyContent: 'center'
+            }}>
+                <Image 
+                    source={require('../assets/FiveOneLogo.png')}
+                    style={{width: '80%', height: '80%', resizeMode: 'contain'}}
+                />
+            </View>
+          </View>
+
+          {/* TOP CATEGORIES */}
+          <View style={{marginTop: 25}}>
+            <View style={{flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: 20, marginBottom: 15}}>
+                <Text style={{color: '#fff', fontSize: 18, fontWeight: 'bold'}}>Categorias</Text>
+                <TouchableOpacity onPress={() => setShowAllCategories(!showAllCategories)}>
+                    <Text style={{color: '#888', fontSize: 14}}>{showAllCategories ? 'Ver menos' : 'Ver mais'}</Text>
+                </TouchableOpacity>
+            </View>
+            
+            {showAllCategories ? (
+                <View style={{flexDirection: 'row', flexWrap: 'wrap', paddingHorizontal: 20, justifyContent: 'space-between'}}>
+                    {filteredThemes.map(([theme, data]: [string, any]) => (
+                        <TouchableOpacity 
+                            key={theme}
+                            onPress={() => onThemeSelect(theme)}
+                            style={{
+                                width: '48%', 
+                                height: 100, 
+                                marginBottom: 15, 
+                                borderRadius: 15, 
+                                overflow: 'hidden',
+                                position: 'relative'
+                            }}
+                        >
+                            <Image 
+                                source={{ uri: data.image }} 
+                                style={{width: '100%', height: '100%', resizeMode: 'cover', opacity: 0.7}}
+                            />
+                            <View style={{
+                                position: 'absolute', 
+                                top: 0, left: 0, right: 0, bottom: 0, 
+                                justifyContent: 'center', 
+                                alignItems: 'center',
+                                backgroundColor: 'rgba(0,0,0,0.3)'
+                            }}>
+                                <Text style={{color: '#fff', fontWeight: 'bold', fontSize: 14}}>{theme}</Text>
+                            </View>
+                        </TouchableOpacity>
+                    ))}
                 </View>
-              </TouchableOpacity>
-            ))}
-            {filteredThemes.length === 0 && (
-              <Text style={styles.noResultsText}>Nenhum tema encontrado.</Text>
+            ) : (
+                <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{paddingLeft: 20}}>
+                    {filteredThemes.map(([theme, data]: [string, any]) => (
+                        <TouchableOpacity 
+                            key={theme}
+                            onPress={() => onThemeSelect(theme)}
+                            style={{
+                                width: 100, 
+                                height: 100, 
+                                marginRight: 15, 
+                                borderRadius: 15, 
+                                overflow: 'hidden',
+                                position: 'relative'
+                            }}
+                        >
+                            <Image 
+                                source={{ uri: data.image }} 
+                                style={{width: '100%', height: '100%', resizeMode: 'cover', opacity: 0.7}}
+                            />
+                            <View style={{
+                                position: 'absolute', 
+                                top: 0, left: 0, right: 0, bottom: 0, 
+                                justifyContent: 'center', 
+                                alignItems: 'center',
+                                backgroundColor: 'rgba(0,0,0,0.3)'
+                            }}>
+                                <Text style={{color: '#fff', fontWeight: 'bold', fontSize: 14}}>{theme}</Text>
+                            </View>
+                        </TouchableOpacity>
+                    ))}
+                </ScrollView>
             )}
           </View>
+
+          {/* MATERIAL DE APOIO */}
+          <View style={{marginTop: 25, paddingHorizontal: 20}}>
+            <View style={{flexDirection: 'row', justifyContent: 'space-between', marginBottom: 15}}>
+                <Text style={{color: '#fff', fontSize: 18, fontWeight: 'bold'}}>Material de Apoio</Text>
+                <TouchableOpacity onPress={() => setShowAllMaterials(!showAllMaterials)}>
+                    <Text style={{color: '#888', fontSize: 14}}>{showAllMaterials ? 'Ver menos' : 'Ver mais'}</Text>
+                </TouchableOpacity>
+            </View>
+
+            {/* Lista Vertical de Materiais */}
+            {(showAllMaterials ? SUPPORT_MATERIALS : SUPPORT_MATERIALS.slice(0, 3)).map((item) => (
+                <TouchableOpacity 
+                    key={item.id}
+                    onPress={() => Linking.openURL(item.link)}
+                    style={{
+                        flexDirection: 'row',
+                        backgroundColor: '#1C1C1E',
+                        borderRadius: 15,
+                        padding: 10,
+                        marginBottom: 15,
+                        alignItems: 'center'
+                    }}
+                >
+                    <Image 
+                        source={{ uri: item.image }} 
+                        style={{width: 60, height: 60, borderRadius: 10}}
+                    />
+                    <View style={{marginLeft: 15, flex: 1}}>
+                        <Text style={{color: '#fff', fontSize: 16, fontWeight: 'bold'}}>{item.title}</Text>
+                        <Text style={{color: '#888', fontSize: 12, marginTop: 4}} numberOfLines={2}>{item.description}</Text>
+                        <View style={{flexDirection: 'row', alignItems: 'center', marginTop: 6}}>
+                            <Ionicons name="book-outline" size={12} color={colors.primary} style={{marginRight: 4}} />
+                            <Text style={{color: colors.primary, fontSize: 12, fontWeight: 'bold'}}>{item.category}</Text>
+                        </View>
+                    </View>
+                    <Ionicons name="open-outline" size={20} color="#666" />
+                </TouchableOpacity>
+            ))}
+          </View>
+
         </ScrollView>
       </View>
     );
@@ -316,7 +472,7 @@ const QuizGameScreen: React.FC<QuizGameScreenProps> = ({ onBack, onThemeSelect, 
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
           <Text style={{ color: colors.danger, fontSize: 18, textAlign: 'center', paddingHorizontal: 20 }}>
             {shuffledQuestions.length === 0 
-              ? "Carregando perguntas ou nenhuma pergunta encontrada..." 
+              ? "Carregando..." 
               : "Erro ao carregar a próxima pergunta."}
           </Text>
           <TouchableOpacity style={[styles.actionButton, { marginTop: 30 }]} onPress={onBack}>
@@ -332,6 +488,9 @@ const QuizGameScreen: React.FC<QuizGameScreenProps> = ({ onBack, onThemeSelect, 
       <StatusBar barStyle="light-content" backgroundColor={colors.background} />
 
       <View style={styles.gameHeader}>
+        <TouchableOpacity onPress={onBack} style={{ marginRight: 15 }}>
+            <Ionicons name="arrow-back" size={24} color={colors.primary} />
+        </TouchableOpacity>
         <View style={styles.themeInfo}>
           <Ionicons name={themeIcon} size={24} color={colors.primary} style={styles.headerIcon} />
           <Text style={styles.themeBadge}>{activeTheme.toUpperCase()}</Text>
@@ -340,6 +499,21 @@ const QuizGameScreen: React.FC<QuizGameScreenProps> = ({ onBack, onThemeSelect, 
             {timeLeft}s
         </Text>
       </View>
+
+      {/* IMAGEM DO TEMA */}
+      {activeTheme && QUIZ_THEMES[activeTheme] && (
+        <View style={{marginBottom: 20, borderRadius: 15, overflow: 'hidden', height: 150, width: '100%'}}>
+            <Image 
+                source={{ uri: QUIZ_THEMES[activeTheme].image }} 
+                style={{width: '100%', height: '100%', resizeMode: 'cover'}}
+            />
+            <View style={{
+                position: 'absolute', 
+                top: 0, left: 0, right: 0, bottom: 0, 
+                backgroundColor: 'rgba(0,0,0,0.3)' 
+            }}/>
+        </View>
+      )}
 
       <View style={styles.questionContainer}>
         <Text style={styles.questionCounter}>
@@ -398,11 +572,6 @@ const QuizGameScreen: React.FC<QuizGameScreenProps> = ({ onBack, onThemeSelect, 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    borderWidth: 2,
-    borderColor: colors.primary,
-    margin: 10,
-    borderRadius: 15,
-    overflow: 'hidden',
     backgroundColor: colors.background,
     padding: 20,
   },
